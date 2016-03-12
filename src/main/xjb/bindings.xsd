@@ -1,0 +1,18 @@
+<bindings version="2.0"
+              xmlns="http://java.sun.com/xml/ns/jaxb"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <bindings schemaLocation="../xsd/FictionBook_20.xsd" node="/xsd:schema">
+    <bindings node="//xsd:complexType[@name='dateType']">
+      <bindings node=".//xsd:attribute[@name='value']">
+        <property name="DateTypeValue"/>
+      </bindings>
+    </bindings>
+
+    <bindings node="//xsd:complexType[@name='linkType']">
+      <bindings node=".//xsd:attribute[@ref='xlink:type']">
+        <property name="XLinkType"/>
+      </bindings>
+    </bindings>
+
+  </bindings>
+</bindings>

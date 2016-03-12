@@ -1,0 +1,2001 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by m (CJSC PETER-SERVICE) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="Operation">
+		<xs:annotation>
+			<xs:documentation>Логические операции над аргументами</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="o"/>
+			<xs:enumeration value="n"/>
+			<xs:enumeration value="m"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MsisdnLocationType">
+		<xs:annotation>
+			<xs:documentation>Типы выбора локации номера телефона</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="l"/>
+			<xs:enumeration value="i"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringCompareType">
+		<xs:annotation>
+			<xs:documentation>Способы сравнения строк, перечисление</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="e"/>
+			<xs:enumeration value="l"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumCompare_CloseType">
+		<xs:annotation>
+			<xs:documentation>Способы сравнения чисел,  закрытая граница, перечисление</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ge"/>
+			<xs:enumeration value="le"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumCompare_OpenType">
+		<xs:annotation>
+			<xs:documentation>Способы сравнения чисел,  закрытая граница, перечисление</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="gt"/>
+			<xs:enumeration value="lt"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ElementType">
+		<xs:annotation>
+			<xs:documentation>Типы элементов выражения условия</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="s"/>
+			<xs:enumeration value="g"/>
+			<xs:enumeration value="n"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DirectionRole">
+		<xs:annotation>
+			<xs:documentation> Направление в передаче данных</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="d"/>
+			<xs:enumeration value="s"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IpTypes">
+		<xs:annotation>
+			<xs:documentation>Типы ip адресов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConnectionRole">
+		<xs:annotation>
+			<xs:documentation>Роли указанного субъекта в соединении</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="b"/>
+			<xs:enumeration value="n"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubjectRole">
+		<xs:annotation>
+			<xs:documentation>Роли субъектов в карточке</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubscribersParamTypes">
+		<xs:annotation>
+			<xs:documentation>Типы параметров в запросе по идентификаторам</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fio"/>
+			<xs:enumeration value="pass"/>
+			<xs:enumeration value="addr"/>
+			<xs:enumeration value="cntct"/>
+			<xs:enumeration value="org_n"/>
+			<xs:enumeration value="inn"/>
+			<xs:enumeration value="bik"/>
+			<xs:enumeration value="okpo"/>
+			<xs:enumeration value="okonh"/>
+			<xs:enumeration value="int_u"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdentifiersParamTypes">
+		<xs:annotation>
+			<xs:documentation>Типы параметров в запросе по абонентам</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="imsi"/>
+			<xs:enumeration value="icc"/>
+			<xs:enumeration value="imei"/>
+			<xs:enumeration value="min"/>
+			<xs:enumeration value="phn_n"/>
+			<xs:enumeration value="mac"/>
+			<xs:enumeration value="ip_a"/>
+			<xs:enumeration value="ip_m"/>
+			<xs:enumeration value="ip_p"/>
+			<xs:enumeration value="e_m"/>
+			<xs:enumeration value="url"/>
+			<xs:enumeration value="lgn"/>
+			<xs:enumeration value="pin"/>
+			<xs:enumeration value="pgr_n"/>
+			<xs:enumeration value="phn_n_list"/>
+			<xs:enumeration value="imsi_list"/>
+			<xs:enumeration value="imei_esn_list"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AllSubsParamTypes">
+		<xs:annotation>
+			<xs:documentation>Типы параметров в объединенном запросе по абонентам</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="imsi"/>
+			<xs:enumeration value="icc"/>
+			<xs:enumeration value="imei"/>
+			<xs:enumeration value="min"/>
+			<xs:enumeration value="phn_n"/>
+			<xs:enumeration value="mac"/>
+			<xs:enumeration value="ip_a"/>
+			<xs:enumeration value="ip_m"/>
+			<xs:enumeration value="ip_p"/>
+			<xs:enumeration value="e_m"/>
+			<xs:enumeration value="url"/>
+			<xs:enumeration value="lgn"/>
+			<xs:enumeration value="pin"/>
+			<xs:enumeration value="pgr_n"/>
+			<xs:enumeration value="phn_n_list"/>
+			<xs:enumeration value="imsi_list"/>
+			<xs:enumeration value="imei_esn_list"/>
+			<xs:enumeration value="fio"/>
+			<xs:enumeration value="pass"/>
+			<xs:enumeration value="addr"/>
+			<xs:enumeration value="cntct"/>
+			<xs:enumeration value="org_n"/>
+			<xs:enumeration value="inn"/>
+			<xs:enumeration value="bik"/>
+			<xs:enumeration value="okpo"/>
+			<xs:enumeration value="okonh"/>
+			<xs:enumeration value="int_u"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TrafParamTypes">
+		<xs:annotation>
+			<xs:documentation>Типы параметров в запросе трафика</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="url"/>
+			<xs:enumeration value="prt"/>
+			<xs:enumeration value="ip_pr"/>
+			<xs:enumeration value="ip_ta"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CallsParamTypes">
+		<xs:annotation>
+			<xs:documentation>Типы параметров в запросе соединений</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="imsi"/>
+			<xs:enumeration value="imei"/>
+			<xs:enumeration value="min"/>
+			<xs:enumeration value="phn_n"/>
+			<xs:enumeration value="intr_n"/>
+			<xs:enumeration value="mac"/>
+			<xs:enumeration value="ip_a"/>
+			<xs:enumeration value="ip_m"/>
+			<xs:enumeration value="ip_p"/>
+			<xs:enumeration value="ip_pr"/>
+			<xs:enumeration value="e_m"/>
+			<xs:enumeration value="url"/>
+			<xs:enumeration value="lgn"/>
+			<xs:enumeration value="dt_ph_n"/>
+			<xs:enumeration value="pin"/>
+			<xs:enumeration value="pgr_n"/>
+			<xs:enumeration value="trnk_id"/>
+			<xs:enumeration value="swt_id"/>
+			<xs:enumeration value="bs_id"/>
+			<xs:enumeration value="crd_n"/>
+			<xs:enumeration value="trnk_c"/>
+			<xs:enumeration value="swt_c"/>
+			<xs:enumeration value="lac_cell"/>
+			<xs:enumeration value="cnn_tp"/>
+			<xs:enumeration value="phn_n_list"/>
+			<xs:enumeration value="imsi_list"/>
+			<xs:enumeration value="imei_esn_list"/>
+			<xs:enumeration value="bs_id_list"/>
+			<xs:enumeration value="lac_cell_list"/>
+			<xs:enumeration value="crd_n_list"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CallsListParamTypes">
+		<xs:annotation>
+			<xs:documentation>Типы списочных параметров в запросе соединений</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="phn_n_list"/>
+			<xs:enumeration value="imsi_list"/>
+			<xs:enumeration value="imei_esn_list"/>
+			<xs:enumeration value="bs_id_list"/>
+			<xs:enumeration value="lac_cell_list"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TrafRequestType">
+		<xs:annotation>
+			<xs:documentation>Типы запросов соединений, перечисление</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="traff_subs"/>
+			<xs:enumeration value="traff"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RequestType">
+		<xs:annotation>
+			<xs:documentation>Типы запросов соединений, перечисление</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="subs_conn"/>
+			<xs:enumeration value="btwn_subs_conn"/>
+			<xs:enumeration value="cross_conn"/>
+			<xs:enumeration value="conn_bslist"/>
+			<xs:enumeration value="conn_imsi"/>
+			<xs:enumeration value="conn_imei"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NetworkType">
+		<xs:annotation>
+			<xs:documentation>Стандарт связи сети, для которой передается идентификационная информация</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="IpParam">
+		<xs:annotation>
+			<xs:documentation>Аттрибутивная группа для указания условий поиска ip адресу</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="IPV" type="IpTypes" use="required">
+			<xs:annotation>
+				<xs:documentation>Версия IP адреса</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>строковое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CMP" type="StringCompareType" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="StrParam">
+		<xs:annotation>
+			<xs:documentation>Аттрибутивная группа для указания условий поиска по строковым параметрам</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>строковое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CMP" type="StringCompareType" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="Num_OpenBound_Param">
+		<xs:annotation>
+			<xs:documentation>Аттрибутивная группа для указания условий поиска по числовым параметрам</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>числовое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CMP" type="NumCompare_OpenType" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="Num_CloseBound_Param">
+		<xs:annotation>
+			<xs:documentation>Аттрибутивная группа для указания условий поиска по числовым параметрам</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>числовое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CMP" type="NumCompare_CloseType" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="PhoneParam">
+		<xs:annotation>
+			<xs:documentation>Аттрибутивная группа для указания условий поиска по строковым параметрам</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="DRCT" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>строковое значение прямого номера для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DCMP" type="StringCompareType" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения прямого номера</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="INTR" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>строковое значение внутреннего номера для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ICMP" type="StringCompareType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения внутреннего номера</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="TrunkDirection">
+		<xs:annotation>
+			<xs:documentation>Перечисление направлений транков: 0 - входящий, 1 - исходящий</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:unsignedByte">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContactType">
+		<xs:annotation>
+			<xs:documentation>Типы атрибутов контактной информации</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AddressType">
+		<xs:annotation>
+			<xs:documentation>Тип адресов, по функциональному признаку, перечисление</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IP_Protocols">
+		<xs:annotation>
+			<xs:documentation>Протоколы передачи данных (1-ICMP, 6-TCP/IP, 17 - UDP)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:unsignedShort">
+			<xs:pattern value="1"/>
+			<xs:pattern value="6"/>
+			<xs:pattern value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StringParameter">
+		<xs:annotation>
+			<xs:documentation>Тип стрококвых параметров запроса, с указанием типа сравнения</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>строковое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CMP" type="StringCompareType" use="required">
+			<xs:annotation>
+				<xs:documentation>способ сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="StringValueParameter">
+		<xs:annotation>
+			<xs:documentation>Тип стрококвых параметров запроса, с указанием только значения</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>строковое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NumValueParameter">
+		<xs:annotation>
+			<xs:documentation>Тип числовых параметров запроса, с указанием только значения</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>числовое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PhoneStringParameter">
+		<xs:annotation>
+			<xs:documentation>Тип телефонных номеров в запросе, с указанием типа сравнения</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="DRCT" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>прямой телефонный номер</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DCMP" type="StringCompareType" use="required">
+			<xs:annotation>
+				<xs:documentation>способ сравнения прямого номера</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="INTR" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Внутренний телефонный номер</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ICMP" type="StringCompareType" use="optional">
+			<xs:annotation>
+				<xs:documentation>способ сравнения внутреннего номера</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Ip_String_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр IP адреса с направлением  - строковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="DRL" type="DirectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Направление IP адреса</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="IpParam"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Connection_String_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр идентификатора абонента с ролью - строковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль идентифицируемого значением Value субъекта в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="StrParam"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Duration_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр ограничение длительности соединения</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="Num_CloseBound_Param"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_LevelLimit_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр ограничения количества связей на одном уровне</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="Num_CloseBound_Param"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Connection_Phone_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр идентификатора абонента с ролью - строковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль идентифицируемого значением Value субъекта в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="PhoneParam"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Connection_Short_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр идентификатора абонента с ролью - целое 2 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль идентифицируемого значением Value субъекта в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedShort" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Port_Int_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр идентификатора абонента с ролью - целое 4 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="DRL" type="DirectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>направление в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Connection_Int_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр идентификатора абонента с ролью - целое 4 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль идентифицируемого значением Value субъекта в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Connection_Int2_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр идентификатора абонента с ролью - 2 целых 4 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль идентифицируемого значением Value субъекта в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V2" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>Второе, опциональное значеие для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Subject_String_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр описания абонента с ролью - строковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="SRL" type="SubjectRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, соответствующего условию, в карточке абонента</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="StrParam"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Subject_Short_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр описания абонента с ролью - целое 2 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="SRL" type="SubjectRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, соответствующего условию, в карточке абонента</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedShort" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Int_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр  - целое 4 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_MsisdnLocation_Filter">
+		<xs:annotation>
+			<xs:documentation>Параметр  - фильтр по локации телефона</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="MsisdnLocationType" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип префикса</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Subject_Int_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр описания абонента с ролью - целое 4 байта, беззнаковое</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="SRL" type="SubjectRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, соответствующего условию, в карточке абонента</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_BaseStation_LAC_CELL">
+		<xs:annotation>
+			<xs:documentation>Структура параметров базовой станции</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, учавствовавшего в соединении через данную базовую станцию, в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="LAC" type="xs:long" use="optional">
+			<xs:annotation>
+				<xs:documentation>LAC базовой станции</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CELL" type="xs:long" use="optional">
+			<xs:annotation>
+				<xs:documentation>CELL базовой станции</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_ContactInfo">
+		<xs:annotation>
+			<xs:documentation>Контактная информация по субъекту</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CTP" type="ContactType" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, соответствующего условию, в карточке абонента</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="StrParam"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_TELCOS">
+		<xs:annotation>
+			<xs:documentation>Перечень ОС</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="T_ID" type="xs:unsignedInt" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Перечень идентификаторов интересующих ОС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_EVNT_TPS">
+		<xs:annotation>
+			<xs:documentation>Перечень ОС</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ETP" type="xs:string" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Перечень типов соединений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_FIO">
+		<xs:annotation>
+			<xs:documentation>Фамилия, имя, отчество</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FRS" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MDL" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LST" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="SRL" type="SubjectRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, соответствующего условию, в карточке абонента</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="O" use="required">
+			<xs:annotation>
+				<xs:documentation>Атрибут правила упорядочивания составляющих ФИО при поиске</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:short">
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Address">
+		<xs:annotation>
+			<xs:documentation>Адрес в запросе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ZIP" type="StringParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ZIP-код (почтовый индекс?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CNTR" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>страна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RGN" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>регион, область</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ZN" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Район города или области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CTY" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Населенный пункт, город</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="STRT" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>улица</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HS" type="StringParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>дом</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BLD" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>корпус</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="APRT" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>помещение, офис, квартира</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ATP" type="AddressType" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип адреса, обуславливающий объект поиска</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_PassportInfo">
+		<xs:annotation>
+			<xs:documentation>Паспортные данные</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="P_SRL" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Серийный номер удостоверения личности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="P_NUM" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Номер удостоверения личности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="SRL" type="SubjectRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль субъекта, соответствующего условию, в карточке абонента</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_FindRange">
+		<xs:annotation>
+			<xs:documentation>Период интереса для  поиска</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="T_BGN" type="xs:string" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата и время начала интересующего периода времени</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="T_END" type="xs:string" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата и время окончания интересующего периода времени</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_FullName">
+		<xs:annotation>
+			<xs:documentation>Название организации, в том числе с указанием формы собственности</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FN" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Полное название организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ABR" type="StringParameter" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Краткое наименование организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Trunk_String">
+		<xs:annotation>
+			<xs:documentation>Транк с указанием его направления</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="TDR" type="TrunkDirection" use="required">
+			<xs:annotation>
+				<xs:documentation>Направление транка</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CMP" type="StringCompareType" use="required">
+			<xs:annotation>
+				<xs:documentation>Способ сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>значение кода транка</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Trunk_Int">
+		<xs:annotation>
+			<xs:documentation>Транк с указанием его направления</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="TDR" type="TrunkDirection" use="required">
+			<xs:annotation>
+				<xs:documentation>Направление транка</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="V" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение идентификатора транка</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_List_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр описания списочного значения</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="param_id" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор значений списочного параметра</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Connection_List_Parameter">
+		<xs:annotation>
+			<xs:documentation>Параметр описания списочного значения для поиска соединений</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CRL" type="ConnectionRole" use="required">
+			<xs:annotation>
+				<xs:documentation>Роль в соединении</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="param_id" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор значений списочного параметра</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_SubscribersInfo">
+		<xs:annotation>
+			<xs:documentation>Параметр запроса, селективный, запрос по описанию абонента</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="fio" type="HAS_FIO" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ФИО субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pass" type="HAS_PassportInfo" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Удостоверение личности субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="addr" type="HAS_Address" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Адрес, с указанием типа адреса, относящийся к субъекту</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cntct" type="HAS_ContactInfo" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Контактная информация по субъекту</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="org_n" type="HAS_FullName" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Полное название организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inn" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ИНН субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="int_u" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Внутренний пользователь организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bik" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>БИК банка субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="okpo" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ОКПО субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="okonh" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ОКОНХ субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="TP" type="SubscribersParamTypes" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип параметра, задействованного в данном экземпляре</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_EdgesLimit">
+		<xs:annotation>
+			<xs:documentation>Параметр запроса, лимит на количество связей на уровнях при поиске связей</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="L1" type="HAS_LevelLimit_Parameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ограничение на  количество соединений для 1 -го уровня связи </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="L2" type="HAS_LevelLimit_Parameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ограничение на  количество соединений для 2 -го уровня связи </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="L3" type="HAS_LevelLimit_Parameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ограничение на  количество соединений для 3 -го уровня связи </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_SubscribersIdentifier">
+		<xs:annotation>
+			<xs:documentation>Параметр запроса, селективный, запрос по идентификатору абонента</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="imsi" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IMSI SIM-карты абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="icc" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ICC абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imei" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IMEI или ESN аппарата абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="min" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>MIN аппарата абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phn_n" type="PhoneStringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Телефонный номер абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lgn" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Логин пользователя сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mac" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>MAC-адрес абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_a" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IP-адрес терминала абонента сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_m" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Маска IP-адресов терминалов абонентов сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="e_m" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Адрес электронной почты пользовтеля услуги электронной почты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="url" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>URL ресурса сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pin" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>?пин?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pgr_n" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Номер пэйджера абонента пэйджинговой сети</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phn_n_list" type="HAS_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра номеров телефонов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imsi_list" type="HAS_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра IMSI</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imei_esn_list" type="HAS_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра IMEI/ESN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="TP" type="IdentifiersParamTypes" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип параметра, задействованного в данном экземпляре</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="std" type="NetworkType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код стандарта связи, к которому относится параметр</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_Subscribers">
+		<xs:annotation>
+			<xs:documentation>Параметр запроса, селективный, запрос по объединенному поиску абонента</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="imsi" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IMSI SIM-карты абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="icc" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ICC абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imei" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IMEI или ESN аппарата абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="min" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>MIN аппарата абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phn_n" type="PhoneStringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Телефонный номер абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lgn" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Логин пользователя сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mac" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>MAC-адрес абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_a" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IP-адрес терминала абонента сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_m" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Маска IP-адресов терминалов абонентов сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="e_m" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Адрес электронной почты пользовтеля услуги электронной почты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="url" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>URL ресурса сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pin" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>?пин?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pgr_n" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Номер пэйджера абонента пэйджинговой сети</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fio" type="HAS_FIO" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ФИО субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pass" type="HAS_PassportInfo" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Удостоверение личности субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="addr" type="HAS_Address" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Адрес, с указанием типа адреса, относящийся к субъекту</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cntct" type="HAS_ContactInfo" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Контактная информация по субъекту</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="org_n" type="HAS_FullName" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Полное название организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inn" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ИНН субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="int_u" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Внутренний пользователь организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bik" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>БИК банка субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="okpo" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ОКПО субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="okonh" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>ОКОНХ субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phn_n_list" type="HAS_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра номеров телефонов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imsi_list" type="HAS_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра IMSI</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imei_esn_list" type="HAS_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра IMEI/ESN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="TP" type="AllSubsParamTypes" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип параметра, задействованного в данном экземпляре</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="std" type="NetworkType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Код стандарта связи, к которому относится параметр</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_Summary_Calls_Info">
+		<xs:annotation>
+			<xs:documentation>Параметр запроса, селективный, запрос по соединениям</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="imsi" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IMSI SIM-карты абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imei" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IMEI или ESN аппарата абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="min" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>MIN абонента CDMA</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phn_n" type="HAS_Connection_Phone_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Телефонный номер абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mac" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>MAC-адрес устройства абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_a" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IP-адрес терминала абонента в сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_m" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IP-маска терминалов абонентов в сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_p" type="HAS_Connection_Short_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IP-порт, задействованный в соединении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_pr" type="IP_Protocols" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Протокол соединения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="e_m" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Адрес электронной почты пользователя услуги электронной почты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="url" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>URL ресурса сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lgn" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Логин пользователя сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pin" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>?пин?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pgr_n" type="StringParameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Номер пэйджера абонента пэйджинговой сети</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="crd_n" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Номер телефонной карты, использованной в интересующих соединениях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="trnk_id" type="HAS_Trunk_Int" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор транка, задействованного в соединении,  с указанием его роли</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="swt_id" type="HAS_Connection_Int_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор свитча, задействованного в соединении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bs_id" type="HAS_Connection_Int2_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор базовой станции, задействованной в интересующих соединениях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="trnk_c" type="HAS_Trunk_String" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Код транка, задействованного  в интересующих соединениях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="swt_c" type="HAS_Connection_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Код коммутатора, задействованного в интересующих соединениях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lac_cell" type="HAS_BaseStation_LAC_CELL" nillable="false">
+				<xs:annotation>
+					<xs:documentation>LAC и CELL базовой станции, задействованной в интересующих соединениях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cnn_tp" type="xs:unsignedLong">
+				<xs:annotation>
+					<xs:documentation>Идентификатор типа соединения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phn_n_list" type="HAS_Connection_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра номеров телефонов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imsi_list" type="HAS_Connection_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра IMSI</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imei_esn_list" type="HAS_Connection_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра IMEI/ESN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bs_id_list" type="HAS_Connection_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра базовых станций</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lac_cell_list" type="HAS_Connection_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра lac и cell</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="crd_n_list" type="HAS_Connection_List_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор списочного параметра номеров телефонныйх карт</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="TP" type="CallsParamTypes" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип параметра, задействованного в данном экземпляре</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="std" type="NetworkType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код стандарта связи, к которому относится параметр</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_Summary_Traff_Info">
+		<xs:annotation>
+			<xs:documentation>Параметр запроса, селективный, запрос по трафику</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="ip_ta" type="HAS_Ip_String_Parameter" nillable="false">
+				<xs:annotation>
+					<xs:documentation>IP-адрес в сети передачи данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ip_pr" type="HAS_Int_Parameter">
+				<xs:annotation>
+					<xs:documentation>Идентификатор протокола L7</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="prt" type="HAS_Port_Int_Parameter">
+				<xs:annotation>
+					<xs:documentation>Порт, участвующий в соедиении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mdx_url" type="StringParameter">
+				<xs:annotation>
+					<xs:documentation>URL, используемый в соединении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="TP" type="TrafParamTypes" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип параметра, задействованного в данном экземпляре</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameters_SubsInfo_Element">
+		<xs:annotation>
+			<xs:documentation>Элемент выражения условия, запрос по описанию абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:annotation>
+				<xs:documentation>Следующий уровень условия</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:element name="F_GR" type="HAS_Parameters_SubsInfo_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Первый аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="F_PR" type="HAS_Parameter_SubscribersInfo" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Первый аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="S_GR" type="HAS_Parameters_SubsInfo_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Второй аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="S_PR" type="HAS_Parameter_SubscribersInfo" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Второй аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="F_TP" type="ElementType" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип первого аргумента выражения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OP" type="Operation" use="required">
+			<xs:annotation>
+				<xs:documentation>Логическая операция над аргументами</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="S_TP" type="ElementType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Тип второго аргумента выражения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameters_Identifier_Element">
+		<xs:annotation>
+			<xs:documentation>Элемент выражения условия, запрос по идентификатору абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:annotation>
+				<xs:documentation>Следующий уровень условия</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:element name="F_GR" type="HAS_Parameters_Identifier_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Первый аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="F_PR" type="HAS_Parameter_SubscribersIdentifier" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Первый аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="S_GR" type="HAS_Parameters_Identifier_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Второй аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="S_PR" type="HAS_Parameter_SubscribersIdentifier" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Второй аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="F_TP" type="ElementType" use="required"/>
+		<xs:attribute name="OP" type="Operation" use="required"/>
+		<xs:attribute name="S_TP" type="ElementType" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameters_Subscriber_Element">
+		<xs:annotation>
+			<xs:documentation>Элемент выражения условия, запрос по объединенному поиску абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:annotation>
+				<xs:documentation>Следующий уровень условия</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:element name="F_GR" type="HAS_Parameters_Subscriber_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Первый аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="F_PR" type="HAS_Parameter_Subscribers" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Первый аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="S_GR" type="HAS_Parameters_Subscriber_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Второй аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="S_PR" type="HAS_Parameter_Subscribers" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Второй аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="F_TP" type="ElementType" use="required"/>
+		<xs:attribute name="OP" type="Operation" use="required"/>
+		<xs:attribute name="S_TP" type="ElementType" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_Summary_Traff_Info_Element">
+		<xs:annotation>
+			<xs:documentation>Элемент выражения условия, запрос по трафику</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:annotation>
+				<xs:documentation>Следующий уровень условия</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:element name="F_GR" type="HAS_Parameter_Summary_Calls_Info_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Первый аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="F_PR" type="HAS_Parameter_Summary_Traff_Info" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Первый аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="S_GR" type="HAS_Parameter_Summary_Calls_Info_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Второй аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="S_PR" type="HAS_Parameter_Summary_Traff_Info" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Второй аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="F_TP" type="ElementType" use="required">
+			<xs:annotation>
+				<xs:documentation>Вид первого аргумента в выражении - групповой или одинарный</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OP" type="Operation" use="required">
+			<xs:annotation>
+				<xs:documentation>Операция над аргументами данного выражения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="S_TP" type="ElementType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Вид первого аргумента в выражении - групповой, одинарный или отсутствует</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Parameter_Summary_Calls_Info_Element">
+		<xs:annotation>
+			<xs:documentation>Элемент выражения условия, запрос по соединениям</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:annotation>
+				<xs:documentation>Следующий уровень условия</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:element name="F_GR" type="HAS_Parameter_Summary_Calls_Info_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Первый аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="F_PR" type="HAS_Parameter_Summary_Calls_Info" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Первый аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="S_GR" type="HAS_Parameter_Summary_Calls_Info_Element" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Группа из двух параметров или групп, объедененных логическим выражением. Второй аргумент в логической операции текущего уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="S_PR" type="HAS_Parameter_Summary_Calls_Info" nillable="false">
+					<xs:annotation>
+						<xs:documentation>Одиночный параметр. Второй аргумент логического выражения данного уровня</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="F_TP" type="ElementType" use="required">
+			<xs:annotation>
+				<xs:documentation>Вид первого аргумента в выражении - групповой или одинарный</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OP" type="Operation" use="required">
+			<xs:annotation>
+				<xs:documentation>Операция над аргументами данного выражения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="S_TP" type="ElementType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Вид первого аргумента в выражении - групповой, одинарный или отсутствует</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Cards_BySubscribersInfo">
+		<xs:annotation>
+			<xs:documentation>запрос по описанию абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ROOT" type="HAS_Parameters_SubsInfo_Element" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Условие поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Cards_BySubscribers">
+		<xs:annotation>
+			<xs:documentation>запрос по объединенному поиску абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ROOT" type="HAS_Parameters_Subscriber_Element" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Условие поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ALL_SUBS" type="NumValueParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Связывать ли клиента со всеми возможными вариантами абонента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Cards_BySubscribersIdentifiers">
+		<xs:annotation>
+			<xs:documentation>запрос по идентификатору абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ROOT" type="HAS_Parameters_Identifier_Element" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Условие поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. При пустом начальном или конечном - поиск происходит на указанную дату, при обоих пустых - текущая дата???</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Fillup_BySubscribersIdentifiers">
+		<xs:annotation>
+			<xs:documentation>запрос по идентификатору абонента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ROOT" type="HAS_Parameters_Identifier_Element" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Условие поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. При пустом начальном или конечном - поиск происходит на указанную дату, при обоих пустых - текущая дата???</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Traff_Calls">
+		<xs:annotation>
+			<xs:documentation>запрос по трафику</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RTP" type="TrafRequestType" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Тип запроса трафика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ROOT" type="HAS_Parameter_Summary_Traff_Info_Element" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Условие поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Summary_Calls">
+		<xs:annotation>
+			<xs:documentation>запрос по соединениям</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RTP" type="RequestType" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Тип запроса соединений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ROOT" type="HAS_Parameter_Summary_Calls_Info_Element" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Условие поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="F_ETPS" type="HAS_EVNT_TPS" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ФИЛЬТР - типы соединений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="F_DUR" type="HAS_Duration_Parameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ФИЛЬТР - продолжительность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="STAT" type="NumValueParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак рассчета статистики</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="F_PREFIX" type="HAS_MsisdnLocation_Filter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фильтр по типу префикса телефона</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Summary_Edges">
+		<xs:annotation>
+			<xs:documentation>запрос по связям</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="F_ETPS" type="HAS_EVNT_TPS" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ФИЛЬТР - типы соединений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="msisdn2" type="StringValueParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MSISDN второй стороны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DEPTH" type="NumValueParameter">
+				<xs:annotation>
+					<xs:documentation>Глубина, на которую необходимо построить связи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LIM" type="HAS_Parameter_EdgesLimit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Набор ограничений на  количество соединений </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="N_CLS" type="NumValueParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Необходимость выдавать данные о соединениях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="msisdn" type="StringValueParameter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>MSISDN для котоого ищутся связи</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="imsi" type="StringValueParameter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>IMSI для которого ищется связи</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="imei" type="StringValueParameter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>IMEI для которого ищется связи</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="F_PREFIX" type="HAS_MsisdnLocation_Filter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фильтр по префиксу телефона</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="N_SRV" type="NumValueParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Необходимость выдавать сервисные номера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="F_PHNS" type="HAS_List_Parameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Список телефонов, котрые надо исключить из поиска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NEED_CALLS" type="NumValueParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>НЕ ИСПОЛЬЗОВАТЬ! Ytj,[jlbvjcnm dslfdfnm lfyyst j cjtlbytybz[</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Summary_Change">
+		<xs:annotation>
+			<xs:documentation>запрос по изменениям</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PERIOD" type="HAS_FindRange" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Временной период условия поиска. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TELCOS" type="HAS_TELCOS" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ОС, к данным по которому применяются условия запроса. Обязательный аргумент!</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="msisdn" type="StringValueParameter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>MSISDN для котоого ищутся изменения</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="imsi" type="StringValueParameter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>IMSI для которого ищется изменени </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="imei" type="StringValueParameter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>IMEI для которого ищется изменение</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAS_Request_Summary_DRCT_CNTRL">
+		<xs:annotation>
+			<xs:documentation>Запрос по управлению критериями прямого контроля</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="ALL_RULES" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наличие ноды - признак обновления всех критериев прямого контроля</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RULE_ID" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор критерия прямого контроля, который надо синхронизировать</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="REQ_IDENT" type="HAS_Request_Cards_BySubscribersInfo" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по идентификаторам</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_CARDS" type="HAS_Request_Cards_BySubscribersIdentifiers" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по абонентам</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_SUBS" type="HAS_Request_Cards_BySubscribers" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по абонентам_объединенный поиск</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_PAYMENTS" type="HAS_Request_Cards_BySubscribersIdentifiers" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по абонентам</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_CALLS" type="HAS_Request_Summary_Calls">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по соединениям</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_IPTRAF" type="HAS_Request_Traff_Calls">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по ip трафику для MDX</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_EDGS" type="HAS_Request_Summary_Edges">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по связям</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="REQ_CHNG" type="HAS_Request_Summary_Change">
+		<xs:annotation>
+			<xs:documentation>Экземпляр запроса, запрос по изменениям</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SEARCH_ROOT">
+		<xs:annotation>
+			<xs:documentation>Корневая вершина поиска (для JAXB)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="REQ_CALLS"/>
+				<xs:element ref="REQ_CARDS"/>
+				<xs:element ref="REQ_IDENT"/>
+				<xs:element ref="REQ_IPTRAF"/>
+				<xs:element ref="REQ_PAYMENTS"/>
+				<xs:element ref="REQ_EDGS"/>
+				<xs:element name="RULE_MESSAGE" type="HAS_Request_Summary_DRCT_CNTRL">
+					<xs:annotation>
+						<xs:documentation>Экземпляр запроса, запрос на синхронизацию критериев прямого контроля</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="REQ_CHNG"/>
+				<xs:element ref="REQ_SUBS"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

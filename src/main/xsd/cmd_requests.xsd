@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 U (http://www.altova.com) by m (m) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="DataSource_KillTaskParameter">
+		<xs:annotation>
+			<xs:documentation>Параметр источник данных для удаляемых заданий</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SRC_TASK" type="xs:unsignedInt" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="ID" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>строковое значение для сравнения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="RqsTaskNode">
+		<xs:annotation>
+			<xs:documentation>Команда, выполняемая над заданием</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DATA_SOURCE" type="DataSource_KillTaskParameter" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RQS_TASK" type="RqsTaskNode" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Команда, выполняемая над заданием</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CMD_STOP_TASK">
+		<xs:annotation>
+			<xs:documentation>Корневая вершина команды на удаление задания</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="RQS_TASK"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
