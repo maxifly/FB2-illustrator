@@ -29,6 +29,10 @@ public class App {
         bookParse.setBookFile(path);
         bookParse.setOutpootBook(pathOut);
         bookParse.parse();
+
+        bookParse.setBookFile(FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
+        bookParse.setOutpootBook(FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
+        bookParse.parse();
     }
 
      private void shutdown() {
