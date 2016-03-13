@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>1.5</version>
+                <version>2.2</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
@@ -43,12 +43,20 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <!--<verbose>true</verbose>-->
                     <packageName>com.kuku.fb2_illustrator.fb2_xml.model</packageName>
+                    <!--http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/xjc-mojo.html#target-->
+                    <sources>
+                        <source>${project.basedir}/src/main/xsd/FictionBook_20.xsd</source>
+                    </sources>
 
+                    <xjbSources>
+                        <xjbSource>${project.basedir}/src/main/xsj/bindings.xsj</xjbSource>
+                    </xjbSources>
                     <!--<bindingDirectory>${jaxbSchemaDirectory}</bindingDirectory>-->
-                    <bindingFiles>bindings.xsd</bindingFiles>
+                    <!--<bindingFiles>bindings.xsj</bindingFiles>-->
                     <!-- The name of your generated source package -->
-                    <schemaFiles>FictionBook_20.xsd</schemaFiles>
+                    <!--<schemaFiles>FictionBook_20.xsd</schemaFiles>-->
                     <!--<schemaFiles>has_search_request.xsd,cmd_requests.xsd,FictionBook.xsd,FictionBookGenres.xsd,FictionBookLang.xsd,FictionBookLinks.xsd</schemaFiles>-->
 
                 </configuration>

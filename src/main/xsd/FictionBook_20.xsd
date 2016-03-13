@@ -421,14 +421,14 @@
           </xs:element>
         </xs:sequence>
         <xs:sequence>
-          <xs:choice>
-            <xs:element name="p" type="pType"/>
-            <xs:element name="poem" type="poemType"/>
-            <xs:element name="subtitle" type="pType"/>
-            <xs:element name="cite" type="citeType"/>
-            <xs:element name="empty-line"/>
-            <xs:element name="table" type="tableType"/>
-          </xs:choice>
+          <!--<xs:choice>-->
+            <!--<xs:element name="p" type="pType"/>-->
+            <!--<xs:element name="poem" type="poemType"/>-->
+            <!--<xs:element name="subtitle" type="pType"/>-->
+            <!--<xs:element name="cite" type="citeType"/>-->
+            <!--<xs:element name="empty-line"/>-->
+            <!--<xs:element name="table" type="tableType"/>-->
+          <!--</xs:choice>-->
           <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="p" type="pType"/>
             <xs:element name="image" type="imageType"/>

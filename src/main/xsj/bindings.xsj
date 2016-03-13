@@ -14,5 +14,13 @@
       </bindings>
     </bindings>
 
+<!--
+    <bindings node="//xsd:complexType[@name='sectionType']">
+        <bindings node=".//xsd:choice/xsd:element[@name='image']">
+          <property name="Ikukukuku"/>
+        </bindings>
+    </bindings>
+-->
+
   </bindings>
 </bindings>
