@@ -6,6 +6,8 @@ import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutionException;
 
 public class App {
@@ -20,6 +22,15 @@ public class App {
         Runtime.getRuntime().addShutdownHook(appShutdownHook);
     }
 
+    public void run() throws Exception {
+        BookParse bookParse = new BookParse();
+        Path path = FileSystems.getDefault().getPath("priv_fales", "test.fb2");
+        Path pathOut = FileSystems.getDefault().getPath("priv_fales", "test_out.fb2");
+        bookParse.setBookFile(path);
+        bookParse.setOutpootBook(pathOut);
+        bookParse.parse();
+    }
+
      private void shutdown() {
         log.info("SHUTDOWN_NOW");
 
@@ -28,9 +39,10 @@ public class App {
 
 
 
-    public static void main(String[] params) throws ExecutionException, InterruptedException, CloneNotSupportedException {
+    public static void main(String[] params) throws Exception {
 
         App app = new App();
+        app.run();
 
     }
 
