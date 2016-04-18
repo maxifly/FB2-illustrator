@@ -43,6 +43,9 @@ public class BookParse {
 
         FictionBook fictionBook = (FictionBook) unmarshaller.unmarshal(this.BookFile.toFile());
 
+        ParagrafSearcher ps = new ParagrafSearcher();
+        ps.search(fictionBook);
+
  int i = 1;
 
         Marshaller marshaller = jc.createMarshaller();
