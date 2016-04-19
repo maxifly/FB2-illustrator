@@ -19,4 +19,7 @@ public class Paragrafs {
         numByParagraf.put(index,paragraf);
     }
 
+    public Integer getParagrafNumber(Object paragraf) {
+       return paragrafByNum.get(paragraf);
+    }
 }
