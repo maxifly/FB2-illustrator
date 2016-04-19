@@ -2,6 +2,7 @@ package com.kuku.fb2_illustrator.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -12,6 +13,10 @@ public class Paragrafs {
     private Map<Integer,Object> numByParagraf = new HashMap<>();
     private Integer index = 0;
 
-//    addParagraf()
+    public void addParagraf(Object paragraf) {
+      this.index ++;
+       paragrafByNum.put(paragraf,index);
+        numByParagraf.put(index,paragraf);
+    }
 
 }

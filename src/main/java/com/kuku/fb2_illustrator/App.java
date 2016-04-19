@@ -24,11 +24,11 @@ public class App {
 
     public void run() throws Exception {
         BookParse bookParse = new BookParse();
-        Path path = FileSystems.getDefault().getPath("priv_fales", "test.fb2");
-        Path pathOut = FileSystems.getDefault().getPath("priv_fales", "test_out.fb2");
-        bookParse.setBookFile(path);
-        bookParse.setOutpootBook(pathOut);
-        bookParse.parse();
+//        Path path = FileSystems.getDefault().getPath("priv_fales", "test.fb2");
+//        Path pathOut = FileSystems.getDefault().getPath("priv_fales", "test_out.fb2");
+//        bookParse.setBookFile(path);
+//        bookParse.setOutpootBook(pathOut);
+//        bookParse.parse();
 
         bookParse.setBookFile(FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
         bookParse.setOutpootBook(FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
