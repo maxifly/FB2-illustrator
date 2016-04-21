@@ -25,4 +25,11 @@ public class Illustration {
     }
 
 
+    public String getFile() {
+        return file;
+    }
+
+    public String getDescriopion() {
+        return descriopion;
+    }
 }

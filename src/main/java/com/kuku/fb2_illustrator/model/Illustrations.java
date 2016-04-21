@@ -20,12 +20,12 @@ public class Illustrations {
     private static LocLogger log = (new LocLoggerFactory(mc))
             .getLocLogger(BookParse.class.getName());
 
-    private Vector<Illustration> allIllustrations = new Vector<>();
+    private ArrayList<Illustration> allIllustrations = new ArrayList<>();
     private Map<PType, Set<Illustration>> illustratedParagrafs = new HashMap<>();
     private Map<Illustration, PType> chineIllustrations = new HashMap<>();
 
     private Set<Integer> chinedIllustrationIndexes = new TreeSet<>();
-    private int lastChainIllustration = 0;
+    private int lastChainIllustration = -1;
 
 
     public void addIllustration(Illustration illustration) {
@@ -43,7 +43,8 @@ public class Illustrations {
 
         Set<Illustration> illSet = illustratedParagrafs.get(paragraf);
         if (illSet == null) {
-            illustratedParagrafs.put(paragraf, new LinkedHashSet<Illustration>());
+            illSet = new LinkedHashSet<Illustration>();
+            illustratedParagrafs.put(paragraf, illSet );
         }
 
         if (illSet.add(illustration)) {
@@ -66,9 +67,9 @@ public class Illustrations {
      */
     public Iterator<Illustration> getNotChained() {
         if (this.allIllustrations.size() > lastChainIllustration + 1) {
-            return this.allIllustrations.listIterator(this.lastChainIllustration);
+            return this.allIllustrations.listIterator(this.lastChainIllustration+1);
         } else {
-            return (new Vector<Illustration>()).iterator();
+            return (new ArrayList<Illustration>()).iterator();
         }
     }
 
