@@ -60,6 +60,29 @@ public class Illustrations {
     }
 
     /**
+     * Определяет иллюстрирован объект или нет
+     * @param paragraf - объект текста
+     * @return иллюстрирован или нет
+     */
+    public boolean isIllustrated(Object paragraf) {
+        return illustratedParagrafs.containsKey(paragraf);
+    }
+
+    /**
+     * Возвращает итератор на иллюстрации к параграфу
+     * @param paragraf параграф
+     * @return итератор на иллюстрации
+     */
+    public Iterator<Illustration> getIllustrations(Object paragraf) {
+        Set<Illustration> illSet = illustratedParagrafs.get(paragraf);
+        if (illSet == null) {
+            illSet = new HashSet<>();
+        }
+        return illSet.iterator();
+
+    }
+
+    /**
      * Возвращает итератор на список несвязанных иллюстраций,
      * следующих за последней связанной иллюстрацией
      *
@@ -107,6 +130,8 @@ public class Illustrations {
         if (endIndex > startIndex + 1) {
             // Есть промежуток
             // Определим стартовый и конечный номера параграфов
+
+            // TODO Если ни одна из иллюстраций из границ окна ни с кем не связана (последнее окно или единственное окно), то параграфы должны быть первым и последним среди всех существующих параграфов
             startParagraf =
                     paragrafs.getParagrafNumber(
                             chineIllustrations.get(allIllustrations.get(startIndex)));

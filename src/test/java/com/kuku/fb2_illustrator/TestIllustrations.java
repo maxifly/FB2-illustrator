@@ -78,4 +78,51 @@ public class TestIllustrations {
         assertEquals(0,i);
 
     }
+
+    @Test
+    public void twoIllustration() {
+        PType paragraf = new PType();
+
+        int i = 0;
+        Iterator<Illustration> illIter = illustrations.getIllustrations(paragraf);
+        assertEquals(false,illIter.hasNext());
+        assertEquals(false,illustrations.isIllustrated(paragraf));
+
+        illustrations.illustratedParagraf(paragraf,ill2);
+        illustrations.illustratedParagraf(paragraf,ill2);
+        illustrations.illustratedParagraf(paragraf,ill1);
+
+         i = 0;
+         illIter = illustrations.getIllustrations(paragraf);
+        assertEquals(true,illustrations.isIllustrated(paragraf));
+        ArrayList<Illustration> illArray = new ArrayList();
+        while (illIter.hasNext()) {
+            Illustration ill = illIter.next();
+            illArray.add(i,ill);
+            i ++;
+        }
+
+        assertEquals(2,i);
+        assertEquals(ill2,illArray.get(0));
+        assertEquals(ill1,illArray.get(1));
+    }
+
+
+    @Test
+    public  void chineNotChined() {
+        Paragrafs paragrafs = new Paragrafs();
+        PType[] pTypes = new  PType[7];
+
+        for (int i = 0; i<=6 ; i++ ) {
+            pTypes[i] = new PType();
+            paragrafs.addParagraf(pTypes[i]);
+        }
+
+        illustrations.illustratedParagraf(pTypes[1], ill1);
+        illustrations.chineByOrder(paragrafs);
+
+        assertEquals(true,illustrations.isIllustrated(pTypes[3]));
+        assertEquals(true,illustrations.isIllustrated(pTypes[5]));
+    }
+
 }
