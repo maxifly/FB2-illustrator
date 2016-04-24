@@ -3,6 +3,7 @@ package com.kuku.fb2_illustrator;
 import com.kuku.fb2_illustrator.fb2_xml.model.PType;
 import com.kuku.fb2_illustrator.model.Illustration;
 import com.kuku.fb2_illustrator.model.Illustrations;
+import com.kuku.fb2_illustrator.model.Paragraf;
 import com.kuku.fb2_illustrator.model.Paragrafs;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,7 +52,7 @@ public class TestIllustrations {
 
     @Test
     public  void chined2() {
-        illustrations.illustratedParagraf(new PType(),ill2);
+        illustrations.illustratedParagraf(new Paragraf(),ill2);
         Iterator<Illustration> iterator = illustrations.getNotChained();
         ArrayList illArray = new ArrayList();
         int i = 0;
@@ -66,7 +67,7 @@ public class TestIllustrations {
 
     @Test
     public  void chinedLast() {
-        illustrations.illustratedParagraf(new PType(),ill3);
+        illustrations.illustratedParagraf(new Paragraf(),ill3);
         Iterator<Illustration> iterator = illustrations.getNotChained();
         ArrayList illArray = new ArrayList();
         int i = 0;
@@ -81,7 +82,7 @@ public class TestIllustrations {
 
     @Test
     public void twoIllustration() {
-        PType paragraf = new PType();
+        Paragraf paragraf = new Paragraf();
 
         int i = 0;
         Iterator<Illustration> illIter = illustrations.getIllustrations(paragraf);
@@ -111,18 +112,18 @@ public class TestIllustrations {
     @Test
     public  void chineNotChined() {
         Paragrafs paragrafs = new Paragrafs();
-        PType[] pTypes = new  PType[7];
+        Paragraf[] paragraf = new  Paragraf[7];
 
         for (int i = 0; i<=6 ; i++ ) {
-            pTypes[i] = new PType();
-            paragrafs.addParagraf(pTypes[i]);
+            paragraf[i] = new Paragraf();
+            paragrafs.addParagraf(paragraf[i]);
         }
 
-        illustrations.illustratedParagraf(pTypes[1], ill1);
+        illustrations.illustratedParagraf(paragraf[1], ill1);
         illustrations.chineByOrder(paragrafs);
 
-        assertEquals(true,illustrations.isIllustrated(pTypes[3]));
-        assertEquals(true,illustrations.isIllustrated(pTypes[5]));
+        assertEquals(true,illustrations.isIllustrated(paragraf[3]));
+        assertEquals(true,illustrations.isIllustrated(paragraf[5]));
     }
 
 }

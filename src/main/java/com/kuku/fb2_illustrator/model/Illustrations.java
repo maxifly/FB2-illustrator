@@ -4,7 +4,7 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.kuku.fb2_illustrator.BookParse;
 import com.kuku.fb2_illustrator.Constants;
-import com.kuku.fb2_illustrator.fb2_xml.model.PType;
+//import com.kuku.fb2_illustrator.fb2_xml.model.PType;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -21,8 +21,8 @@ public class Illustrations {
             .getLocLogger(BookParse.class.getName());
 
     private ArrayList<Illustration> allIllustrations = new ArrayList<>();
-    private Map<PType, Set<Illustration>> illustratedParagrafs = new HashMap<>();
-    private Map<Illustration, PType> chineIllustrations = new HashMap<>();
+    private Map<Paragraf, Set<Illustration>> illustratedParagrafs = new HashMap<>();
+    private Map<Illustration, Paragraf> chineIllustrations = new HashMap<>();
 
     private Set<Integer> chinedIllustrationIndexes = new TreeSet<>();
     private int lastChainIllustration = -1;
@@ -38,7 +38,7 @@ public class Illustrations {
      * @param paragraf     - параграф
      * @param illustration - иллюстрация
      */
-    public void illustratedParagraf(PType paragraf, Illustration illustration) {
+    public void illustratedParagraf(Paragraf paragraf, Illustration illustration) {
         int illIndex = this.allIllustrations.indexOf(illustration);
 
         Set<Illustration> illSet = illustratedParagrafs.get(paragraf);
@@ -64,7 +64,7 @@ public class Illustrations {
      * @param paragraf - объект текста
      * @return иллюстрирован или нет
      */
-    public boolean isIllustrated(Object paragraf) {
+    public boolean isIllustrated(Paragraf paragraf) {
         return illustratedParagrafs.containsKey(paragraf);
     }
 
@@ -73,7 +73,7 @@ public class Illustrations {
      * @param paragraf параграф
      * @return итератор на иллюстрации
      */
-    public Iterator<Illustration> getIllustrations(Object paragraf) {
+    public Iterator<Illustration> getIllustrations(Paragraf paragraf) {
         Set<Illustration> illSet = illustratedParagrafs.get(paragraf);
         if (illSet == null) {
             illSet = new HashSet<>();

@@ -5,6 +5,7 @@ import ch.qos.cal10n.MessageConveyor;
 import com.kuku.fb2_illustrator.fb2_xml.model.FictionBook;
 import com.kuku.fb2_illustrator.fb2_xml.model.PType;
 import com.kuku.fb2_illustrator.fb2_xml.model.SectionType;
+import com.kuku.fb2_illustrator.model.Paragraf;
 import com.kuku.fb2_illustrator.model.Paragrafs;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -67,10 +68,11 @@ public class ParagrafSearcher {
    }
 
 
-   private void paragrafParser(JAXBElement<PType> paragraf) {
-       this.paragrafs.addParagraf(paragraf);
+   private void paragrafParser(JAXBElement<PType> pType) {
 
-       for (Object element : paragraf.getValue().getContent()) {
+       this.paragrafs.addParagraf(new Paragraf((pType)));
+
+       for (Object element : pType.getValue().getContent()) {
 
            if ( element instanceof String ) {
                // Отлично. Это строка. Проверим, что она подходит под одну из новых иллюстраций
