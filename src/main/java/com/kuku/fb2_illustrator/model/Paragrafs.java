@@ -14,12 +14,20 @@ public class Paragrafs {
     private Integer index = 0;
 
     public void addParagraf(Paragraf paragraf) {
-      this.index ++;
        paragrafByNum.put(paragraf,index);
-        numByParagraf.put(index,paragraf);
+       numByParagraf.put(index,paragraf);
+       this.index ++;
     }
 
     public Integer getParagrafNumber(Paragraf paragraf) {
        return paragrafByNum.get(paragraf);
+    }
+
+    public Integer getSize() {
+        return index;
+    }
+
+    public Paragraf getParagraf(Integer index) {
+        return numByParagraf.get(index);
     }
 }

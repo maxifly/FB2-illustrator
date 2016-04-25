@@ -18,13 +18,13 @@ public class Illustrations {
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
     private static LocLogger log = (new LocLoggerFactory(mc))
-            .getLocLogger(BookParse.class.getName());
+            .getLocLogger(Illustrations.class.getName());
 
     private ArrayList<Illustration> allIllustrations = new ArrayList<>();
     private Map<Paragraf, Set<Illustration>> illustratedParagrafs = new HashMap<>();
     private Map<Illustration, Paragraf> chineIllustrations = new HashMap<>();
 
-    private Set<Integer> chinedIllustrationIndexes = new TreeSet<>();
+    private Set<Integer> chinedIllustrationIndexes = new TreeSet<>(); // Номера иллюстраций, уже связанных с кем нибудь
     private int lastChainIllustration = -1;
 
 
@@ -44,11 +44,11 @@ public class Illustrations {
         Set<Illustration> illSet = illustratedParagrafs.get(paragraf);
         if (illSet == null) {
             illSet = new LinkedHashSet<Illustration>();
-            illustratedParagrafs.put(paragraf, illSet );
+            illustratedParagrafs.put(paragraf, illSet);
         }
 
         if (illSet.add(illustration)) {
-            log.debug("Chine illustration " + illustration + " with paragraf.");
+            log.info("Chine illustration " + illustration + " with paragraf.");
         } else {
             log.warn("Illustration " + illustration + " already chined with paragraf.");
         }
@@ -61,6 +61,7 @@ public class Illustrations {
 
     /**
      * Определяет иллюстрирован объект или нет
+     *
      * @param paragraf - объект текста
      * @return иллюстрирован или нет
      */
@@ -70,6 +71,7 @@ public class Illustrations {
 
     /**
      * Возвращает итератор на иллюстрации к параграфу
+     *
      * @param paragraf параграф
      * @return итератор на иллюстрации
      */
@@ -90,7 +92,7 @@ public class Illustrations {
      */
     public Iterator<Illustration> getNotChained() {
         if (this.allIllustrations.size() > lastChainIllustration + 1) {
-            return this.allIllustrations.listIterator(this.lastChainIllustration+1);
+            return this.allIllustrations.listIterator(this.lastChainIllustration + 1);
         } else {
             return (new ArrayList<Illustration>()).iterator();
         }
@@ -104,7 +106,7 @@ public class Illustrations {
     public void chineByOrder(Paragrafs paragrafs) {
         Iterator<Integer> chined = chinedIllustrationIndexes.iterator();
         Integer startIndex = 0, endIndex = 0;
-        Map<Integer, Integer> ill_par_chain = new HashMap<>();
+        ArrayList<ParIll> ill_par_chain = new ArrayList<>();
 
         while (chined.hasNext()) {
             // Переходим к следующему окну
@@ -117,15 +119,28 @@ public class Illustrations {
         startIndex = endIndex;
         endIndex = allIllustrations.size() - 1;
         addNotChined(startIndex, endIndex, paragrafs, ill_par_chain);
+
+        // Все иллюстрации распределили. Теперь свяжем.
+        Iterator<ParIll> parIllIterator = ill_par_chain.iterator();
+        while (parIllIterator.hasNext()) {
+            ParIll parIll = parIllIterator.next();
+            this.illustratedParagraf(paragrafs.getParagraf(parIll.paragraf_index), allIllustrations.get(parIll.ill_index));
+
+        }
+
     }
 
 
     public void addNotChined(Integer startIndex,
                              Integer endIndex,
                              Paragrafs paragrafs,
-                             Map<Integer, Integer> ill_par_chain) {
+                             ArrayList<ParIll> ill_par_chain) {
 
         Integer startParagraf, endParagraf;
+        Integer startUnchinedIll, endUnchinedIll;
+
+
+        log.debug("startIndex:{} endIndex:{}", startIndex, endIndex);
 
         if (endIndex > startIndex + 1) {
             // Есть промежуток
@@ -135,29 +150,58 @@ public class Illustrations {
             startParagraf =
                     paragrafs.getParagrafNumber(
                             chineIllustrations.get(allIllustrations.get(startIndex)));
+            if (startParagraf == null) {
+                startParagraf = 0;
+                startUnchinedIll = startIndex;
+            } else {
+                startUnchinedIll = startIndex + 1;
+            }
+
+
             endParagraf =
                     paragrafs.getParagrafNumber(
                             chineIllustrations.get(allIllustrations.get(endIndex)));
 
-            log.debug("Start paragraf " + startParagraf + " endParagraf " + endParagraf);
+            if (endParagraf == null) {
+                endParagraf = paragrafs.getSize();
+                endUnchinedIll = endIndex;
+            } else {
+                endUnchinedIll = endIndex - 1;
+            }
 
-            int notChinedIll = endIndex - startIndex; // Сколько не связано иллюстраций
-            int step = ((endParagraf - startParagraf) / notChinedIll) + 1;
+            log.debug("Start paragraf {} endParagraf {}, startIll {} endIll {}", startParagraf, endParagraf, startUnchinedIll, endUnchinedIll);
+
+
+            int notChinedIll = endUnchinedIll - startUnchinedIll + 1; // Сколько не связано иллюстраций
+            int step = ((endParagraf - startParagraf) / (notChinedIll + 1));
+            if (step == 0) {
+                step = 1;
+            }
 
             log.debug("notChinedIll " + notChinedIll + " step " + step);
 
             // теперь начинаем связывать
 
             int chinedParagraf = startParagraf;
-            for (int i = (startIndex + 1); i < endIndex; i++) {
+            for (int i = startUnchinedIll; i <= endUnchinedIll; i++) {
                 chinedParagraf += step;
                 if (chinedParagraf > endParagraf) chinedParagraf = endParagraf;
-                ill_par_chain.put(i, chinedParagraf);
-                log.info("Not chined illustration number " + i + " chine with paragraf");
+                ill_par_chain.add(new ParIll(chinedParagraf, i));
+                log.info("Not chined illustration number " + i + " chine with paragraf number " + chinedParagraf);
             }
 
         }
 
     }
 
+
+    private class ParIll {
+        Integer paragraf_index;
+        Integer ill_index;
+
+        public ParIll(Integer paragraf_index, Integer ill_index) {
+            this.paragraf_index = paragraf_index;
+            this.ill_index = ill_index;
+        }
+    }
 }

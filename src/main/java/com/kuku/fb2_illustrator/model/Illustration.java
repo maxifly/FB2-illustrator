@@ -32,4 +32,12 @@ public class Illustration {
     public String getDescriopion() {
         return descriopion;
     }
+
+
+    @Override
+    public String toString() {
+        return "Illustration{" +
+                "descriopion='" + descriopion + '\'' +
+                '}';
+    }
 }

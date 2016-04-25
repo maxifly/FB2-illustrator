@@ -122,8 +122,8 @@ public class TestIllustrations {
         illustrations.illustratedParagraf(paragraf[1], ill1);
         illustrations.chineByOrder(paragrafs);
 
-        assertEquals(true,illustrations.isIllustrated(paragraf[3]));
-        assertEquals(true,illustrations.isIllustrated(paragraf[5]));
+        assertEquals("Illustrated paragraf 3", true,illustrations.isIllustrated(paragraf[3]));
+        assertEquals("Illustrated paragraf 5",true,illustrations.isIllustrated(paragraf[5]));
     }
 
 }
