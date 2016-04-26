@@ -2,6 +2,8 @@ package com.kuku.fb2_illustrator;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
+import com.kuku.fb2_illustrator.model.Illustration;
+import com.kuku.fb2_illustrator.model.Illustrations;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -32,7 +34,14 @@ public class App {
 
         bookParse.setBookFile(FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
         bookParse.setOutpootBook(FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
-        bookParse.parse();
+
+        Illustrations illustrations = new Illustrations();
+
+        illustrations.addIllustration(new Illustration("file1","Частное, пренебрегая деталями"));
+        illustrations.addIllustration(new Illustration("file2","НеРеальность"));
+        illustrations.addIllustration(new Illustration("file3","трансформирует"));
+
+        bookParse.parse(illustrations);
     }
 
      private void shutdown() {

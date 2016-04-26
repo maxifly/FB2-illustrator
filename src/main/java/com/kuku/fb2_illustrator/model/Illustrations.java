@@ -23,6 +23,7 @@ public class Illustrations {
     private ArrayList<Illustration> allIllustrations = new ArrayList<>();
     private Map<Paragraf, Set<Illustration>> illustratedParagrafs = new HashMap<>();
     private Map<Illustration, Paragraf> chineIllustrations = new HashMap<>();
+    private Set<Illustration> notChinedIllustrations = new HashSet<>();
 
     private Set<Integer> chinedIllustrationIndexes = new TreeSet<>(); // Номера иллюстраций, уже связанных с кем нибудь
     private int lastChainIllustration = -1;
@@ -30,6 +31,7 @@ public class Illustrations {
 
     public void addIllustration(Illustration illustration) {
         allIllustrations.add(illustration);
+        notChinedIllustrations.add(illustration);
     }
 
     /**
@@ -48,13 +50,14 @@ public class Illustrations {
         }
 
         if (illSet.add(illustration)) {
-            log.info("Chine illustration " + illustration + " with paragraf.");
+            log.info("Chine illustration {} with paragraf (index: {}).",illustration, paragraf.getIndexInParagrafs());
         } else {
-            log.warn("Illustration " + illustration + " already chined with paragraf.");
+            log.warn("Illustration {} already chined with paragraf (index: {}).",illustration,paragraf);
         }
 
         chineIllustrations.put(illustration, paragraf);
         this.chinedIllustrationIndexes.add(illIndex);
+        this.notChinedIllustrations.remove(illustration);
         if (illIndex > lastChainIllustration) this.lastChainIllustration = illIndex;
 
     }
@@ -105,7 +108,7 @@ public class Illustrations {
      */
     public void chineByOrder(Paragrafs paragrafs) {
         Iterator<Integer> chined = chinedIllustrationIndexes.iterator();
-        Integer startIndex = 0, endIndex = 0;
+        Integer startIndex, endIndex = 0;
         ArrayList<ParIll> ill_par_chain = new ArrayList<>();
 
         while (chined.hasNext()) {
@@ -146,7 +149,6 @@ public class Illustrations {
             // Есть промежуток
             // Определим стартовый и конечный номера параграфов
 
-            // TODO Если ни одна из иллюстраций из границ окна ни с кем не связана (последнее окно или единственное окно), то параграфы должны быть первым и последним среди всех существующих параграфов
             startParagraf =
                     paragrafs.getParagrafNumber(
                             chineIllustrations.get(allIllustrations.get(startIndex)));

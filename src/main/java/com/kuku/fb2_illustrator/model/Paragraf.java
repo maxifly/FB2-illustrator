@@ -9,11 +9,20 @@ import javax.xml.bind.JAXBElement;
  */
 public class Paragraf {
     private JAXBElement<PType> pType;
+    private int indexInParagrafs;
 
     public Paragraf(JAXBElement<PType> pType) {
         this.pType = pType;
     }
 
     public Paragraf() {
+    }
+
+    public void setIndexInParagrafs(int indexInParagrafs) {
+        this.indexInParagrafs = indexInParagrafs;
+    }
+
+    public int getIndexInParagrafs() {
+        return indexInParagrafs;
     }
 }

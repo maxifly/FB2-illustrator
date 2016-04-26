@@ -16,6 +16,7 @@ public class Paragrafs {
     public void addParagraf(Paragraf paragraf) {
        paragrafByNum.put(paragraf,index);
        numByParagraf.put(index,paragraf);
+       paragraf.setIndexInParagrafs(index);
        this.index ++;
     }
 

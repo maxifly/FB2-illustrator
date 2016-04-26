@@ -3,6 +3,8 @@ package com.kuku.fb2_illustrator;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.kuku.fb2_illustrator.fb2_xml.model.FictionBook;
+import com.kuku.fb2_illustrator.model.Illustration;
+import com.kuku.fb2_illustrator.model.Illustrations;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -32,7 +34,7 @@ public class BookParse {
     }
 
 
-    public void parse() throws Exception {
+    public void parse(Illustrations illustrations) throws Exception {
 
         log.debug("Book XML " + this.BookFile);
 
@@ -44,7 +46,7 @@ public class BookParse {
         FictionBook fictionBook = (FictionBook) unmarshaller.unmarshal(this.BookFile.toFile());
 
         ParagrafSearcher ps = new ParagrafSearcher();
-        ps.search(fictionBook);
+        ps.search(fictionBook, illustrations);
 
  int i = 1;
 
