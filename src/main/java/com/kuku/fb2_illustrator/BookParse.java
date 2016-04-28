@@ -5,6 +5,7 @@ import ch.qos.cal10n.MessageConveyor;
 import com.kuku.fb2_illustrator.fb2_xml.model.FictionBook;
 import com.kuku.fb2_illustrator.model.Illustration;
 import com.kuku.fb2_illustrator.model.Illustrations;
+import com.kuku.fb2_illustrator.model.Paragrafs;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -45,8 +46,15 @@ public class BookParse {
 
         FictionBook fictionBook = (FictionBook) unmarshaller.unmarshal(this.BookFile.toFile());
 
+        // Поищем иллюстрации
+
         ParagrafSearcher ps = new ParagrafSearcher();
-        ps.search(fictionBook, illustrations);
+        Paragrafs paragrafs = new Paragrafs();
+        ps.search(fictionBook, illustrations, paragrafs);
+
+        // Теперь вставим иллюстрации в книгу
+
+
 
  int i = 1;
 
