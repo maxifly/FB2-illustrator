@@ -54,9 +54,11 @@ public class BookParse {
 
         // Теперь вставим иллюстрации в книгу
 
-
+        ps.process(fictionBook, illustrations, paragrafs);
 
  int i = 1;
+
+
 
         Marshaller marshaller = jc.createMarshaller();
         marshaller.marshal(fictionBook, this.outpootBook.toFile());

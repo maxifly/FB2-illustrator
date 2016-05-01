@@ -48,10 +48,19 @@ public class ParagrafSearcher {
         this.paragrafs = paragrafs;
         FictionBook.Body mainBody = fictionBook.getBody().iterator().next();
 
+        ArrayList<SectionType> newSectionList = new ArrayList<>();
+
         for (SectionType section : mainBody.getSection()) {
-            sectionProcessor(section);
+            SectionType newSection = sectionProcessor(section);
+            newSectionList.add(newSection);
         }
-        illustrations.chineByOrder(paragrafs);
+
+        List<SectionType> sectionLists = mainBody.getSection();
+        sectionLists.clear();
+
+        for (SectionType newElement : newSectionList) {
+            sectionLists.add(newElement);
+        }
 
     }
 
@@ -71,14 +80,22 @@ public class ParagrafSearcher {
                 case "SectionType":
                     log.debug("Section");
                     int i = 1;
-                    sectionProcessor(((JAXBElement<SectionType>) element).getValue()); //TODO Понять всеж таки какой тип тут должен быть
+                    SectionType newSectionType = sectionProcessor(((JAXBElement<SectionType>) element).getValue()); //TODO Понять всеж таки какой тип тут должен быть
+                    JAXBElement<SectionType> new_stjxb = objectFactory.createSectionTypeSection(newSectionType);
+                    newSectionObjectsList.add(new_stjxb);
                     break;
                 default:
                     newSectionObjectsList.add(element);
             }
 
         }
-        return null; //TODO
+        List<JAXBElement<?>> newSectionElements = section.getImageOrAnnotationOrSection();
+        newSectionElements.clear();
+        for (JAXBElement<?> newElement : newSectionObjectsList) {
+            newSectionElements.add(newElement);
+        }
+
+        return section; //TODO
     }
 
     private List<JAXBElement<?>> paragrafProcessor(JAXBElement<PType> element) {
@@ -86,7 +103,7 @@ public class ParagrafSearcher {
 
         elements.add(element);
 
-        if (1 = 1) { // TODO Надо как-то понять, что параграф иллюстрирован
+        if (1 == 1) { // TODO Надо как-то понять, что параграф иллюстрирован
             // параграф иллюстрирован
             elements.add(createIllustration());
         }
