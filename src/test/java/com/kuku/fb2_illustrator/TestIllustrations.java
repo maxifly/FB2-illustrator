@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,9 +28,9 @@ public class TestIllustrations {
     @Before
     public void createIllustrations() {
         illustrations = new Illustrations();
-        ill1 = new Illustration("file1", "desc1");
-        ill2 = new Illustration("file2", "desc2");
-        ill3 = new Illustration("file3", "desc3");
+        ill1 = new Illustration("ill_file1", FileSystems.getDefault().getPath("file1"), "desc1");
+        ill2 = new Illustration("ill_file2",FileSystems.getDefault().getPath("file2"), "desc2");
+        ill3 = new Illustration("ill_file3",FileSystems.getDefault().getPath("file3"), "desc3");
         illustrations.addIllustration(ill1);
         illustrations.addIllustration(ill2);
         illustrations.addIllustration(ill3);

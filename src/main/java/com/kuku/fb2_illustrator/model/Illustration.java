@@ -2,16 +2,21 @@ package com.kuku.fb2_illustrator.model;
 
 import com.kuku.fb2_illustrator.fb2_xml.model.PType;
 
+import java.nio.file.Path;
+
 
 /**
  * Created by Maximus on 19.04.2016.
  */
 public class Illustration {
-    private String file;
+    private Path file;
     private String  descriopion;
+    private String  id;
 
-    public Illustration(String file, String descriopion) {
+
+    public Illustration(String id, Path file, String descriopion) {
         this.file = file;
+        this.id = id;
         this.descriopion = descriopion;
     }
 
@@ -25,7 +30,7 @@ public class Illustration {
     }
 
 
-    public String getFile() {
+    public Path getFile() {
         return file;
     }
 
@@ -33,6 +38,9 @@ public class Illustration {
         return descriopion;
     }
 
+    public String getId() {
+        return id;
+    }
 
     @Override
     public String toString() {

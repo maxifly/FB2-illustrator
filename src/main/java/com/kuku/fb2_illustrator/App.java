@@ -37,19 +37,23 @@ public class App {
 
         Illustrations illustrations = new Illustrations();
 
-        illustrations.addIllustration(new Illustration("file1","Частное, пренебрегая деталями"));
-        illustrations.addIllustration(new Illustration("file2","НеРеальность"));
-        illustrations.addIllustration(new Illustration("file3","трансформирует"));
+        illustrations.addIllustration(new Illustration("ill_f1",
+                FileSystems.getDefault().getPath("priv_fales", "afrika_768.jpg"),
+                "Частное, пренебрегая деталями"));
+        illustrations.addIllustration(new Illustration("ill_f2",
+                FileSystems.getDefault().getPath("priv_fales", "afrika_768.jpg"),
+                "НеРеальность"));
+        illustrations.addIllustration(new Illustration("ill_f3",
+                FileSystems.getDefault().getPath("priv_fales", "afrika_768.jpg"),
+                "трансформирует"));
 
         bookParse.parse(illustrations);
     }
 
-     private void shutdown() {
+    private void shutdown() {
         log.info("SHUTDOWN_NOW");
 
     }
-
-
 
 
     public static void main(String[] params) throws Exception {

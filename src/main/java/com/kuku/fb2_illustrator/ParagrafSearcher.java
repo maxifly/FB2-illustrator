@@ -11,11 +11,12 @@ import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import javax.xml.bind.JAXBElement;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  * Created by Maximus on 18.04.2016.
@@ -62,7 +63,47 @@ public class ParagrafSearcher {
             sectionLists.add(newElement);
         }
 
+        addBinarys(fictionBook,illustrations);
+
     }
+
+
+    public void addBinarys(FictionBook fictionBook, Illustrations illustrations) {
+        List<FictionBook.Binary> binaryList = fictionBook.getBinary();
+        for (Illustration ill : illustrations.getAllIllustrations())  {
+            FictionBook.Binary fbBinary = genBinary(ill);
+            if (fbBinary != null) {
+                binaryList.add(fbBinary);
+            }
+        }
+    }
+
+    private FictionBook.Binary genBinary(Illustration ill) {
+        Path path = ill.getFile();
+        try {
+            byte[] data = Files.readAllBytes(path);
+
+            FictionBook.Binary fictionBookBinary = objectFactory.createFictionBookBinary();
+            fictionBookBinary.setValue(data);
+            fictionBookBinary.setId(ill.getId());
+            fictionBookBinary.setContentType("image/jpeg");
+
+            return fictionBookBinary;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("Error when create binary: {}", e);
+            return null;
+        }
+
+
+    }
+
+
+
+
+
+
 
     private SectionType sectionProcessor(SectionType section) {
         ArrayList<JAXBElement<?>> newSectionObjectsList = new ArrayList<>(); // Сюда будем складывать новый список элементов
@@ -118,7 +159,7 @@ public class ParagrafSearcher {
 
         ImageType imageType = objectFactory.createImageType();
         imageType.setAlt("Alt");
-        imageType.setHref("href_href");
+        imageType.setHref("ill_f1");
 
         JAXBElement<ImageType> imageTypeJAXBElement =
                 objectFactory.createStyleTypeImage(imageType);

@@ -29,6 +29,11 @@ public class Illustrations {
     private int lastChainIllustration = -1;
 
 
+
+    public List<Illustration> getAllIllustrations() {
+        return this.allIllustrations;
+    }
+
     public void addIllustration(Illustration illustration) {
         allIllustrations.add(illustration);
         notChinedIllustrations.add(illustration);
