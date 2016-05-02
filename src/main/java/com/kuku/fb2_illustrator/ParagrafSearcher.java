@@ -12,7 +12,6 @@ import org.slf4j.cal10n.LocLoggerFactory;
 
 import javax.xml.bind.JAXBElement;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -172,7 +171,7 @@ public class ParagrafSearcher {
 
         PType pTypeDesc = objectFactory.createPType();
         List<Serializable> contentPTypeDesc = pTypeDesc.getContent();
-        contentPTypeDesc.add(ill.getDescriopion());
+        contentPTypeDesc.add(ill.getDescription());
 
         CiteType citeType = objectFactory.createCiteType();
         List<Object> citeList = citeType.getPOrPoemOrEmptyLine();

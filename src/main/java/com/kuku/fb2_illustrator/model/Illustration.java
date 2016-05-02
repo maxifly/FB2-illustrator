@@ -1,8 +1,9 @@
 package com.kuku.fb2_illustrator.model;
 
-import com.kuku.fb2_illustrator.fb2_xml.model.PType;
-
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**
@@ -10,14 +11,17 @@ import java.nio.file.Path;
  */
 public class Illustration {
     private Path file;
-    private String  descriopion;
+    private String def_description;
     private String  id;
 
+    private Set<SearchTemplate_POJO> searchTemplates;
 
-    public Illustration(String id, Path file, String descriopion) {
+
+    public Illustration(String id, Path file, String def_description) {
         this.file = file;
         this.id = id;
-        this.descriopion = descriopion;
+        this.def_description = def_description;
+        this.searchTemplates = new HashSet<>();
     }
 
     /**
@@ -26,7 +30,8 @@ public class Illustration {
      * @return - подходит или нет
      */
     public boolean isSuitable(String paragrafText) {
-       return paragrafText.contains(this.descriopion);
+       // TODO переписать проверку, подходит ли иллюстрация под текст параграфа
+       return paragrafText.contains(this.def_description);
     }
 
 
@@ -34,18 +39,22 @@ public class Illustration {
         return file;
     }
 
-    public String getDescriopion() {
-        return descriopion;
+    public String getDescription() {
+        return def_description;
     }
 
     public String getId() {
         return id;
     }
 
+    public void addSearchTempale(SearchTemplate_POJO searchTemplate) {
+        this.searchTemplates.add(searchTemplate);
+    }
+
     @Override
     public String toString() {
         return "Illustration{" +
-                "descriopion='" + descriopion + '\'' +
+                "def_description='" + def_description + '\'' +
                 '}';
     }
 }
