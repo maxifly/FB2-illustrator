@@ -6,7 +6,7 @@ package com.kuku.fb2_illustrator.model;
 public class SearchTemplate_POJO {
     public TemplateType templateType;
     public String template;
-    public String description;
+    public String description = null;
 
     public SearchTemplate_POJO(TemplateType templateType, String template, String description) {
         this.templateType = templateType;

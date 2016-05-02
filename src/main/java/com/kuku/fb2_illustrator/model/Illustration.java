@@ -1,5 +1,12 @@
 package com.kuku.fb2_illustrator.model;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
+import com.kuku.fb2_illustrator.Constants;
+import com.kuku.fb2_illustrator.IllustrationParser;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
+
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,8 +17,14 @@ import java.util.Set;
  * Created by Maximus on 19.04.2016.
  */
 public class Illustration {
+    private static IMessageConveyor mc = new MessageConveyor(
+            Constants.getLocaleApp());
+    private static LocLogger log = (new LocLoggerFactory(mc))
+            .getLocLogger(Illustration.class.getName());
+
     private Path file;
     private String def_description;
+    private String illustrated_description = null;
     private String  id;
 
     private Set<SearchTemplate_POJO> searchTemplates;
@@ -30,8 +43,23 @@ public class Illustration {
      * @return - подходит или нет
      */
     public boolean isSuitable(String paragrafText) {
+
+
        // TODO переписать проверку, подходит ли иллюстрация под текст параграфа
-       return paragrafText.contains(this.def_description);
+        for (SearchTemplate_POJO searchTemplate : searchTemplates) {
+            switch (searchTemplate.templateType) {
+                case substr:
+                    if (paragrafText.contains(searchTemplate.template)) {
+                        this.illustrated_description = searchTemplate.description;
+                        return true;
+                    }
+                    break;
+                default:
+                    log.warn("Search type {} unsupported",searchTemplate.templateType);
+
+            }
+        }
+        return  false;
     }
 
 
@@ -40,7 +68,10 @@ public class Illustration {
     }
 
     public String getDescription() {
-        return def_description;
+        if (illustrated_description == null) {
+        return def_description; } else {
+            return illustrated_description;
+        }
     }
 
     public String getId() {
@@ -53,8 +84,18 @@ public class Illustration {
 
     @Override
     public String toString() {
-        return "Illustration{" +
-                "def_description='" + def_description + '\'' +
-                '}';
+        if (this.illustrated_description == null) {
+            return "Illustration{" +
+                    "def_description='" + def_description + '\'' +
+                    '}';
+        } else {
+            return "Illustration{" +
+                    "def_description='" + def_description
+                    + "' illustrated_description='" +
+                    illustrated_description +
+                    "'}";
+        }
+
+
     }
 }

@@ -79,6 +79,7 @@ public class IllustrationParser {
             }
 
             illustrations.addIllustration(ill);
+            i++;
         }
         return illustrations;
     }
