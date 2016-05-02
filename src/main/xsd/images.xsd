@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Images">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Image" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="path" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Image">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element ref="SearchTemplate"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="file" type="xs:string" use="required"/>
+			<xs:attribute name="default_desc" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="SearchType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="substring"/>
+			<xs:enumeration value="regular"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SearchTemplate" type="SearchTemplateType"/>
+	<xs:complexType name="SearchTemplateType">
+		<xs:attribute name="type" type="SearchType" use="required"/>
+		<xs:attribute name="template" type="xs:string" use="required"/>
+		<xs:attribute name="description" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>
