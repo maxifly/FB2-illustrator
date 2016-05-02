@@ -63,14 +63,14 @@ public class ParagrafSearcher {
             sectionLists.add(newElement);
         }
 
-        addBinarys(fictionBook,illustrations);
+        addBinarys(fictionBook, illustrations);
 
     }
 
 
     public void addBinarys(FictionBook fictionBook, Illustrations illustrations) {
         List<FictionBook.Binary> binaryList = fictionBook.getBinary();
-        for (Illustration ill : illustrations.getAllIllustrations())  {
+        for (Illustration ill : illustrations.getAllIllustrations()) {
             FictionBook.Binary fbBinary = genBinary(ill);
             if (fbBinary != null) {
                 binaryList.add(fbBinary);
@@ -100,11 +100,6 @@ public class ParagrafSearcher {
     }
 
 
-
-
-
-
-
     private SectionType sectionProcessor(SectionType section) {
         ArrayList<JAXBElement<?>> newSectionObjectsList = new ArrayList<>(); // Сюда будем складывать новый список элементов
 
@@ -121,7 +116,7 @@ public class ParagrafSearcher {
                 case "SectionType":
                     log.debug("Section");
                     int i = 1;
-                    SectionType newSectionType = sectionProcessor(((JAXBElement<SectionType>) element).getValue()); //TODO Понять всеж таки какой тип тут должен быть
+                    SectionType newSectionType = sectionProcessor(((JAXBElement<SectionType>) element).getValue());
                     JAXBElement<SectionType> new_stjxb = objectFactory.createSectionTypeSection(newSectionType);
                     newSectionObjectsList.add(new_stjxb);
                     break;
@@ -136,7 +131,7 @@ public class ParagrafSearcher {
             newSectionElements.add(newElement);
         }
 
-        return section; //TODO
+        return section;
     }
 
     private List<JAXBElement<?>> paragrafProcessor(JAXBElement<PType> element) {
@@ -144,9 +139,17 @@ public class ParagrafSearcher {
 
         elements.add(element);
 
-        if (1 == 1) { // TODO Надо как-то понять, что параграф иллюстрирован
+        Paragraf paragraf = this.paragrafs.getParagrafByBookElement(element);
+
+
+        if (this.illustrations.isIllustrated(paragraf)) {
             // параграф иллюстрирован
-            elements.add(createIllustration());
+            log.debug("Paragraf {} illustrated.", paragraf);
+
+            Iterator<Illustration> illIter = this.illustrations.getIllustrations(paragraf);
+            while (illIter.hasNext()) {
+                elements.add(createIllustration(illIter.next()));
+            }
         }
 
         return elements;
@@ -154,12 +157,10 @@ public class ParagrafSearcher {
     }
 
 
-    private JAXBElement<PType> createIllustration() {
-        //TODO Надо написать что сюда вставлять как картинку и все такое
+    private JAXBElement<?> createIllustration(Illustration ill) {
 
         ImageType imageType = objectFactory.createImageType();
-        imageType.setAlt("Alt");
-        imageType.setHref("ill_f1");
+        imageType.setHref(ill.getId());
 
         JAXBElement<ImageType> imageTypeJAXBElement =
                 objectFactory.createStyleTypeImage(imageType);
@@ -168,9 +169,17 @@ public class ParagrafSearcher {
         PType pType = objectFactory.createPType();
         List<Serializable> content = pType.getContent();
         content.add(imageTypeJAXBElement);
-        content.add("test image text");
 
-        return objectFactory.createSectionTypeP(pType);
+        PType pTypeDesc = objectFactory.createPType();
+        List<Serializable> contentPTypeDesc = pTypeDesc.getContent();
+        contentPTypeDesc.add(ill.getDescriopion());
+
+        CiteType citeType = objectFactory.createCiteType();
+        List<Object> citeList = citeType.getPOrPoemOrEmptyLine();
+        citeList.add(pType);
+        citeList.add(pTypeDesc);
+
+        return objectFactory.createSectionTypeCite(citeType);
 
     }
 

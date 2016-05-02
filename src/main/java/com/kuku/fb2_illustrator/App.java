@@ -41,10 +41,10 @@ public class App {
                 FileSystems.getDefault().getPath("priv_fales", "afrika_768.jpg"),
                 "Частное, пренебрегая деталями"));
         illustrations.addIllustration(new Illustration("ill_f2",
-                FileSystems.getDefault().getPath("priv_fales", "afrika_768.jpg"),
+                FileSystems.getDefault().getPath("priv_fales", "ill2.jpg"),
                 "НеРеальность"));
         illustrations.addIllustration(new Illustration("ill_f3",
-                FileSystems.getDefault().getPath("priv_fales", "afrika_768.jpg"),
+                FileSystems.getDefault().getPath("priv_fales", "ill3.jpg"),
                 "трансформирует"));
 
         bookParse.parse(illustrations);

@@ -291,6 +291,7 @@
 		<xs:attribute ref="xlink:type"/>
 		<xs:attribute ref="xlink:href"/>
 		<xs:attribute name="alt" type="xs:string" use="optional"/>
+		<xs:attribute name="title" type="xs:string" use="optional"/>
 	</xs:complexType>
 	<xs:complexType name="pType" mixed="true">
 		<xs:annotation>

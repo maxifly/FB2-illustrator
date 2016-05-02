@@ -11,8 +11,8 @@ public class Paragraf {
     private JAXBElement<PType> pType;
     private int indexInParagrafs;
 
-    public Paragraf(JAXBElement<PType> pType) {
-        this.pType = pType;
+    public Paragraf(JAXBElement<PType> bookElement) {
+        this.pType = bookElement;
     }
 
     public Paragraf() {
@@ -24,5 +24,18 @@ public class Paragraf {
 
     public int getIndexInParagrafs() {
         return indexInParagrafs;
+    }
+
+    /**
+     * Возвращает признак того, что параграф содержит переданный элемент книги
+     * @param pType
+     * @return
+     */
+    public boolean isContain(JAXBElement<PType> pType) {
+        return (this.pType == pType);
+    }
+
+    public JAXBElement<PType> getBookElement() {
+        return pType;
     }
 }
