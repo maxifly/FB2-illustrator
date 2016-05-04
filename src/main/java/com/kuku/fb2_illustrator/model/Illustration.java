@@ -11,6 +11,8 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -28,6 +30,8 @@ public class Illustration {
     private String  id;
 
     private Set<SearchTemplate_POJO> searchTemplates;
+
+
 
 
     public Illustration(String id, Path file, String def_description) {
@@ -54,6 +58,22 @@ public class Illustration {
                         return true;
                     }
                     break;
+                case regexp:
+                    try {
+                        Pattern pattern = Pattern.compile(searchTemplate.template);
+                        Matcher matcher = pattern.matcher(paragrafText);
+                        if (matcher.matches()) {
+                            this.illustrated_description = searchTemplate.description;
+                            return true;
+                        }
+                    }
+                    catch (Exception e) {
+                        log.error("Exception when check regexp: {}",e);
+                        return false;
+                    }
+                    break;
+
+
                 default:
                     log.warn("Search type {} unsupported",searchTemplate.templateType);
 
