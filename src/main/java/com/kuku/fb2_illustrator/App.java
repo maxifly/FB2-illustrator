@@ -2,7 +2,6 @@ package com.kuku.fb2_illustrator;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
-import com.kuku.fb2_illustrator.model.Illustration;
 import com.kuku.fb2_illustrator.model.Illustrations;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -10,7 +9,6 @@ import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.concurrent.ExecutionException;
 
 public class App {
     public static IMessageConveyor mc = new MessageConveyor(
@@ -25,7 +23,7 @@ public class App {
     }
 
     public void run() throws Exception {
-        BookParse bookParse = new BookParse();
+        BookProcessor bookParse = new BookProcessor_FB20();
         IllustrationParser illustrationParser = new IllustrationParser();
 
 //        Path path = FileSystems.getDefault().getPath("priv_fales", "test.fb2");
@@ -34,8 +32,8 @@ public class App {
 //        bookParse.setOutpootBook(pathOut);
 //        bookParse.parse();
 
-        bookParse.setBookFile(FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
-        bookParse.setOutpootBook(FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
+        Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
+        Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
 
         Path imageXML = FileSystems.getDefault().getPath("priv_fales", "images.xml");
 
@@ -53,7 +51,7 @@ public class App {
 //                FileSystems.getDefault().getPath("priv_fales", "ill3.jpg"),
 //                "трансформирует"));
 
-        bookParse.parse(illustrations);
+        bookParse.processBook(illustrations,inputFile,outputFile);
     }
 
     private void shutdown() {

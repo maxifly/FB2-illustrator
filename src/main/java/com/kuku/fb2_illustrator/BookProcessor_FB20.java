@@ -3,7 +3,6 @@ package com.kuku.fb2_illustrator;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.kuku.fb2_illustrator.fb2_xml.model.FictionBook;
-import com.kuku.fb2_illustrator.model.Illustration;
 import com.kuku.fb2_illustrator.model.Illustrations;
 import com.kuku.fb2_illustrator.model.Paragrafs;
 import org.slf4j.cal10n.LocLogger;
@@ -12,43 +11,30 @@ import org.slf4j.cal10n.LocLoggerFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.StringReader;
 import java.nio.file.Path;
 
 
-public class BookParse {
+public class BookProcessor_FB20 implements BookProcessor {
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
     private static LocLogger log = (new LocLoggerFactory(mc))
-            .getLocLogger(BookParse.class.getName());
-
-    private Path BookFile = null;
-    private Path outpootBook = null;
+            .getLocLogger(BookProcessor_FB20.class.getName());
 
 
-//    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.0Z'");
-
-
-    public void setBookFile(Path bookFile) {
-      this.BookFile = bookFile;
-    }
-
-
-    public void parse(Illustrations illustrations) throws Exception {
-
-        log.debug("Book XML " + this.BookFile);
+    @Override
+    public void processBook(Illustrations illustrations, Path inputFile, Path outputFile) throws Exception {
+        log.debug("Book XML " + inputFile);
 
         // Разберем XML
         JAXBContext jc = JAXBContext.newInstance("com.kuku.fb2_illustrator.fb2_xml.model");
         Unmarshaller unmarshaller = jc.createUnmarshaller();
 
 
-        FictionBook fictionBook = (FictionBook) unmarshaller.unmarshal(this.BookFile.toFile());
+        FictionBook fictionBook = (FictionBook) unmarshaller.unmarshal(inputFile.toFile());
 
         // Поищем иллюстрации
 
-        ParagrafSearcher ps = new ParagrafSearcher();
+        ParagrafSearcher_FB20 ps = new ParagrafSearcher_FB20();
         Paragrafs paragrafs = new Paragrafs();
         ps.search(fictionBook, illustrations, paragrafs);
 
@@ -56,19 +42,8 @@ public class BookParse {
 
         ps.process(fictionBook, illustrations, paragrafs);
 
- int i = 1;
-
-
-
         Marshaller marshaller = jc.createMarshaller();
-        marshaller.marshal(fictionBook, this.outpootBook.toFile());
+        marshaller.marshal(fictionBook, outputFile.toFile());
 
-
-        // TODO сделать
-    }
-
-
-    public void setOutpootBook(Path outpootBook) {
-        this.outpootBook = outpootBook;
     }
 }

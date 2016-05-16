@@ -60,6 +60,7 @@ public class Illustration {
                     break;
                 case regexp:
                     try {
+                        //TODO Перенести компиляцию условия на момент разбора иллюстраций
                         Pattern pattern = Pattern.compile(searchTemplate.template);
                         Matcher matcher = pattern.matcher(paragrafText);
                         if (matcher.matches()) {

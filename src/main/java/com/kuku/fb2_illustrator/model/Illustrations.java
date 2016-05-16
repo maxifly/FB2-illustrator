@@ -2,7 +2,6 @@ package com.kuku.fb2_illustrator.model;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
-import com.kuku.fb2_illustrator.BookParse;
 import com.kuku.fb2_illustrator.Constants;
 //import com.kuku.fb2_illustrator.fb2_xml.model.PType;
 import org.slf4j.cal10n.LocLogger;
