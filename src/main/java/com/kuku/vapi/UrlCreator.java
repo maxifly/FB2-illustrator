@@ -1,6 +1,7 @@
 package com.kuku.vapi;
 
 import com.kuku.vapi.model.AuthHeader;
+import com.kuku.vapi.model.ScopeElement;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -16,11 +17,30 @@ public class UrlCreator {
     private static final String response_type = "token";
     private static final String METHOD_URI = "https://api.vk.com/method/";
 
-    public static String getAuthUrl(String clientId, String[] scopes) {
+    /**
+     * Складывает права
+     * @param scopeElements - список требуемых прав
+     * @return битовая маска прав
+     */
+    static String computeScope(ScopeElement[] scopeElements) {
+        int scope = 0;
+
+        for (int i=0;i<scopeElements.length;i++) {
+
+            scope += scopeElements[i].getCode();
+
+        }
+
+        if (scope == 0) scope = ScopeElement.photos.getCode();
+        return  String.valueOf(scope);
+    }
+
+
+    public static String getAuthUrl(String clientId, ScopeElement[] scopes) {
         // https://oauth.vk.com/authorize?client_id=idApp&scope=audio&redirect_url=https://oauth.vk.com/blank.html&display=page&v=5.4&response_type=token
         return  "http://oauth.vk.com/authorize?" +
                 "client_id="+clientId+
-                "&scope=" + scope + //StringUtils.join(scopes, ",") +
+                "&scope=" + computeScope(scopes) + // scope + //StringUtils.join(scopes, ",") +
                 "&redirect_uri="+redirect_uri+
                 "&v=" + version +
                 "&display="+display+
