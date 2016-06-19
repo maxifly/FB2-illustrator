@@ -171,7 +171,7 @@ public class Connect {
 
             // попробуем еще раз получить Access Token
             response = execute(path);
-            h = response.getFirstHeader("location");
+            h = response.getFirstHeader("location"); //TODO Может быть null
             return h.getValue();
         }
     }
