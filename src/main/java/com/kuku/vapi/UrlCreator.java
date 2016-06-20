@@ -50,19 +50,30 @@ public class UrlCreator {
 
 
     public static String getLoginUrl(final AuthHeader ah, final String login, final String password) {
-        return   "https://login.vk.com/?act=login"+
-                "&soft=1"+
-                "&ip_h="+ ah.getIp_h()+
-                "&lg_h="+ ah.getLg_h()+
-                "&_origin="+ah.getOrigin()+
+        return "https://login.vk.com/?act=login" +
+                "&soft=1" +
+                "&ip_h=" + ah.getIp_h() +
+                "&lg_h=" + ah.getLg_h() +
+                "&_origin=" + ah.getOrigin() +
 
-               // "&q=1"+
+                // "&q=1"+
 
-               // "&from_host=oauth.vk.com"+
-                "&to="+ah.getTo()+
-                "&expire=0"+
-                "&email="+login+
-                "&pass="+password;
+                // "&from_host=oauth.vk.com"+
+                "&to=" + ah.getTo() +
+                "&expire=0" +
+                "&email=" + login +
+                "&pass=" + password;
+    }
+
+    public static String getPhotos(String accessToken, int albumId, int offset, int pageSize )  {
+       return "https://api.vk.com/method/photos.get?" +
+               "album_id1=" + String.valueOf(albumId) +
+               "&access_token="+ accessToken +
+               "&v=" + version +
+               "&offset=" + String.valueOf(offset) +
+               "&count=" + String.valueOf(pageSize);
+
+
     }
 //    ip_h=470cfbb365f2340293&lg_h=6e19f1dfd460fde753
 //

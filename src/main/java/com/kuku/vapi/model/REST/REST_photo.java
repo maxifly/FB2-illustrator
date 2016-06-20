@@ -11,6 +11,8 @@ public class REST_photo {
     public String photo_130;
     public String photo_604;
     public String photo_807;
+    public String photo_1280;
+    public String photo_2560;
     public String text;
 
 }
