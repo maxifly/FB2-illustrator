@@ -1,7 +1,16 @@
 package com.kuku.vapi;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
+import com.google.gson.Gson;
+import com.kuku.fb2_illustrator.Constants;
 import com.kuku.vapi.model.DATA.DATA_photo;
 import com.kuku.vapi.model.PhotoSize;
+import com.kuku.vapi.model.REST.REST_Result_photo;
+import com.kuku.vapi.model.REST.REST_photo;
+import com.kuku.vapi.model.RestResponse;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +19,10 @@ import java.util.Iterator;
  * Created by Maximus on 19.06.2016.
  */
 public class PhotoProcessor {
+    private static final IMessageConveyor mc = new MessageConveyor(Constants.getLocaleApp());
+    private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
+    private static final LocLogger log = llFactory_uk.getLocLogger(PhotoProcessor.class.getName());
+
     private String accessToken;
     private int albumId;
     private int offset = 0;
@@ -18,6 +31,7 @@ public class PhotoProcessor {
     private int index;
     private ArrayList<DATA_photo> container = new ArrayList<>();
     private Iterator<DATA_photo> iterator;
+    private RestSender restSender = new RestSender();
 
 
 
@@ -30,7 +44,7 @@ public class PhotoProcessor {
 
 
 
-    public boolean hasNext() {
+    public boolean hasNext() throws Exception {
         if (!iterator.hasNext()) {
             // Надо получить новую порцию
             return getNewPortion() != 0;
@@ -44,11 +58,43 @@ public class PhotoProcessor {
     }
 
 
-    private int getNewPortion() {
+    private int getNewPortion() throws Exception {
         iterator = null;
         container.clear();
 
         String URL = UrlCreator.getPhotos(this.accessToken,this.albumId,this.offset,this.WINDOWS_SIZE);
+Thread.sleep(500);
+        RestResponse restResponse = restSender.sendGet(URL);
+//TODO count в результате это похоже общее количество итемов, а не количество, полученное в окне. Сколько их получено в окне надо судить по количеству элементов в массиве
+        if (restResponse.getResponseCode() != 200) {
+            throw new Exception("Error when get photos");
+        }
+
+        Gson g = new Gson();
+
+        REST_Result_photo rest_result_photo =
+                g.fromJson(restResponse.getResponseBody().toString(),REST_Result_photo.class);
+
+        log.debug("rest_result_photo.response: ?" + rest_result_photo.response);
+
+        if (rest_result_photo.error != null) {
+            log.error("Error return by get photos: ?" + rest_result_photo.error);
+            throw new Exception("Error when get photos");
+        }
+
+        if (rest_result_photo.response != null) {
+            if (rest_result_photo.response.count > 0) {
+                for (REST_photo rest_photo: rest_result_photo.response.items) {
+                    DATA_photo data_photo = new DATA_photo();
+                    data_photo.text = rest_photo.text;
+                    data_photo.url = rest_photo.getPhotoUrl();
+                    container.add(data_photo);
+                }
+                iterator = container.iterator();
+                offset = offset + rest_result_photo.response.count;
+                return rest_result_photo.response.count;
+            }
+        }
 
         return 0; //TODO написать
     }

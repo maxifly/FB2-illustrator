@@ -67,7 +67,7 @@ public class UrlCreator {
 
     public static String getPhotos(String accessToken, int albumId, int offset, int pageSize )  {
        return "https://api.vk.com/method/photos.get?" +
-               "album_id1=" + String.valueOf(albumId) +
+               "album_id=" + String.valueOf(albumId) +
                "&access_token="+ accessToken +
                "&v=" + version +
                "&offset=" + String.valueOf(offset) +
