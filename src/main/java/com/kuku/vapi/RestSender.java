@@ -13,6 +13,9 @@ import java.net.URL;
  */
 public class RestSender {
 
+    public static void respDelay() throws InterruptedException {
+        Thread.sleep(500);
+    }
 
     public RestResponse sendGet(String url) {
         RestResponse result = new RestResponse();

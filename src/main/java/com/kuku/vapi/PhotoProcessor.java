@@ -63,7 +63,7 @@ public class PhotoProcessor {
         container.clear();
 
         String URL = UrlCreator.getPhotos(this.accessToken,this.albumId,this.offset,this.WINDOWS_SIZE);
-Thread.sleep(500);
+        RestSender.respDelay();
         RestResponse restResponse = restSender.sendGet(URL);
 //TODO count в результате это похоже общее количество итемов, а не количество, полученное в окне. Сколько их получено в окне надо судить по количеству элементов в массиве
         if (restResponse.getResponseCode() != 200) {
@@ -75,10 +75,10 @@ Thread.sleep(500);
         REST_Result_photo rest_result_photo =
                 g.fromJson(restResponse.getResponseBody().toString(),REST_Result_photo.class);
 
-        log.debug("rest_result_photo.response: ?" + rest_result_photo.response);
+        log.debug("rest_result_photo.response: ?1", rest_result_photo.response);
 
         if (rest_result_photo.error != null) {
-            log.error("Error return by get photos: ?" + rest_result_photo.error);
+            log.error("Error return by get photos: %1", rest_result_photo.error);
             throw new Exception("Error when get photos");
         }
 
@@ -91,12 +91,12 @@ Thread.sleep(500);
                     container.add(data_photo);
                 }
                 iterator = container.iterator();
-                offset = offset + rest_result_photo.response.count;
-                return rest_result_photo.response.count;
+                offset = offset +  rest_result_photo.response.items.size();
+                return rest_result_photo.response.items.size();
             }
         }
 
-        return 0; //TODO написать
+        return 0;
     }
 
 
