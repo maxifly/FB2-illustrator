@@ -12,6 +12,21 @@ import static junit.framework.TestCase.assertEquals;
  * Created by Maximus on 11.07.2016.
  */
 public class TestFormat {
+    @Test
+    public  void bad_ill_image() {
+        //TODO Написать тест на неправильный формат
+        String desc = "{\"fb_ill\":1,\"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
+        Gson gson = new Gson();
+
+        ILL_data ill_data = gson.fromJson(desc, ILL_data.class);
+
+        assertEquals((int)1,(int)ill_data.fb_ill);
+        assertEquals("srch count", 3, ill_data.srch.size());
+        assertEquals("dsc","подпись1", ill_data.dsc);
+        assertEquals("num",1,(int) ill_data.num);
+
+
+    }
 
     @Test
     public  void ill_image() {
