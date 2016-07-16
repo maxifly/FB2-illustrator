@@ -22,4 +22,15 @@ public class InternetIllustration extends Illustration {
         this.illSubNum = illSubNum;
     }
 
+    public String getUrl_picture() {
+        return url_picture;
+    }
+
+    public int getIllNum() {
+        return illNum;
+    }
+
+    public int getIllSubNum() {
+        return illSubNum;
+    }
 }

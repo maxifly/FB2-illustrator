@@ -75,10 +75,10 @@ public class PhotoProcessor {
         REST_Result_photo rest_result_photo =
                 g.fromJson(restResponse.getResponseBody().toString(),REST_Result_photo.class);
 
-        log.debug("rest_result_photo.response: ?1", rest_result_photo.response);
+        log.debug("rest_result_photo.response: {}", rest_result_photo.response);
 
         if (rest_result_photo.error != null) {
-            log.error("Error return by get photos: %1", rest_result_photo.error);
+            log.error("Error return by get photos: {}", rest_result_photo.error);
             throw new Exception("Error when get photos");
         }
 
