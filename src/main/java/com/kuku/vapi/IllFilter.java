@@ -105,7 +105,7 @@ public class IllFilter {
                 searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr, ill_search.s, null);
             } else if (ill_search.re != null) {
                 // Условия поиска регулярное выражение
-                searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.regexp, ill_search.s, null);
+                searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.regexp, ill_search.re, null);
             } else {
                 searchTemplate_pojo = null;
             }
