@@ -149,8 +149,18 @@ public class Illustrations {
 
         log.debug("startIndex:{} endIndex:{}", startIndex, endIndex);
 
-        if (endIndex > startIndex + 1) {
-            // Есть промежуток
+        boolean isUnchinedEndIll = false;
+
+        if ( (endIndex+1) == allIllustrations.size()) {
+            if (
+            paragrafs.getParagrafNumber(
+                    chineIllustrations.get(allIllustrations.get(endIndex))) == null ) {
+                isUnchinedEndIll = true;
+            }
+        }
+
+        if (endIndex > startIndex + 1 || (startIndex == 0 && endIndex == 1) || isUnchinedEndIll ) {
+            // Есть промежуток из непривязанных иллюстраций или непривязана первая иллюстрация
             // Определим стартовый и конечный номера параграфов
 
             startParagraf =

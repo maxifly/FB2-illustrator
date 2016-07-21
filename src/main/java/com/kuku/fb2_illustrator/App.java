@@ -35,7 +35,7 @@ public class App {
         Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
         Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
 
-        Path imageXML = FileSystems.getDefault().getPath("priv_fales", "images.xml");
+        Path imageXML = FileSystems.getDefault().getPath("priv_fales", "images1.xml");
 
 
         Illustrations illustrations = illustrationParser.parseIll(imageXML);

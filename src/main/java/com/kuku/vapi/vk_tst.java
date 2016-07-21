@@ -25,7 +25,7 @@ public class vk_tst {
 
     public static void main(String[] params) throws Exception {
         ScopeElement[] scopes = {ScopeElement.photos, ScopeElement.groups, ScopeElement.e_mail};
-        Connect connect = new Connect("5509552",scopes,"maxpant@mail.ru", "");
+        Connect connect = new Connect("5509552",scopes,"maxpant@mail.ru", "kukuku");
 
         String accessToken = connect.getAccessToken(60000);
 
