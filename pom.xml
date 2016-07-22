@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kuku</groupId>
+    <groupId>com.maxifly</groupId>
     <artifactId>fb2_illustrator</artifactId>
     <version>1.0</version>
     <repositories>
@@ -78,7 +78,7 @@
 
                         <configuration>
                             <!--<verbose>true</verbose>-->
-                            <packageName>com.kuku.fb2_illustrator.fb2_xml.model</packageName>
+                            <packageName>com.maxifly.fb2_illustrator.fb2_xml.model</packageName>
                             <!--http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/xjc-mojo.html#target-->
                             <sources>
                                 <source>${project.basedir}/src/main/xsd/FictionBook_20.xsd</source>
@@ -103,7 +103,7 @@
 
                         <configuration>
                             <!--<verbose>true</verbose>-->
-                            <packageName>com.kuku.fb2_illustrator.image_xml.model</packageName>
+                            <packageName>com.maxifly.fb2_illustrator.image_xml.model</packageName>
                             <!--http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/xjc-mojo.html#target-->
                             <sources>
                                 <source>${project.basedir}/src/main/xsd/images.xsd</source>
@@ -136,10 +136,10 @@
                 <configuration>
                     <instrumentation>
                         <ignores>
-                            <ignore>com.kuku.fb2_illustrator.fb2_xml.model.*</ignore>
+                            <ignore>com.maxifly.fb2_illustrator.fb2_xml.model.*</ignore>
                         </ignores>
                         <excludes>
-                            <exclude>com/kuku/fb2_illustrator/fb2_xml/model/**/*.class</exclude>
+                            <exclude>com/maxifly/fb2_illustrator/fb2_xml/model/**/*.class</exclude>
                             <!--<exclude>com/example/**/*Test.class</exclude>-->
                         </excludes>
                     </instrumentation>
@@ -155,7 +155,7 @@
             <!--<manifest>-->
             <!--<addClasspath>true</addClasspath>-->
             <!--<classpathPrefix>lib/</classpathPrefix>-->
-            <!--<mainClass>com.kuku.fb2_illustrator.App</mainClass>-->
+            <!--<mainClass>com.maxiflyfly.fb2_illustrator.App</mainClass>-->
             <!--</manifest>-->
             <!--</archive>-->
             <!--<outputDirectory>${project.parent.build.directory}/lib</outputDirectory>-->
