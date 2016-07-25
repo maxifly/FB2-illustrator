@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -34,6 +33,8 @@ public class Fb2App extends Application {
 
 //            factory_gui.getStatus_user().setLogin("kuku");
         Scene scene = new Scene(root, 400, 250);
+
+        scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
 
         primaryStage.setTitle("FB2 Illustrator");
         primaryStage.setScene(scene);
