@@ -29,9 +29,9 @@ public class Fb2App extends Application {
 
         BorderPane root = new BorderPane();
         root.setCenter(btn);
-        root.setBottom(factory_gui.getStateRow());
+        root.setBottom(factory_gui.getStatusNBox());
 
-//            factory_gui.getStatus_user().setLogin("kuku");
+        factory_gui.getStatusBar().setLogin("kuku");
         Scene scene = new Scene(root, 400, 250);
 
         scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
