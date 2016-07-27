@@ -4,9 +4,11 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -29,7 +31,9 @@ public class Fb2App extends Application {
 
         BorderPane root = new BorderPane();
         root.setCenter(btn);
-        root.setBottom(factory_gui.getStatusBar());
+        HBox statusBar = factory_gui.getStatusBar();
+        root.setBottom(statusBar);
+        root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
 
         factory_gui.getDm_statusBar().setLogin("kuku");
         Scene scene = new Scene(root, 400, 250);
