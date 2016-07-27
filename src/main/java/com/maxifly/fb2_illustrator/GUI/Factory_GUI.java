@@ -1,14 +1,11 @@
 package com.maxifly.fb2_illustrator.GUI;
 
+import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_StatusBar;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.*;
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -24,7 +21,6 @@ public class Factory_GUI {
 //        return status_user;
 //    }
 
-    StatusBar statusBar = new StatusBar();
 
 //    public HBox getStateRow() {
 //        HBox stateRow = new HBox(10);
@@ -38,13 +34,29 @@ public class Factory_GUI {
 //    }
 
 
-    public StatusBar getStatusBar() {
-        return statusBar;
+    final private DM_StatusBar dm_statusBar = new DM_StatusBar();
+    private HBox hBox_statusBar;
+
+
+    public DM_StatusBar getDm_statusBar() {
+        return dm_statusBar;
     }
-    public HBox getStatusNBox() throws IOException {
 
-        HBox hBox = FXMLLoader.load(Factory_GUI.class.getResource("StatusBar.fxml"));
+    public HBox getStatusBar() throws IOException {
 
-        return hBox;
+        if (this.hBox_statusBar == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Factory_GUI.class.getResource("StatusBar.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> aClass) {
+                    return new Ctrl_StatusBar(dm_statusBar);
+                }
+            });
+
+
+            this.hBox_statusBar = loader.load();
+        }
+        return this.hBox_statusBar;
     }
 }
