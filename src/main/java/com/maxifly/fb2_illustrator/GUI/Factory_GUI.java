@@ -1,9 +1,12 @@
 package com.maxifly.fb2_illustrator.GUI;
 
+import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_CertainAlbum;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_StatusBar;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_CertainAlbum;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -58,5 +61,20 @@ public class Factory_GUI {
             this.hBox_statusBar = loader.load();
         }
         return this.hBox_statusBar;
+    }
+
+    public Pane createCertainAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormCertainAlbum.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                DM_CertainAlbum dm_certainAlbum = new DM_CertainAlbum();
+                return new Ctrl_CertainAlbum(dm_certainAlbum);
+            }
+        });
+        Pane pane = loader.load();
+        return pane;
+
     }
 }

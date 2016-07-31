@@ -30,7 +30,9 @@ public class Fb2App extends Application {
         });
 
         BorderPane root = new BorderPane();
-        root.setCenter(btn);
+        //root.setCenter(btn);
+        root.setCenter(factory_gui.createCertainAction());
+
         HBox statusBar = factory_gui.getStatusBar();
         root.setBottom(statusBar);
         root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);

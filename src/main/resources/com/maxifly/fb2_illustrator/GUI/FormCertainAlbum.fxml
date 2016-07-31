@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_CertainAlbum">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="146.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="419.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label text="Название книги:" GridPane.columnIndex="1" />
+      <TextField fx:id="book_name" GridPane.columnIndex="2" />
+      <Label prefHeight="42.0" prefWidth="120.0" text="Контролировать название" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <CheckBox fx:id="book_check" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label text="Адрес альбома" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="album_addr" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Label text="Исходный FB2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label text="Результирующий FB2:" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+         <children>
+            <Button mnemonicParsing="false" onAction="#clear_form" text="Очистить" />
+            <Button mnemonicParsing="false" text="Загрузить" />
+         </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+      </HBox>
+      <TextField fx:id="book_src_file" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <TextField fx:id="book_dst_file" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+   </children>
+</GridPane>
