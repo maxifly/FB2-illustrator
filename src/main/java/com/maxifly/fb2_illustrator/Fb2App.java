@@ -52,8 +52,16 @@ public class Fb2App extends Application {
         primaryStage.setScene(scene1);
 
         DM_Login dm_login = factory_gui.getDm_login();
+
         dm_login.connect();
         primaryStage.show();
+        Thread.sleep(1000);
+
+//        while (dm_login.getToken1() == null) {
+//            Thread.sleep(1000);
+//        }
+
+        System.out.println("dm_login.getToken1() " + dm_login.getToken1());
 
 
 
