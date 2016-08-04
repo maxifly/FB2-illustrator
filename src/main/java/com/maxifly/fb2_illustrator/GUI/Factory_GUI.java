@@ -1,10 +1,13 @@
 package com.maxifly.fb2_illustrator.GUI;
 
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_CertainAlbum;
+import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_Login;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_CertainAlbum;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Login;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -39,6 +42,7 @@ public class Factory_GUI {
 
     final private DM_StatusBar dm_statusBar = new DM_StatusBar();
     private HBox hBox_statusBar;
+    private DM_Login dm_login = null;
 
 
     public DM_StatusBar getDm_statusBar() {
@@ -76,5 +80,24 @@ public class Factory_GUI {
         Pane pane = loader.load();
         return pane;
 
+    }
+
+    public Parent createLoginForm() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormLogin.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                dm_login = new DM_Login();
+                return new Ctrl_Login(dm_login);
+            }
+        });
+        Parent parent = loader.load();
+        return parent;
+
+    }
+
+    public DM_Login getDm_login() {
+        return dm_login;
     }
 }

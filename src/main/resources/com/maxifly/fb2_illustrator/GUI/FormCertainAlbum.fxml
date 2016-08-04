@@ -31,7 +31,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <children>
             <Button mnemonicParsing="false" onAction="#clear_form" text="Очистить" />
-            <Button mnemonicParsing="false" text="Загрузить" />
+            <Button mnemonicParsing="false" onAction="#load_ill" text="Загрузить" />
          </children>
          <padding>
             <Insets left="5.0" right="5.0" />

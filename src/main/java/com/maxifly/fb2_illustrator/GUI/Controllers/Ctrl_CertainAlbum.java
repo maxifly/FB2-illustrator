@@ -35,6 +35,10 @@ public class Ctrl_CertainAlbum implements Initializable{
 
     }
 
+    @FXML protected void load_ill(ActionEvent actionEvent) {
+
+    }
+
     public Ctrl_CertainAlbum(DM_CertainAlbum dm_certainAlbum) {
         this.dm_certainAlbum = dm_certainAlbum;
     }

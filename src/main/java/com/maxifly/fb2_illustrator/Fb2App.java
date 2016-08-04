@@ -1,10 +1,12 @@
 package com.maxifly.fb2_illustrator;
 
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Login;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -44,7 +46,17 @@ public class Fb2App extends Application {
 
         primaryStage.setTitle("FB2 Illustrator");
         primaryStage.setScene(scene);
+
+        Parent parent = factory_gui.createLoginForm();
+        Scene scene1 = new Scene(parent, 400, 250);
+        primaryStage.setScene(scene1);
+
+        DM_Login dm_login = factory_gui.getDm_login();
+        dm_login.connect();
         primaryStage.show();
+
+
+
     }
 
     public static void main(String[] args) {

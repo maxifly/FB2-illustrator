@@ -3,6 +3,9 @@ package com.maxifly.vapi;
 import com.maxifly.vapi.model.AuthHeader;
 import com.maxifly.vapi.model.ScopeElement;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Maximus on 17.06.2016.
  */
@@ -74,6 +77,26 @@ public class UrlCreator {
 
 
     }
+
+    public static int getAlbumId(String albumPath) throws Exception {
+       Pattern dg_pattern = Pattern.compile("^\\d+$");
+       if (dg_pattern.matcher(albumPath).matches()) {
+         return  Integer.valueOf(albumPath);
+       }
+
+       Pattern url_pattern = Pattern.compile("\\d+$");
+        Matcher matcher = url_pattern.matcher(albumPath);
+        if (matcher.find()) {
+            return
+                    Integer.valueOf(
+                    matcher.group(0));
+        }
+
+        throw new Exception("Can not parse album addr " + albumPath);
+        // http://vk.com/albums320470599
+
+    }
+
 //    ip_h=470cfbb365f2340293&lg_h=6e19f1dfd460fde753
 //
 //    &_origin=https%3A%2F%2Foauth.vk.com
