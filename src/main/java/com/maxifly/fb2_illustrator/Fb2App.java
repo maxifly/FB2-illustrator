@@ -39,6 +39,8 @@ public class Fb2App extends Application {
         root.setBottom(statusBar);
         root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
 
+        root.setTop(factory_gui.createMainMenu());
+
         factory_gui.getDm_statusBar().setLogin("kuku");
         Scene scene = new Scene(root, 400, 250);
 
@@ -47,21 +49,24 @@ public class Fb2App extends Application {
         primaryStage.setTitle("FB2 Illustrator");
         primaryStage.setScene(scene);
 
-        Parent parent = factory_gui.createLoginForm();
-        Scene scene1 = new Scene(parent, 400, 250);
-        primaryStage.setScene(scene1);
+//        Parent parent = factory_gui.createLoginForm();
+//        Scene scene1 = new Scene(parent, 400, 250);
+//        primaryStage.setScene(scene1);
 
-        DM_Login dm_login = factory_gui.getDm_login();
+//        DM_Login dm_login = factory_gui.getDm_login();
+//
+//        dm_login.connect();
 
-        dm_login.connect();
+
+
         primaryStage.show();
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
 
 //        while (dm_login.getToken1() == null) {
 //            Thread.sleep(1000);
 //        }
 
-        System.out.println("dm_login.getToken1() " + dm_login.getToken1());
+   //     System.out.println("dm_login.getToken1() " + dm_login.getToken1());
 
 
 

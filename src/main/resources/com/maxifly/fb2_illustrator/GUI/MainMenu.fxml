@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu">
+  <menus>
+    <Menu mnemonicParsing="false" text="Project">
+      <items>
+        <MenuItem id="kuku" mnemonicParsing="false" onAction="#action_File_Close" text="Close" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="VK">
+      <items>
+        <MenuItem id="tutu" mnemonicParsing="false" onAction="#action_File_Close" text="Connect" />
+            <MenuItem mnemonicParsing="false" text="Disconnect" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+      <items>
+        <MenuItem mnemonicParsing="false" text="About" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>

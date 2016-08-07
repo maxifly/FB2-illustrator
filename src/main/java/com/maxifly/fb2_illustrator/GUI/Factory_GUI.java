@@ -2,12 +2,16 @@ package com.maxifly.fb2_illustrator.GUI;
 
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_CertainAlbum;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_Login;
+import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_CertainAlbum;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Login;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -41,6 +45,7 @@ public class Factory_GUI {
 
 
     final private DM_StatusBar dm_statusBar = new DM_StatusBar();
+    final private DM_MainMenu dm_mainMenu = new DM_MainMenu();
     private HBox hBox_statusBar;
     private DM_Login dm_login = null;
 
@@ -96,6 +101,22 @@ public class Factory_GUI {
         return parent;
 
     }
+
+    public MenuBar createMainMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("MainMenu.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                                        @Override
+                                        public Object call(Class<?> aClass) {
+                                            return new Ctrl_MainMenu(dm_mainMenu);
+                                        }
+                                    });
+        MenuBar menu = loader.load();
+        return  menu;
+
+
+    }
+
 
     public DM_Login getDm_login() {
         return dm_login;
