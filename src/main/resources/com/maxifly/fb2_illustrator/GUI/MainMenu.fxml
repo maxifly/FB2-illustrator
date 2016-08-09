@@ -8,13 +8,13 @@
   <menus>
     <Menu mnemonicParsing="false" text="Project">
       <items>
-        <MenuItem id="kuku" mnemonicParsing="false" onAction="#action_File_Close" text="Close" />
+        <MenuItem id="kuku" mnemonicParsing="false" text="Close" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="VK">
       <items>
-        <MenuItem id="tutu" mnemonicParsing="false" onAction="#action_File_Close" text="Connect" />
-            <MenuItem mnemonicParsing="false" text="Disconnect" />
+        <MenuItem id="vk_connect" mnemonicParsing="false" onAction="#action_vk" text="Connect" />
+            <MenuItem id="vk_disconnect" mnemonicParsing="false" onAction="#action_vk" text="Disconnect" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Help">

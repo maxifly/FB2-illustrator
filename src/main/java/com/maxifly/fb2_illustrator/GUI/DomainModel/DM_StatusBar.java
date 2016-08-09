@@ -8,13 +8,15 @@ import javafx.beans.property.StringProperty;
  */
 public class DM_StatusBar {
    private StringProperty login;
+   private String token;
 
     public DM_StatusBar() {
         this.login = new SimpleStringProperty("login:");
     }
 
-    public void setLogin(String login) {
+    public void setLogin(String login, String token) {
         this.login.set("login:" + login);
+        this.token = token;
     }
 
     public StringProperty loginProperty() {

@@ -21,33 +21,26 @@ public class Fb2App extends Application {
     public void start(Stage primaryStage) throws Exception {
         Factory_GUI factory_gui = new Factory_GUI();
 
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        Scene mainScene = factory_gui.getMainScene();
 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-
-        BorderPane root = new BorderPane();
-        //root.setCenter(btn);
-        root.setCenter(factory_gui.createCertainAction());
-
-        HBox statusBar = factory_gui.getStatusBar();
-        root.setBottom(statusBar);
-        root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
-
-        root.setTop(factory_gui.createMainMenu());
-
-        factory_gui.getDm_statusBar().setLogin("kuku");
-        Scene scene = new Scene(root, 400, 250);
-
-        scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
+//        BorderPane root = new BorderPane();
+//        //root.setCenter(btn);
+//        root.setCenter(factory_gui.createCertainAction());
+//
+//        HBox statusBar = factory_gui.getStatusBar();
+//        root.setBottom(statusBar);
+//        root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
+//
+//        root.setTop(factory_gui.createMainMenu());
+//
+//        factory_gui.getDm_statusBar().setLogin("kuku");
+//        Scene scene = new Scene(root, 400, 250);
+//
+//        scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
 
         primaryStage.setTitle("FB2 Illustrator");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(mainScene);
+
 
 //        Parent parent = factory_gui.createLoginForm();
 //        Scene scene1 = new Scene(parent, 400, 250);

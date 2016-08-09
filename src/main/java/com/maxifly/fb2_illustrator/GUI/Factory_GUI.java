@@ -1,5 +1,6 @@
 package com.maxifly.fb2_illustrator.GUI;
 
+import com.maxifly.fb2_illustrator.Fb2App;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_CertainAlbum;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_Login;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu;
@@ -9,11 +10,16 @@ import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Login;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -45,10 +51,30 @@ public class Factory_GUI {
 
 
     final private DM_StatusBar dm_statusBar = new DM_StatusBar();
-    final private DM_MainMenu dm_mainMenu = new DM_MainMenu();
+    final private DM_MainMenu dm_mainMenu = new DM_MainMenu(this);
     private HBox hBox_statusBar;
     private DM_Login dm_login = null;
+    private Scene mainScene;
 
+
+    public Scene getMainScene() throws IOException {
+      if (this.mainScene == null) {
+          this.mainScene = createMainScene();
+      }
+      return this.mainScene;
+    }
+
+    private Scene createMainScene() throws IOException {
+        BorderPane root = new BorderPane();
+        root.setCenter(this.createCertainAction());
+        HBox statusBar = this.getStatusBar();
+        root.setBottom(statusBar);
+        root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
+        root.setTop(this.createMainMenu());
+        Scene scene = new Scene(root, 400, 250);
+        scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
+        return scene;
+    }
 
     public DM_StatusBar getDm_statusBar() {
         return dm_statusBar;
@@ -87,18 +113,26 @@ public class Factory_GUI {
 
     }
 
-    public Parent createLoginForm() throws IOException {
+    public Stage createLoginWindow() throws IOException {
+        Factory_GUI factory_gui = this;
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("FormLogin.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                dm_login = new DM_Login();
+                dm_login = new DM_Login(factory_gui);
                 return new Ctrl_Login(dm_login);
             }
         });
-        Parent parent = loader.load();
-        return parent;
+        Parent root = loader.load();
+        stage.setScene(new Scene(root));
+        stage.setTitle("My modal window");
+        stage.initModality(Modality.WINDOW_MODAL);
+
+        stage.initOwner(this.getMainScene().getWindow() );
+
+        return stage;
 
     }
 

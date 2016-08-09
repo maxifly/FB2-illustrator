@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.vapi.Connect;
 import com.maxifly.vapi.UrlCreator;
 
@@ -24,10 +25,14 @@ public class DM_Login {
     private static final LocLogger log = llFactory_uk.getLocLogger(DM_Login.class.getName());
 
 
-
+    private Factory_GUI factory_gui;
     private WebEngine webEngine;
     private ReadOnlyStringProperty currentLocationProperty;
     private String token1 = null;
+
+    public DM_Login(Factory_GUI factory_gui) {
+        this.factory_gui = factory_gui;
+    }
 
     public void setWebEngine(WebEngine webEngine) {
         this.webEngine = webEngine;
@@ -38,12 +43,12 @@ public class DM_Login {
                 log.debug("new URL: {}", newValue);
                 if (newValue.contains("access_token")) {
                     log.debug("TOKEN!!!!");
+
+
+                    //TODO Вытащить логин и токен
                     token1 = "kuku";
+                    factory_gui.getDm_statusBar().setLogin("kuku","token_kuku");
                 }
-
-                    //("blank.html")) {
-
-                //}
 
             }
         });
