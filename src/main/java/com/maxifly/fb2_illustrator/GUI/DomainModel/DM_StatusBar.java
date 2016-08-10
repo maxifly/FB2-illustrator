@@ -11,11 +11,11 @@ public class DM_StatusBar {
    private String token;
 
     public DM_StatusBar() {
-        this.login = new SimpleStringProperty("login:");
+        this.login = new SimpleStringProperty("login: ");
     }
 
     public void setLogin(String login, String token) {
-        this.login.set("login:" + login);
+        this.login.set("login: " + login);
         this.token = token;
     }
 

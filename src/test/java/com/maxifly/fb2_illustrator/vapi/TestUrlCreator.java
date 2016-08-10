@@ -15,4 +15,21 @@ public class TestUrlCreator {
         assertEquals(320470599, 320470599);
 
     }
+
+    @Test
+    public void getToken() {
+        String token =
+                UrlCreator.getToken("http://oauth.vk.com/blank.html#access_token=abcd&expires_in=86400&user_id=320470599&email=kuku@mail.ru");
+
+        assertEquals("abcd",token);
+
+    }
+    @Test
+    public void getEmail() {
+        String token =
+                UrlCreator.getEmail("http://oauth.vk.com/blank.html#access_token=abcd&expires_in=86400&user_id=320470599&email=kuku@mail.ru");
+
+        assertEquals("kuku@mail.ru",token);
+
+    }
 }

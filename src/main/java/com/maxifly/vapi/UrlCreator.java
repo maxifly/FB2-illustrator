@@ -38,6 +38,27 @@ public class UrlCreator {
     }
 
 
+    public static String getToken(String URL) {
+        Pattern ptrn_token = Pattern.compile("#access_token=.+?(&|$)");
+        Matcher matcher = ptrn_token.matcher(URL+"&");
+        if (matcher.find()) {
+            String grp = matcher.group();
+            return grp.substring(14, grp.length() - 1);
+        }
+        return  null;
+    }
+
+    public static String getEmail(String URL) {
+        Pattern ptrn_token = Pattern.compile("&email=.+?(&|$)");
+        Matcher matcher = ptrn_token.matcher(URL+"&");
+        if (matcher.find()) {
+            String grp = matcher.group();
+            return grp.substring(7, grp.length() - 1);
+        }
+        return  null;
+    }
+
+
     public static String getAuthUrl(String clientId, ScopeElement[] scopes) {
         // https://oauth.vk.com/authorize?client_id=idApp&scope=audio&redirect_url=https://oauth.vk.com/blank.html&display=page&v=5.4&response_type=token
         return  "http://oauth.vk.com/authorize?" +

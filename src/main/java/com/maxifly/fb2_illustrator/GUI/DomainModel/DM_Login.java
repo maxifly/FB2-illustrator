@@ -16,6 +16,9 @@ import javafx.scene.web.WebEngine;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Maximus on 04.08.2016.
  */
@@ -28,7 +31,6 @@ public class DM_Login {
     private Factory_GUI factory_gui;
     private WebEngine webEngine;
     private ReadOnlyStringProperty currentLocationProperty;
-    private String token1 = null;
 
     public DM_Login(Factory_GUI factory_gui) {
         this.factory_gui = factory_gui;
@@ -41,13 +43,14 @@ public class DM_Login {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 log.debug("new URL: {}", newValue);
-                if (newValue.contains("access_token")) {
+                if (newValue.contains("#access_token")) {
                     log.debug("TOKEN!!!!");
 
+                    String token = UrlCreator.getToken(newValue);
+                    String eMail = UrlCreator.getEmail(newValue);
 
-                    //TODO Вытащить логин и токен
-                    token1 = "kuku";
-                    factory_gui.getDm_statusBar().setLogin("kuku","token_kuku");
+                    log.debug("TOKEN: {} Email: {}", token, eMail);
+                    factory_gui.getDm_statusBar().setLogin(eMail,token);
                 }
 
             }
@@ -66,19 +69,11 @@ public class DM_Login {
         log.debug("sUrl: {}", sUrl);
 
         webEngine.load(sUrl);
-//int i = 1;
-//        while(i <=100000) {
-//            log.debug("url: {}",this.currentLocationProperty.getValue());
-//i++;
-//            Thread.sleep(1000);
-//        }
 
 
-//TODO Вернуть токен
+
         return null;
     }
 
-    public String getToken1() {
-        return token1;
-    }
+
 }
