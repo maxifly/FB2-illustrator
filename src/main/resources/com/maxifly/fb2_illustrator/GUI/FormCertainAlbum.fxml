@@ -30,8 +30,8 @@
       <Label text="Результирующий FB2:" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <children>
-            <Button mnemonicParsing="false" onAction="#clear_form" text="Очистить" />
-            <Button mnemonicParsing="false" onAction="#load_ill" text="Загрузить" />
+            <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#load_ill" text="Загрузить" />
+            <Button cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#clear_form" text="Очистить" />
          </children>
          <padding>
             <Insets left="5.0" right="5.0" />
