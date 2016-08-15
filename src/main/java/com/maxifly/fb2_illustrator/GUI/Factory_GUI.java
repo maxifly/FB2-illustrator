@@ -99,12 +99,13 @@ public class Factory_GUI {
     }
 
     public Pane createCertainAction() throws IOException {
+        Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("FormCertainAlbum.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                DM_CertainAlbum dm_certainAlbum = new DM_CertainAlbum();
+                DM_CertainAlbum dm_certainAlbum = new DM_CertainAlbum(factory_gui);
                 return new Ctrl_CertainAlbum(dm_certainAlbum);
             }
         });

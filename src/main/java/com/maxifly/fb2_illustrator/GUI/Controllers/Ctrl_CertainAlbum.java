@@ -48,7 +48,8 @@ public class Ctrl_CertainAlbum implements Initializable {
     }
 
     @FXML
-    protected void load_ill(ActionEvent actionEvent) {
+    protected void load_ill(ActionEvent actionEvent) throws Exception {
+        dm_certainAlbum.load_ill();
 
     }
 

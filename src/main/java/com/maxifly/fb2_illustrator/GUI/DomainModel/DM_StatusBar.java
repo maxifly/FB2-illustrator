@@ -22,4 +22,8 @@ public class DM_StatusBar {
     public StringProperty loginProperty() {
         return login;
     }
+
+    public String getToken() {
+        return token;
+    }
 }

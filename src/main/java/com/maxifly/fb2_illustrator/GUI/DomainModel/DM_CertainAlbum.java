@@ -2,6 +2,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import com.maxifly.fb2_illustrator.BookProcessor;
 import com.maxifly.fb2_illustrator.BookProcessor_FB20;
+import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Illustrations;
 import com.maxifly.vapi.*;
@@ -32,13 +33,15 @@ public class DM_CertainAlbum {
     private StringProperty book_dst_file;
 
     private BooleanProperty book_check;
+    private Factory_GUI factory_gui;
 
-    public DM_CertainAlbum() {
+    public DM_CertainAlbum(Factory_GUI factory_gui) {
         book_name = new SimpleStringProperty();
         album_addr = new SimpleStringProperty();
         book_src_file = new SimpleStringProperty();
         book_dst_file = new SimpleStringProperty();
         book_check = new SimpleBooleanProperty();
+        this.factory_gui = factory_gui;
     }
 
     public StringProperty book_name_Propery() {
@@ -62,13 +65,9 @@ public class DM_CertainAlbum {
      * Загрузка иллюстраций
      */
     public void load_ill() throws Exception {
-        // TODO Написать форму получения токена
-        ScopeElement[] scopes = {ScopeElement.photos, ScopeElement.groups, ScopeElement.e_mail};
-        Connect connect = new Connect("5509552",scopes,"maxpant@mail.ru", "kukuku");
-
-        String accessToken = connect.getAccessToken(60000);
 
 
+        String accessToken = factory_gui.getDm_statusBar().getToken();
 
         PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,233176977, PhotoSize.photo_2560x2048);
         IllFilter illFilter = new IllFilter();
