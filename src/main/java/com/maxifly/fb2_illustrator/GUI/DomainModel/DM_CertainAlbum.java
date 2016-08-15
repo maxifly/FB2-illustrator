@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 import com.maxifly.fb2_illustrator.BookProcessor;
 import com.maxifly.fb2_illustrator.BookProcessor_FB20;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Illustrations;
 import com.maxifly.vapi.*;
@@ -66,7 +67,7 @@ public class DM_CertainAlbum {
      */
     public void load_ill() throws Exception {
         if (true) {
-            throw new Exception("kuku");
+            throw new GUI_Exception("kuku");
         }
 
 
