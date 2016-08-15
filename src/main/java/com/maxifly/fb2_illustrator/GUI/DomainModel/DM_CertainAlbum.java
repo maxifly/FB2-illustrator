@@ -65,6 +65,10 @@ public class DM_CertainAlbum {
      * Загрузка иллюстраций
      */
     public void load_ill() throws Exception {
+        if (true) {
+            throw new Exception("kuku");
+        }
+
 
 
         String accessToken = factory_gui.getDm_statusBar().getToken();
@@ -100,7 +104,7 @@ public class DM_CertainAlbum {
 
 
 
-        Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
+        Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "kukutest2.fb2"));
         Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.processBook(illustrations,inputFile,outputFile);

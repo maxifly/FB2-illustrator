@@ -6,3 +6,4 @@ target/jaxb2/*
 config/*
 priv_fales/*
 target/*
+*.orig
