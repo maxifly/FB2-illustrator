@@ -13,12 +13,34 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * Created by Maximus on 23.07.2016.
  */
 public class Fb2App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+            @Override
+            public void uncaughtException(Thread thread, Throwable t) {
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                t.printStackTrace(pw);
+               // sw.toString();
+
+                System.out.println("There was an exception. " + t.getMessage());
+                System.out.println("There was an exception. " + sw.toString());
+
+            }
+
+        });
+
+        try {
+
+
         Factory_GUI factory_gui = new Factory_GUI();
 
         Scene mainScene = factory_gui.getMainScene();
@@ -62,7 +84,10 @@ public class Fb2App extends Application {
    //     System.out.println("dm_login.getToken1() " + dm_login.getToken1());
 
 
-
+        }
+        catch (Exception e) {
+            System.out.println("Exception " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {

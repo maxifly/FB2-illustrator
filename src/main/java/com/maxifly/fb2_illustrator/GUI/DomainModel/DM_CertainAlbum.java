@@ -62,6 +62,10 @@ public class DM_CertainAlbum {
      * Загрузка иллюстраций
      */
     public void load_ill() throws Exception {
+        if (true) {
+            throw new Exception("kuku");
+        }
+
         // TODO Написать форму получения токена
         ScopeElement[] scopes = {ScopeElement.photos, ScopeElement.groups, ScopeElement.e_mail};
         Connect connect = new Connect("5509552",scopes,"maxpant@mail.ru", "kukuku");
@@ -101,7 +105,7 @@ public class DM_CertainAlbum {
 
 
 
-        Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
+        Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "kukutest2.fb2"));
         Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.processBook(illustrations,inputFile,outputFile);
