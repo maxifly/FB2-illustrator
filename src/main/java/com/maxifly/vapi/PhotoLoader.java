@@ -44,9 +44,11 @@ public class PhotoLoader {
 
     public void download() throws IOException, ExecutionException, InterruptedException {
         for (InternetIllustration illustration : illustrationList) {
-            File temp = File.createTempFile("ill", ".tmp",destDir.toFile());
+            String pictureURL = illustration.getUrl_picture();
+            String fileType = UrlCreator.getFileType(pictureURL);
+            File temp = File.createTempFile("ill", "." + fileType,destDir.toFile());
             illustration.setFile(temp.toPath());
-            Download download = new Download(new URL(illustration.getUrl_picture()),temp);
+            Download download = new Download(new URL(pictureURL),temp);
             this.downloader.startTask(download);
         }
 

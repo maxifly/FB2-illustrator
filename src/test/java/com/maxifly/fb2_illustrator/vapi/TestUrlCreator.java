@@ -32,4 +32,14 @@ public class TestUrlCreator {
         assertEquals("kuku@mail.ru",token);
 
     }
+
+    @Test
+    public void getFileType() {
+        String token =
+                UrlCreator.getFileType("http://cs633720.vk.me/v633720599/333b0/qOOmIUbQ6Is.jpg");
+
+        assertEquals("jpg",token);
+
+    }
+
 }

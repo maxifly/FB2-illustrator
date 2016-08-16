@@ -58,6 +58,15 @@ public class UrlCreator {
         return  null;
     }
 
+    public static String getFileType(String URL) {
+        Pattern ptrn_token = Pattern.compile("\\.([^\\.]+?)$");
+        Matcher matcher = ptrn_token.matcher(URL);
+        if (matcher.find()) {
+            String grp = matcher.group(1);
+            return grp;
+        }
+        return  null;
+    }
 
     public static String getAuthUrl(String clientId, ScopeElement[] scopes) {
         // https://oauth.vk.com/authorize?client_id=idApp&scope=audio&redirect_url=https://oauth.vk.com/blank.html&display=page&v=5.4&response_type=token
