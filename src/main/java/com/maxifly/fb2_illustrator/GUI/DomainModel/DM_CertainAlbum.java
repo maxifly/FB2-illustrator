@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -67,6 +68,16 @@ public class DM_CertainAlbum {
      */
     public void load_ill() throws Exception {
 
+        // Проверки
+        Path inputFile = (FileSystems.getDefault().getPath(book_src_file.getValue()));
+        Path outputFile = (FileSystems.getDefault().getPath(book_dst_file.getValue()));
+
+
+        File src_file = inputFile.toFile();
+        if (!(src_file.exists() && src_file.isFile())) {
+           throw new GUI_Exception("Исходный файл \n" + src_file.toString() + "\n не найден.");
+        }
+
 
         String accessToken = factory_gui.getDm_statusBar().getToken();
         double albumId = UrlCreator.getAlbumId(album_addr.getValue());
@@ -103,8 +114,6 @@ public class DM_CertainAlbum {
 
         // Вставим иллюстрации
 
-        Path inputFile = (FileSystems.getDefault().getPath(book_src_file.getValue()));
-        Path outputFile = (FileSystems.getDefault().getPath(book_dst_file.getValue()));
 
         // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();

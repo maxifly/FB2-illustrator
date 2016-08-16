@@ -49,6 +49,11 @@ public class Ctrl_CertainAlbum implements Initializable {
 
     @FXML
     protected void load_ill(ActionEvent actionEvent) throws Exception {
+        // Проверяем, что нет файла-приемника
+
+        if (  ) //TODO Проверить наличие файла
+
+
         dm_certainAlbum.load_ill();
 
     }
