@@ -66,15 +66,13 @@ public class DM_CertainAlbum {
      * Загрузка иллюстраций
      */
     public void load_ill() throws Exception {
-        if (true) {
-            throw new GUI_Exception("kuku");
-        }
-
 
 
         String accessToken = factory_gui.getDm_statusBar().getToken();
+        int albumId = UrlCreator.getAlbumId(album_addr.getValue());
 
-        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,233176977, PhotoSize.photo_2560x2048);
+        // Загрузим иллюстрации
+        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,albumId, PhotoSize.photo_2560x2048);
         IllFilter illFilter = new IllFilter();
         PhotoLoader photoLoader = new PhotoLoader(Files.createTempDirectory("fbill_"));
 
@@ -91,7 +89,6 @@ public class DM_CertainAlbum {
         photoLoader.setIllustrationList(illFilter.getIllustrations());
         photoLoader.download();
 
-        int i = 1;
 
         List<InternetIllustration> illustrationList = illFilter.getIllustrations();
 
@@ -104,9 +101,12 @@ public class DM_CertainAlbum {
         }
 
 
+        // Вставим иллюстрации
 
-        Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "kukutest2.fb2"));
-        Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
+        Path inputFile = (FileSystems.getDefault().getPath(book_src_file.getValue()));
+        Path outputFile = (FileSystems.getDefault().getPath(book_dst_file.getValue()));
+
+        // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.processBook(illustrations,inputFile,outputFile);
 

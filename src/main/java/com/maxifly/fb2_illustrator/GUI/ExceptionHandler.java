@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.vapi.PhotoProcessor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -28,7 +29,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(Thread t, Throwable e) {
         log.error("{}",e);
 
-        GUI_Exception gui_exception = getGuiException(e);
+        MyException gui_exception = getGuiException(e);
         Throwable throwable = (gui_exception == null) ? e : gui_exception;
 
 
@@ -72,11 +73,11 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
 
-    private GUI_Exception getGuiException(Throwable t) {
+    private MyException getGuiException(Throwable t) {
         try {
             Throwable cause = t.getCause().getCause();
-            if (GUI_Exception.class.isAssignableFrom(cause.getClass())) {
-                return (GUI_Exception) cause;
+            if (MyException.class.isAssignableFrom(cause.getClass())) {
+                return (MyException) cause;
             }
             return null;
         } catch

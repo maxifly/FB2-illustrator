@@ -4,6 +4,7 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.vapi.model.DATA.DATA_photo;
 import com.maxifly.vapi.model.PhotoSize;
 import com.maxifly.vapi.model.REST.REST_Result_photo;
@@ -34,14 +35,12 @@ public class PhotoProcessor {
     private RestSender restSender = new RestSender();
 
 
-
     public PhotoProcessor(String accessToken, int albumId, PhotoSize max_photoSize) {
         this.accessToken = accessToken;
         this.albumId = albumId;
         this.photoSize = max_photoSize;
         iterator = container.iterator();
     }
-
 
 
     public boolean hasNext() throws Exception {
@@ -62,36 +61,38 @@ public class PhotoProcessor {
         iterator = null;
         container.clear();
 
-        String URL = UrlCreator.getPhotos(this.accessToken,this.albumId,this.offset,this.WINDOWS_SIZE);
+        String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.offset, this.WINDOWS_SIZE);
         RestSender.respDelay();
         RestResponse restResponse = restSender.sendGet(URL);
 //TODO count в результате это похоже общее количество итемов, а не количество, полученное в окне. Сколько их получено в окне надо судить по количеству элементов в массиве
         if (restResponse.getResponseCode() != 200) {
-            throw new Exception("Error when get photos");
+            throw new MyException("Error when get photos: \n"
+                    + "REST responce code != 200 (responce code:"
+                    + restResponse.getResponseCode() + ")");
         }
 
         Gson g = new Gson();
 
         REST_Result_photo rest_result_photo =
-                g.fromJson(restResponse.getResponseBody().toString(),REST_Result_photo.class);
+                g.fromJson(restResponse.getResponseBody().toString(), REST_Result_photo.class);
 
         log.debug("rest_result_photo.response: {}", rest_result_photo.response);
 
         if (rest_result_photo.error != null) {
             log.error("Error return by get photos: {}", rest_result_photo.error);
-            throw new Exception("Error when get photos");
+            throw new MyException("Error when get photos.\n" + rest_result_photo.error);
         }
 
         if (rest_result_photo.response != null) {
             if (rest_result_photo.response.count > 0) {
-                for (REST_photo rest_photo: rest_result_photo.response.items) {
+                for (REST_photo rest_photo : rest_result_photo.response.items) {
                     DATA_photo data_photo = new DATA_photo();
                     data_photo.text = rest_photo.text;
                     data_photo.url = rest_photo.getPhotoUrl();
                     container.add(data_photo);
                 }
                 iterator = container.iterator();
-                offset = offset +  rest_result_photo.response.items.size();
+                offset = offset + rest_result_photo.response.items.size();
                 return rest_result_photo.response.items.size();
             }
         }
