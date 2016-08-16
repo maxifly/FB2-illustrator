@@ -97,7 +97,7 @@ public class UrlCreator {
                 "&pass=" + password;
     }
 
-    public static String getPhotos(String accessToken, int albumId, int offset, int pageSize )  {
+    public static String getPhotos(String accessToken, double albumId, int offset, int pageSize )  {
        return "https://api.vk.com/method/photos.get?" +
                "album_id=" + String.valueOf(albumId) +
                "&access_token="+ accessToken +
@@ -108,17 +108,17 @@ public class UrlCreator {
 
     }
 
-    public static int getAlbumId(String albumPath) throws Exception {
+    public static double getAlbumId(String albumPath) throws Exception {
        Pattern dg_pattern = Pattern.compile("^\\d+$");
        if (dg_pattern.matcher(albumPath).matches()) {
-         return  Integer.valueOf(albumPath);
+         return  Double.valueOf(albumPath);
        }
 
        Pattern url_pattern = Pattern.compile("\\d+$");
         Matcher matcher = url_pattern.matcher(albumPath);
         if (matcher.find()) {
             return
-                    Integer.valueOf(
+                    Double.valueOf(
                     matcher.group(0));
         }
 

@@ -69,7 +69,7 @@ public class DM_CertainAlbum {
 
 
         String accessToken = factory_gui.getDm_statusBar().getToken();
-        int albumId = UrlCreator.getAlbumId(album_addr.getValue());
+        double albumId = UrlCreator.getAlbumId(album_addr.getValue());
 
         // Загрузим иллюстрации
         PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,albumId, PhotoSize.photo_2560x2048);

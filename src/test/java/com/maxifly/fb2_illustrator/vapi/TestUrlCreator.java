@@ -11,8 +11,8 @@ import static junit.framework.TestCase.assertEquals;
 public class TestUrlCreator {
     @Test
     public void parseAlbumAddr() throws Exception {
-        int id =  UrlCreator.getAlbumId("http://vk.com/albums320470599");
-        assertEquals(320470599, 320470599);
+        double id =  UrlCreator.getAlbumId("http://vk.com/albums32047059911");
+        assertEquals(32047059911D, id);
 
     }
 
