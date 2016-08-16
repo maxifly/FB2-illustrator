@@ -5,12 +5,12 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -51,10 +51,31 @@ public class Ctrl_CertainAlbum implements Initializable {
     protected void load_ill(ActionEvent actionEvent) throws Exception {
         // Проверяем, что нет файла-приемника
 
-        if (  ) //TODO Проверить наличие файла
+        File dstFile = new File(book_dst_file.getText());
+        boolean isContinue = true;
 
+        if (dstFile.exists() && dstFile.isFile()  ) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Файл \n" + book_dst_file.getText()
+                            + "\n существует. Перезаписать?",
+                    ButtonType.YES,ButtonType.NO);
+            alert.setHeaderText(null);
+            Optional<ButtonType> alert_button = alert.showAndWait();
 
-        dm_certainAlbum.load_ill();
+            if (ButtonType.YES == alert_button.get() ) {
+                isContinue = true;
+            } else {
+                isContinue = false;
+            }
+
+        }
+
+        if (isContinue) {
+            dm_certainAlbum.load_ill();
+            Alert info = new Alert(Alert.AlertType.INFORMATION,"Процесс окончен.");
+            info.setHeaderText(null);
+            info.showAndWait();
+        }
 
     }
 

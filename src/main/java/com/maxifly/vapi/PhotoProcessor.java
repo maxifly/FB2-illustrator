@@ -25,7 +25,7 @@ public class PhotoProcessor {
     private static final LocLogger log = llFactory_uk.getLocLogger(PhotoProcessor.class.getName());
 
     private String accessToken;
-    private double albumId;
+    private long albumId;
     private int offset = 0;
     private final int WINDOWS_SIZE = 100;
     private PhotoSize photoSize;
@@ -35,7 +35,7 @@ public class PhotoProcessor {
     private RestSender restSender = new RestSender();
 
 
-    public PhotoProcessor(String accessToken, double albumId, PhotoSize max_photoSize) {
+    public PhotoProcessor(String accessToken, long albumId, PhotoSize max_photoSize) {
         this.accessToken = accessToken;
         this.albumId = albumId;
         this.photoSize = max_photoSize;
