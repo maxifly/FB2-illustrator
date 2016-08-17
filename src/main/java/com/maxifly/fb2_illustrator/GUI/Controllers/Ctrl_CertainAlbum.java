@@ -5,8 +5,11 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.net.URL;
@@ -54,15 +57,15 @@ public class Ctrl_CertainAlbum implements Initializable {
         File dstFile = new File(book_dst_file.getText());
         boolean isContinue = true;
 
-        if (dstFile.exists() && dstFile.isFile()  ) {
+        if (dstFile.exists() && dstFile.isFile()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                     "Файл \n" + book_dst_file.getText()
                             + "\n существует. Перезаписать?",
-                    ButtonType.YES,ButtonType.NO);
+                    ButtonType.YES, ButtonType.NO);
             alert.setHeaderText(null);
             Optional<ButtonType> alert_button = alert.showAndWait();
 
-            if (ButtonType.YES == alert_button.get() ) {
+            if (ButtonType.YES == alert_button.get()) {
                 isContinue = true;
             } else {
                 isContinue = false;
@@ -72,9 +75,38 @@ public class Ctrl_CertainAlbum implements Initializable {
 
         if (isContinue) {
             dm_certainAlbum.load_ill();
-            Alert info = new Alert(Alert.AlertType.INFORMATION,"Процесс окончен.");
+            Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
             info.setHeaderText(null);
             info.showAndWait();
+        }
+
+    }
+
+    @FXML
+    protected void button_src_file_action(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        configureFileChooser(fileChooser, "Выбрать исходный файл ");
+        Window win = ((Node) actionEvent.getSource()).getScene().getWindow();
+        File file = fileChooser.showOpenDialog(win);
+
+        if (file == null) {
+            book_src_file.setText(null);
+        } else {
+            book_src_file.setText(file.getAbsolutePath());
+        }
+    }
+
+    @FXML
+    protected void button_dst_file_action(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        configureFileChooser(fileChooser, "Выбрать результирующий файл ");
+        Window win = ((Node) actionEvent.getSource()).getScene().getWindow();
+        File file = fileChooser.showOpenDialog(win);
+
+        if (file == null) {
+            book_dst_file.setText(null);
+        } else {
+            book_dst_file.setText(file.getAbsolutePath());
         }
 
     }
@@ -125,5 +157,17 @@ public class Ctrl_CertainAlbum implements Initializable {
         btnLoad.disableProperty().bind(enable_Load);
     }
 
+    private static void configureFileChooser(
+            final FileChooser fileChooser,
+            String title) {
+        fileChooser.setTitle(title);
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+        fileChooser.getExtensionFilters().addAll(
+//                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("FB2", "*.fb2")
+        );
+    }
 
 }
