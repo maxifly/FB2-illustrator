@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu">
+<MenuBar xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu">
   <menus>
     <Menu mnemonicParsing="false" text="Project">
       <items>
-        <MenuItem id="kuku" mnemonicParsing="false" text="Close" />
+            <MenuItem id="prj_open" mnemonicParsing="false" onAction="#action_prj" text="Open" />
+        <MenuItem id="kuku" mnemonicParsing="false" onAction="#action_prj" text="Close" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="VK">

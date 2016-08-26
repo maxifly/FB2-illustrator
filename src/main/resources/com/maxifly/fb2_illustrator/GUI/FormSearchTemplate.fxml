@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,25 +14,29 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_SearchTemplate">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_SearchTemplate">
    <children>
       <HBox prefHeight="32.0" prefWidth="600.0" spacing="20.0">
          <children>
       
-            <RadioButton fx:id="type_text" mnemonicParsing="false" text="Текст" />
-            <RadioButton fx:id="type_reg" mnemonicParsing="false" text="Регулярное выражение" />
-            <Button mnemonicParsing="false" fx:id="btn_check">
+            <RadioButton fx:id="type_text" mnemonicParsing="false" onAction="#radio_btn" text="Текст">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tg1" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="type_reg" mnemonicParsing="false" onAction="#radio_btn" text="Регулярное выражение" toggleGroup="$tg1" />
+            <Label prefHeight="21.0" prefWidth="126.0" />
+            <Button fx:id="btn_save" mnemonicParsing="false" onAction="#save">
                <graphic>
-                  <ImageView  fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/Button_White_Check.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" fx:id="btn_cancel">
+            <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#cancel">
                <graphic>
-                  <ImageView  fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/Stop.png" />
                      </image>
@@ -39,11 +44,14 @@
                </graphic>
             </Button>
          </children>
+         <padding>
+            <Insets left="10.0" top="10.0" />
+         </padding>
       </HBox>
       <GridPane hgap="10.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="174.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.0" minWidth="10.0" prefWidth="426.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="70.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0" minWidth="10.0" prefWidth="510.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -53,7 +61,7 @@
             <Label text="Шаблон" />
             <Label text="Подпись" GridPane.rowIndex="1" />
             <TextField fx:id="template" GridPane.columnIndex="1" />
-            <TextField fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="description" prefHeight="41.0" prefWidth="510.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

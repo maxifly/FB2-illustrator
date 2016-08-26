@@ -21,11 +21,22 @@ public class Ctrl_MainMenu {
 
     private DM_MainMenu dm_mainMenu;
 
-    @FXML private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException {
+    @FXML
+    private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException {
 
         switch ( ((MenuItem) actionEvent.getSource()).getId() ) {
             case "vk_connect":
                 dm_mainMenu.vk_connect();
+                break;
+        }
+
+    }
+    @FXML
+    private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException {
+
+        switch ( ((MenuItem) actionEvent.getSource()).getId() ) {
+            case "prj_open":
+                dm_mainMenu.project_open();
                 break;
         }
 

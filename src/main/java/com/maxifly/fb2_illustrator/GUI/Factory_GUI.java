@@ -1,14 +1,10 @@
 package com.maxifly.fb2_illustrator.GUI;
 
 import com.maxifly.fb2_illustrator.Fb2App;
-import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_CertainAlbum;
-import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_Login;
-import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu;
-import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_StatusBar;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_CertainAlbum;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Login;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
+import com.maxifly.fb2_illustrator.GUI.Controllers.*;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.*;
+import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
+import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -96,6 +92,25 @@ public class Factory_GUI {
             this.hBox_statusBar = loader.load();
         }
         return this.hBox_statusBar;
+    }
+
+
+    public Pane createSearchTemplate() throws IOException {
+//        Factory_GUI factory_gui = this;
+        SearchTemplate_POJO searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr,null,null);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormSearchTemplate.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                DM_SearchTemplate dm_searchTemplate = new DM_SearchTemplate();
+                dm_searchTemplate.setSearchTemplate(searchTemplate_pojo);
+                return new Ctrl_SearchTemplate(dm_searchTemplate);
+            }
+        });
+        Pane pane = loader.load();
+        return pane;
+
     }
 
     public Pane createCertainAction() throws IOException {
