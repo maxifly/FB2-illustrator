@@ -9,6 +9,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 /**
  * Created by Maximus on 26.08.2016.
  */
@@ -40,7 +43,25 @@ public class DM_SearchTemplate {
     }
 
     public CheckResult check() {
-        return new CheckResult(true); //TODO Сделать проверку регулярного выражения
+        if (template.getValue() == null || template.getValue().equals("")) {
+            return new CheckResult(false,"Шаблон пустой");
+        } else {
+
+            if (TemplateType.regexp == templateTypeObjectProperty.get()) {
+                try {
+                    Pattern.compile(template.getValue());
+                }
+                catch (PatternSyntaxException pse) {
+                    return new CheckResult(false, "Ошибка регулярного выражения: " + pse.getMessage());
+                }
+
+
+            }
+        }
+
+            return new CheckResult(true);
+
+         //TODO Сделать проверку регулярного выражения
     }
 
     public void save() {

@@ -5,6 +5,8 @@ import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_SearchTemplate;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,6 +40,8 @@ public class Ctrl_SearchTemplate implements Initializable {
     Button btn_save;
     @FXML
     Button btn_cancel;
+    @FXML
+    Node main_node;
 
 
     ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
@@ -91,6 +95,8 @@ public class Ctrl_SearchTemplate implements Initializable {
     }
 
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -105,6 +111,22 @@ public class Ctrl_SearchTemplate implements Initializable {
         } else {
             type_reg.setSelected(true);
         }
+
+
+        main_node.focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                        if (newValue) {
+                            System.out.println("Focused");
+                        } else {
+                            System.out.println("Focus lost");
+                        }
+                    }
+                }
+
+
+        );
 
     }
 }
