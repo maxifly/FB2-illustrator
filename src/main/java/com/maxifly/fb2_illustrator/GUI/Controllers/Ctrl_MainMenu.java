@@ -38,6 +38,8 @@ public class Ctrl_MainMenu {
             case "prj_open":
                 dm_mainMenu.project_open();
                 break;
+            case "prj_ill":
+                dm_mainMenu.ill();
         }
 
     }

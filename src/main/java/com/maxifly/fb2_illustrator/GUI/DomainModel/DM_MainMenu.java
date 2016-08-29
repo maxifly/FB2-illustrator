@@ -4,6 +4,9 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.model.Illustration;
+import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
+import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -39,6 +42,20 @@ public class DM_MainMenu {
     public void project_open() throws IOException {
 
         Pane pane = factory_gui.createSearchTemplate();
+
+        Scene scene = factory_gui.getMainScene();
+        ( (BorderPane) scene.getRoot()).setCenter(pane);
+
+
+
+    }
+
+    public void ill() throws IOException {
+        Illustration illustration = new Illustration("2", "desc_ill");
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp,"kuku","description"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku1","description1"));
+
+        Pane pane = factory_gui.createIll(illustration);
 
         Scene scene = factory_gui.getMainScene();
         ( (BorderPane) scene.getRoot()).setCenter(pane);

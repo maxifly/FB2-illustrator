@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI;
 import com.maxifly.fb2_illustrator.Fb2App;
 import com.maxifly.fb2_illustrator.GUI.Controllers.*;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.*;
+import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.fxml.FXMLLoader;
@@ -95,9 +96,16 @@ public class Factory_GUI {
     }
 
 
-    public Pane createSearchTemplate() throws IOException {
-//        Factory_GUI factory_gui = this;
+    public Pane createSearchTemplate()
+            throws IOException {
         SearchTemplate_POJO searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr,null,null);
+        return createSearchTemplate(searchTemplate_pojo);
+
+    }
+
+    public Pane createSearchTemplate(SearchTemplate_POJO searchTemplate_pojo)
+            throws IOException {
+//        Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("FormSearchTemplate.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -112,6 +120,26 @@ public class Factory_GUI {
         return pane;
 
     }
+
+    public Pane createIll(Illustration ill)
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormIll.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                DM_Ill dm_ill = new DM_Ill();
+                dm_ill.setIll(ill);
+                return new Ctrl_Ill(factory_gui, dm_ill);
+            }
+        });
+        Pane pane = loader.load();
+        return pane;
+
+    }
+
+
 
     public Pane createCertainAction() throws IOException {
         Factory_GUI factory_gui = this;

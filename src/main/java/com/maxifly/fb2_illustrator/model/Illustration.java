@@ -42,6 +42,11 @@ public class Illustration {
         this.file = file;
     }
 
+
+    public Set<SearchTemplate_POJO> getSearchTemplates() {
+        return searchTemplates;
+    }
+
     /**
      * Проверяет, подходит ли иллюстрация под текст параграфа
      * @param paragrafText текст параграфа

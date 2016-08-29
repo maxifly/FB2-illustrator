@@ -9,6 +9,7 @@
     <Menu mnemonicParsing="false" text="Project">
       <items>
             <MenuItem id="prj_open" mnemonicParsing="false" onAction="#action_prj" text="Open" />
+            <MenuItem id="prj_ill" mnemonicParsing="false" onAction="#action_prj" text="Ill" />
         <MenuItem id="kuku" mnemonicParsing="false" onAction="#action_prj" text="Close" />
       </items>
     </Menu>
