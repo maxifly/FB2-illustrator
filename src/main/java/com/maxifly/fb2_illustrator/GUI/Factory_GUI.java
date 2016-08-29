@@ -62,12 +62,23 @@ public class Factory_GUI {
     }
 
     private Scene createMainScene() throws IOException {
-        BorderPane root = new BorderPane();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("Root.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_Root();
+            }
+        });
+
+        BorderPane root = loader.load();
         root.setCenter(this.createCertainAction());
         HBox statusBar = this.getStatusBar();
         root.setBottom(statusBar);
         root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
         root.setTop(this.createMainMenu());
+
+
         Scene scene = new Scene(root, 400, 250);
         scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
         return scene;
