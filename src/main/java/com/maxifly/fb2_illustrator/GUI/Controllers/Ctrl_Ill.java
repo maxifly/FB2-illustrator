@@ -5,10 +5,12 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 
@@ -23,6 +25,15 @@ import java.util.ResourceBundle;
 public class Ctrl_Ill implements Initializable {
     @FXML
     VBox templates;
+
+    @FXML
+    GridPane gridpane;
+
+
+    @FXML
+    protected void kuku(ActionEvent actionEvent) {
+        System.out.println("W " + gridpane.widthProperty().getValue());
+    }
 
     private ListProperty<SearchTemplate_POJO> searchTemplates = new SimpleListProperty<>();
 

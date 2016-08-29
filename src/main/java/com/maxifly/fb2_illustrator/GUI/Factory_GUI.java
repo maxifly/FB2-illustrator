@@ -72,6 +72,7 @@ public class Factory_GUI {
         });
 
         BorderPane root = loader.load();
+
         root.setCenter(this.createCertainAction());
         HBox statusBar = this.getStatusBar();
         root.setBottom(statusBar);
@@ -80,6 +81,8 @@ public class Factory_GUI {
 
 
         Scene scene = new Scene(root, 400, 250);
+        Ctrl_Root ctrl_root = loader.getController();
+        ctrl_root.setListeners();
         scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
         return scene;
     }

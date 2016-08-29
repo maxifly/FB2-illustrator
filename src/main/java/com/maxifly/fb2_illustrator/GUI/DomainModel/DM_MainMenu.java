@@ -54,6 +54,9 @@ public class DM_MainMenu {
         Illustration illustration = new Illustration("2", "desc_ill");
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp,"kuku","description"));
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku1","description1"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku2","description1"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku3","description1"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku4","description1"));
 
         Pane pane = factory_gui.createIll(illustration);
 
