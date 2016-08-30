@@ -79,4 +79,5 @@ public class DM_SearchTemplate extends DM_Abstract {
     public void refresh() {
         cancel();
     }
+
 }

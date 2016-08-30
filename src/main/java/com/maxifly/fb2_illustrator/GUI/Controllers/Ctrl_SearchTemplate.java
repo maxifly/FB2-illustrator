@@ -30,6 +30,8 @@ public class Ctrl_SearchTemplate
         implements Initializable {
 
     private DM_SearchTemplate dm_searchTemplate;
+    private Ctrl_Ill ctrl_ill;
+
 
     @FXML
     TextField template;
@@ -48,14 +50,30 @@ public class Ctrl_SearchTemplate
     VBox buttons;
 
 
-    ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
+    @FXML
+    private void buttons(ActionEvent actionEvent) {
 
+//      switch (((Button) actionEvent.getSource()).getId()) {
+//          case
+//      }
+
+        ctrl_ill.addNeedDelete(
+                dm_searchTemplate.getSearchTemplate()
+        );
+
+    }
+
+
+    ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
 
 
     public Ctrl_SearchTemplate(DM_SearchTemplate dm_searchTemplate) {
         this.dm_searchTemplate = dm_searchTemplate;
     }
 
+    public void setCtrl_ill(Ctrl_Ill ctrl_ill) {
+        this.ctrl_ill = ctrl_ill;
+    }
 
     @FXML
     public void gp_mouse(MouseEvent mouseEvent) {
