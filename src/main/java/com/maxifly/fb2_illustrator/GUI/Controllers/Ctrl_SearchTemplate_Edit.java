@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -65,11 +66,13 @@ public class Ctrl_SearchTemplate_Edit
     @FXML
     protected void cancel(ActionEvent actionEvent) {
         dm_searchTemplate.cancel();
-        if (templateTypeObjectProperty.get().equals(TemplateType.substr)) {
-            type_text.setSelected(true);
-        } else {
-            type_reg.setSelected(true);
-        }
+//        if (templateTypeObjectProperty.get().equals(TemplateType.substr)) {
+//            type_text.setSelected(true);
+//        } else {
+//            type_reg.setSelected(true);
+//        }
+        Stage stage = (Stage) btn_cancel.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -78,6 +81,8 @@ public class Ctrl_SearchTemplate_Edit
 
         if (checkResult.result) {
             dm_searchTemplate.save();
+            Stage stage = (Stage) btn_save.getScene().getWindow();
+            stage.close();
         } else {
 //            Window win = ((Node) actionEvent.getSource()).getScene().getWindow();
             Alert alert = new Alert(Alert.AlertType.WARNING);

@@ -12,15 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -59,9 +57,20 @@ public class Ctrl_SearchTemplate
                 ctrl_ill.addNeedEdit(dm_searchTemplate.getSearchTemplate());
                 break;
             case "btn_del":
-                ctrl_ill.addNeedDelete(
-                        dm_searchTemplate.getSearchTemplate()
-                );
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle(null);
+                alert.setHeaderText(null);
+                alert.setContentText("Удалить вариант поиска?");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.YES) {
+                    ctrl_ill.addNeedDelete(
+                            dm_searchTemplate.getSearchTemplate()
+                    );
+                }
                 break;
             default:
                 throw new GUI_Exception("Unexpected button code: " + ((Button) actionEvent.getSource()).getId());
@@ -94,6 +103,14 @@ public class Ctrl_SearchTemplate
         }
     }
 
+    protected void refresh() {
+        if (templateTypeObjectProperty.get().equals(TemplateType.substr)) {
+            type_text.setSelected(true);
+        } else {
+            type_reg.setSelected(true);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -102,12 +119,8 @@ public class Ctrl_SearchTemplate
         templateTypeObjectProperty.bindBidirectional(dm_searchTemplate.templateType_Propery());
 
         dm_searchTemplate.refresh();
+        refresh();
 
-        if (templateTypeObjectProperty.get().equals(TemplateType.substr)) {
-            type_text.setSelected(true);
-        } else {
-            type_reg.setSelected(true);
-        }
 
     }
 }

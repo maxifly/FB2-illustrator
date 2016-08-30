@@ -5,6 +5,7 @@ import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_SearchTemplate;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
+import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -45,8 +46,7 @@ public class Ctrl_Ill implements Initializable {
     }
 
     private SetProperty<SearchTemplate_POJO> searchTemplates = new SimpleSetProperty<>();
-    private Map<SearchTemplate_POJO, Node> searchTemplatesNodes = new HashMap<>();
-    private Map<SearchTemplate_POJO, DM_SearchTemplate> searchTemplateModels = new HashMap<>();
+    private Map<SearchTemplate_POJO, GUI_Obj> searchTemplates_GUIs = new HashMap<>();
 
 
 
@@ -62,6 +62,17 @@ public class Ctrl_Ill implements Initializable {
         this.factory_gui = factory_gui;
     }
 
+    @FXML
+    private void btn_add(ActionEvent actionEvent) throws IOException {
+        SearchTemplate_POJO stp = new SearchTemplate_POJO(TemplateType.substr,null,null);
+        GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
+        Stage stage = factory_gui.createModalWindow(gui_obj.node);
+        stage.showAndWait();
+
+        if (stp.template != null) {
+            showSearchTemplate(stp);
+        }
+    }
 
     private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change){
         while (change.next()) {
@@ -69,12 +80,11 @@ public class Ctrl_Ill implements Initializable {
                 // Надо удалить запись с шаблоном
                for (SearchTemplate_POJO stp : change.getAddedSubList()) {
                    System.out.println("delete stp " + stp);
-                   Node node = searchTemplatesNodes.get(stp);
+                   Node node = searchTemplates_GUIs.get(stp).node;
                    System.out.println("node " + node);
                    templates.getChildren().remove(node);
                    searchTemplates.getValue().remove(stp);
-                   searchTemplatesNodes.remove(stp);
-                   searchTemplateModels.remove(stp);
+                   searchTemplates_GUIs.remove(stp);
                    needDeleteList.remove(stp);
                }
             }
@@ -86,24 +96,11 @@ public class Ctrl_Ill implements Initializable {
             if (change.wasAdded()) {
                 // Надо редактировать запись с шаблоном
                 for (SearchTemplate_POJO stp : change.getAddedSubList()) {
-                    System.out.println("edit stp " + stp);
                     GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
-//                    Dialog<Boolean> dialog = new Dialog();
-//                    dialog.setTitle("Edit Dialog");
-//                    dialog.getDialogPane().setContent(gui_obj.node);
-//                    //dialog.getDialogPane().getButtonTypes().addAll( ButtonType.CANCEL);
-//                    dialog.showAndWait();
-//
-//                    System.out.println("kuku");
-
-
-                    System.out.println("kuku");
                     Stage stage = factory_gui.createModalWindow(gui_obj.node);
                     stage.showAndWait();
-                    System.out.println("after");
-//TODO надо через диалог
-
-                    searchTemplateModels.get(stp).refresh();
+                    ((DM_SearchTemplate) searchTemplates_GUIs.get(stp).dm_model).refresh();
+                    ((Ctrl_SearchTemplate) searchTemplates_GUIs.get(stp).controll).refresh();
                     needEditList.remove(stp);
                 }
             }
@@ -120,19 +117,21 @@ public class Ctrl_Ill implements Initializable {
     }
 
 
+    private void showSearchTemplate(SearchTemplate_POJO stp) throws IOException {
+        GUI_Obj gui_obj = factory_gui.createSearchTemplate(stp);
+        ((Ctrl_SearchTemplate) gui_obj.controll).setCtrl_ill(this);
+        // Отобразим эту ноду
+        templates.getChildren().add(gui_obj.node);
+        // Запомним связку этой ноды с шаблоном
+        searchTemplates_GUIs.put(stp,gui_obj);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());
         try {
             for (SearchTemplate_POJO stp : searchTemplates.getValue()) {
-                GUI_Obj gui_obj = factory_gui.createSearchTemplate(stp);
-                ((Ctrl_SearchTemplate) gui_obj.controll).setCtrl_ill(this);
-                // Отобразим эту ноду
-                templates.getChildren().add(gui_obj.node);
-                // Запомним связку этой ноды с шаблоном
-                searchTemplatesNodes.put(stp,gui_obj.node);
-                searchTemplateModels.put(stp,((DM_SearchTemplate) gui_obj.dm_model));
-
+                showSearchTemplate(stp);
             }
         } catch (IOException e) {
             e.printStackTrace();

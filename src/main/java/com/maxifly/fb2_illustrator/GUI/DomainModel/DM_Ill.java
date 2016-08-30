@@ -33,4 +33,9 @@ public class DM_Ill {
 
     }
 
+    public void addSearchTemplate(SearchTemplate_POJO searchTemplate_pojo) {
+        ill.addSearchTempale(searchTemplate_pojo);
+    }
+
+
 }
