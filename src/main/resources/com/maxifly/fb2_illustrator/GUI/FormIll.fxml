@@ -68,7 +68,7 @@
             </ToolBar>
             <ScrollPane minHeight="10.0" minWidth="10.0" prefHeight="469.0" prefWidth="337.0">
                <content>
-                  <VBox fx:id="templates" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="334.0" />
+                   <VBox fx:id="templates" prefHeight="463.0" prefWidth="334.0" />
                </content>
             </ScrollPane>
          </children>
