@@ -15,7 +15,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * Created by Maximus on 26.08.2016.
  */
-public class DM_SearchTemplate {
+public class DM_SearchTemplate extends DM_Abstract {
 
     private SearchTemplate_POJO searchTemplate;
     StringProperty template = new SimpleStringProperty();
@@ -74,5 +74,9 @@ public class DM_SearchTemplate {
         description.setValue(searchTemplate.description);
         template.setValue(searchTemplate.template);
         templateTypeObjectProperty.setValue(searchTemplate.templateType);
+    }
+
+    public void refresh() {
+        cancel();
     }
 }

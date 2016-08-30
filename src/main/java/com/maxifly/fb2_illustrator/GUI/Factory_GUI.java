@@ -110,29 +110,29 @@ public class Factory_GUI {
     }
 
 
-    public Pane createSearchTemplate()
+    public GUI_Obj createSearchTemplate()
             throws IOException {
         SearchTemplate_POJO searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr,null,null);
         return createSearchTemplate(searchTemplate_pojo);
 
     }
 
-    public Pane createSearchTemplate(SearchTemplate_POJO searchTemplate_pojo)
+    public GUI_Obj createSearchTemplate(SearchTemplate_POJO searchTemplate_pojo)
             throws IOException {
 //        Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
+        DM_SearchTemplate dm_searchTemplate = new DM_SearchTemplate();
+        dm_searchTemplate.setSearchTemplate(searchTemplate_pojo);
+
         loader.setLocation(Factory_GUI.class.getResource("FormSearchTemplate.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                DM_SearchTemplate dm_searchTemplate = new DM_SearchTemplate();
-                dm_searchTemplate.setSearchTemplate(searchTemplate_pojo);
                 return new Ctrl_SearchTemplate(dm_searchTemplate);
             }
         });
         Pane pane = loader.load();
-        return pane;
-
+        return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
     }
 
     public Pane createIll(Illustration ill)

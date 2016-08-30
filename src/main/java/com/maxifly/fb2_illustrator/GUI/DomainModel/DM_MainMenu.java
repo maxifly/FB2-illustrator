@@ -4,6 +4,7 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
@@ -40,14 +41,9 @@ public class DM_MainMenu {
     }
 
     public void project_open() throws IOException {
-
-        Pane pane = factory_gui.createSearchTemplate();
-
+        GUI_Obj gui_obj = factory_gui.createSearchTemplate();
         Scene scene = factory_gui.getMainScene();
-        ( (BorderPane) scene.getRoot()).setCenter(pane);
-
-
-
+        ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
     }
 
     public void ill() throws IOException {

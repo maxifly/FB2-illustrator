@@ -15,9 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.stage.Window;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +22,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Maximus on 26.08.2016.
  */
-public class Ctrl_SearchTemplate
+public class Ctrl_SearchTemplate_Edit
         extends Ctrl_Abstract
         implements Initializable {
 
@@ -40,34 +37,66 @@ public class Ctrl_SearchTemplate
     RadioButton type_text;
     @FXML
     RadioButton type_reg;
-
+    @FXML
+    Button btn_save;
+    @FXML
+    Button btn_cancel;
     @FXML
     Node main_node;
-
-    @FXML
-    VBox buttons;
 
 
     ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
 
 
 
-    public Ctrl_SearchTemplate(DM_SearchTemplate dm_searchTemplate) {
+    public Ctrl_SearchTemplate_Edit(DM_SearchTemplate dm_searchTemplate) {
         this.dm_searchTemplate = dm_searchTemplate;
     }
 
-
     @FXML
-    public void gp_mouse(MouseEvent mouseEvent) {
-        switch (mouseEvent.getEventType().getName()) {
-            case "MOUSE_ENTERED":
-                buttons.setVisible(true);
-                break;
-            case "MOUSE_EXITED":
-                buttons.setVisible(false);
-                break;
+    protected void radio_btn(ActionEvent actionEvent) {
+        if (type_text.isSelected()) {
+            templateTypeObjectProperty.setValue(TemplateType.substr);
+        } else if (type_reg.isSelected()) {
+            templateTypeObjectProperty.setValue(TemplateType.regexp);
         }
     }
+
+    @FXML
+    protected void cancel(ActionEvent actionEvent) {
+        dm_searchTemplate.cancel();
+        if (templateTypeObjectProperty.get().equals(TemplateType.substr)) {
+            type_text.setSelected(true);
+        } else {
+            type_reg.setSelected(true);
+        }
+    }
+
+    @FXML
+    protected void save(ActionEvent actionEvent) {
+        CheckResult checkResult = dm_searchTemplate.check();
+
+        if (checkResult.result) {
+            dm_searchTemplate.save();
+        } else {
+//            Window win = ((Node) actionEvent.getSource()).getScene().getWindow();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Exception");
+            alert.setHeaderText(null);
+            if (checkResult.message == null) {
+                alert.setContentText("Поля заполнены некорректно");
+            } else {
+                alert.setContentText("Поля заполнены некорректно \n" + checkResult.message);
+            }
+
+            alert.showAndWait();
+
+        }
+
+    }
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,7 +105,7 @@ public class Ctrl_SearchTemplate
         description.textProperty().bindBidirectional(dm_searchTemplate.description_Propery());
         templateTypeObjectProperty.bindBidirectional(dm_searchTemplate.templateType_Propery());
 
-        dm_searchTemplate.refresh();
+        dm_searchTemplate.cancel();
 
         if (templateTypeObjectProperty.get().equals(TemplateType.substr)) {
             type_text.setSelected(true);

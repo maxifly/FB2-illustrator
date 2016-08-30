@@ -2,6 +2,7 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -49,13 +50,10 @@ public class Ctrl_Ill implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());
         try {
-
             for (SearchTemplate_POJO stp : searchTemplates.getValue()) {
-                Node node = factory_gui.createSearchTemplate(stp);
-                templates.getChildren().add(node);
+                GUI_Obj gui_obj = factory_gui.createSearchTemplate(stp);
+                templates.getChildren().add(gui_obj.node);
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
