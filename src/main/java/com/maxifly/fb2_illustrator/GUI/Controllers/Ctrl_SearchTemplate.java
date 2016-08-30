@@ -2,6 +2,7 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.CheckResult;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_SearchTemplate;
+import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -51,15 +52,21 @@ public class Ctrl_SearchTemplate
 
 
     @FXML
-    private void buttons(ActionEvent actionEvent) {
+    private void buttons(ActionEvent actionEvent) throws GUI_Exception {
 
-//      switch (((Button) actionEvent.getSource()).getId()) {
-//          case
-//      }
+        switch (((Button) actionEvent.getSource()).getId()) {
+            case "btn_edit":
+                ctrl_ill.addNeedEdit(dm_searchTemplate.getSearchTemplate());
+                break;
+            case "btn_del":
+                ctrl_ill.addNeedDelete(
+                        dm_searchTemplate.getSearchTemplate()
+                );
+                break;
+            default:
+                throw new GUI_Exception("Unexpected button code: " + ((Button) actionEvent.getSource()).getId());
+        }
 
-        ctrl_ill.addNeedDelete(
-                dm_searchTemplate.getSearchTemplate()
-        );
 
     }
 
@@ -101,22 +108,6 @@ public class Ctrl_SearchTemplate
         } else {
             type_reg.setSelected(true);
         }
-
-
-        main_node.focusedProperty().addListener(
-                new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                        if (newValue) {
-                            System.out.println("Focused");
-                        } else {
-                            System.out.println("Focus lost");
-                        }
-                    }
-                }
-
-
-        );
 
     }
 }

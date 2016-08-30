@@ -8,6 +8,7 @@ import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -135,6 +136,25 @@ public class Factory_GUI {
         return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
     }
 
+    public GUI_Obj createSearchTemplate_Edit(SearchTemplate_POJO searchTemplate_pojo)
+            throws IOException {
+//        Factory_GUI factory_gui = this;
+        FXMLLoader loader = new FXMLLoader();
+        DM_SearchTemplate dm_searchTemplate = new DM_SearchTemplate();
+        dm_searchTemplate.setSearchTemplate(searchTemplate_pojo);
+
+        loader.setLocation(Factory_GUI.class.getResource("FormSearchTemplate_Edit.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_SearchTemplate_Edit(dm_searchTemplate);
+            }
+        });
+        Pane pane = loader.load();
+        return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
+    }
+
+
     public Pane createIll(Illustration ill)
             throws IOException {
         Factory_GUI factory_gui = this;
@@ -193,6 +213,31 @@ public class Factory_GUI {
         return stage;
 
     }
+
+    public Stage createModalWindow(Node node) throws IOException {
+        Factory_GUI factory_gui = this;
+        Stage stage = new Stage();
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(Factory_GUI.class.getResource("FormLogin.fxml"));
+//        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+//            @Override
+//            public Object call(Class<?> aClass) {
+//                dm_login = new DM_Login(factory_gui);
+//                return new Ctrl_Login(dm_login);
+//            }
+//        });
+        Parent root = new BorderPane();
+        ((BorderPane)root).setCenter(node);
+        stage.setScene(new Scene(root));
+        stage.setTitle("My modal window");
+        stage.initModality(Modality.WINDOW_MODAL);
+
+        stage.initOwner(this.getMainScene().getWindow() );
+
+        return stage;
+
+    }
+
 
     public MenuBar createMainMenu() throws IOException {
         FXMLLoader loader = new FXMLLoader();

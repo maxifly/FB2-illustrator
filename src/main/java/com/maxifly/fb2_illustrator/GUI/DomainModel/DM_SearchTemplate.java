@@ -18,10 +18,10 @@ import java.util.regex.PatternSyntaxException;
 public class DM_SearchTemplate extends DM_Abstract {
 
     private SearchTemplate_POJO searchTemplate;
-    StringProperty template = new SimpleStringProperty();
-    StringProperty description = new SimpleStringProperty();
+    private StringProperty template = new SimpleStringProperty();
+    private StringProperty description = new SimpleStringProperty();
 
-    ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
+    private ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
 
     public StringProperty template_Propery() {
         return this.template;
@@ -61,7 +61,6 @@ public class DM_SearchTemplate extends DM_Abstract {
 
             return new CheckResult(true);
 
-         //TODO Сделать проверку регулярного выражения
     }
 
     public void save() {
