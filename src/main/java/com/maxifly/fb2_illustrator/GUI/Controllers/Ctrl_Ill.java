@@ -6,10 +6,9 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SetProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleSetProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,13 +19,22 @@ import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -39,6 +47,12 @@ public class Ctrl_Ill implements Initializable {
     @FXML
     GridPane gridpane;
 
+    @FXML
+    ImageView picture;
+    @FXML
+    TextField picture_string;
+
+
 
     @FXML
     protected void kuku(ActionEvent actionEvent) {
@@ -46,7 +60,12 @@ public class Ctrl_Ill implements Initializable {
     }
 
     private SetProperty<SearchTemplate_POJO> searchTemplates = new SimpleSetProperty<>();
+    private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
+
+
     private Map<SearchTemplate_POJO, GUI_Obj> searchTemplates_GUIs = new HashMap<>();
+
+    private String defaultPicture = Factory_GUI.class.getResource("no_image.png").toString();
 
 
 
@@ -73,6 +92,21 @@ public class Ctrl_Ill implements Initializable {
             showSearchTemplate(stp);
         }
     }
+
+    @FXML
+    protected void button_picture_action(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        configureFileChooser(fileChooser, "Выбрать рисунок ");
+        Window win = ((Node) actionEvent.getSource()).getScene().getWindow();
+        File file = fileChooser.showOpenDialog(win);
+
+        if (file == null) {
+            picture_string.setText(null);
+        } else {
+            picture_string.setText(file.getAbsolutePath());
+        }
+    }
+
 
     private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change){
         while (change.next()) {
@@ -107,6 +141,13 @@ public class Ctrl_Ill implements Initializable {
         }
     }
 
+    private void picture_string_change(ObservableValue<? extends String> observable, String oldValue, String newValue){
+        Path newPath = FileSystems.getDefault().getPath(newValue);
+        dm_ill.setFile(newPath);
+        showImage(newPath);
+    }
+
+
 
     public void addNeedDelete(SearchTemplate_POJO needDelete_Template){
         needDeleteList.add(needDelete_Template);
@@ -126,9 +167,31 @@ public class Ctrl_Ill implements Initializable {
         searchTemplates_GUIs.put(stp,gui_obj);
     }
 
+    private void showImage(Path file_path) {
+        Image image = null;
+         if ( file_path!= null && (file_path.toFile().exists())) {
+            image = new Image(file_path.toString());
+        } else {
+            image = new Image(defaultPicture);
+        }
+        picture.setImage(image);
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());
+
+        picture_path.bindBidirectional(dm_ill.picture_path_Property());
+
+        showImage(picture_path.getValue());
+
+        if (picture_path.getValue() != null) {
+            picture_string.setText(picture_path.getValue().toString());
+        }
+
+
+
         try {
             for (SearchTemplate_POJO stp : searchTemplates.getValue()) {
                 showSearchTemplate(stp);
@@ -154,6 +217,27 @@ public class Ctrl_Ill implements Initializable {
             }
         });
 
+        picture_string.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                picture_string_change(observable, oldValue, newValue);
+            }
+        });
+
 
     }
+
+    private static void configureFileChooser(
+            final FileChooser fileChooser,
+            String title) {
+        fileChooser.setTitle(title);
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+        fileChooser.getExtensionFilters().addAll(
+//                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg")
+        );
+    }
+
 }

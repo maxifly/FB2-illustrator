@@ -16,6 +16,8 @@ import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 
 /**
  * Created by Maximus on 07.08.2016.
@@ -47,7 +49,7 @@ public class DM_MainMenu {
     }
 
     public void ill() throws IOException {
-        Illustration illustration = new Illustration("2", "desc_ill");
+        Illustration illustration = new Illustration("2", FileSystems.getDefault().getPath("file.jpg"), "desc_ill");
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp,"kuku","description"));
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku1","description1"));
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku2","description1"));
