@@ -11,7 +11,7 @@ import java.util.Set;
 public class Project {
     private String id = "123456789";
     private Set<SearchTemplate_POJO> bookNameTemplates = new HashSet<>();
-    private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять пор\док вставки
+    private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
 
 
 

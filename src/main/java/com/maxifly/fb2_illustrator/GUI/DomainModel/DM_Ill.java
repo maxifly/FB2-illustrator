@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Maxim.Pantuhin on 29.08.2016.
  */
-public class DM_Ill {
+public class DM_Ill extends DM_Abstract{
     private SetProperty<SearchTemplate_POJO> searchTemplates =
             new SimpleSetProperty<>();
 

@@ -173,6 +173,21 @@ public class Factory_GUI {
 
     }
 
+    public GUI_Obj createIllIco(DM_Ill dm_ill)
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormIll.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_IllIco(dm_ill);
+            }
+        });
+        Pane pane = loader.load();
+        return new GUI_Obj(pane, loader.getController(), dm_ill);
+    }
+
 
 
     public Pane createCertainAction() throws IOException {
