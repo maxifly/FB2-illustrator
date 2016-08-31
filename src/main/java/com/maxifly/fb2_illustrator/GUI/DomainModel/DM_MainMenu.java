@@ -6,6 +6,7 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.Illustration;
+import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.scene.Scene;
@@ -43,18 +44,22 @@ public class DM_MainMenu {
     }
 
     public void project_open() throws IOException {
-        GUI_Obj gui_obj = factory_gui.createSearchTemplate();
+
+        Project project = new Project();
+        Illustration illustration = createIll("1","kuku");
+        project.addIll(illustration);
+         illustration = createIll("2","tutu");
+        project.addIll(illustration);
+         illustration = createIll("3","lulu");
+        project.addIll(illustration);
+
+        GUI_Obj gui_obj = factory_gui.createProject(project);
         Scene scene = factory_gui.getMainScene();
         ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
     }
 
     public void ill() throws IOException {
-        Illustration illustration = new Illustration("2", FileSystems.getDefault().getPath("file.jpg"), "desc_ill");
-        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp,"kuku","description"));
-        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku1","description1"));
-        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku2","description1"));
-        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku3","description1"));
-        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,"kuku4","description1"));
+        Illustration illustration = createIll("2","kuku");
 
         Pane pane = factory_gui.createIll(illustration);
 
@@ -62,6 +67,18 @@ public class DM_MainMenu {
         ( (BorderPane) scene.getRoot()).setCenter(pane);
 
 
+
+    }
+
+
+    private Illustration createIll(String number, String prefix) {
+        Illustration illustration = new Illustration(number, FileSystems.getDefault().getPath("file.jpg"), "desc_ill");
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp, prefix + "0","description"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,prefix + "1","description1"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,prefix + "2","description1"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,prefix + "3","description1"));
+        illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,prefix + "4","description1"));
+        return illustration;
 
     }
 

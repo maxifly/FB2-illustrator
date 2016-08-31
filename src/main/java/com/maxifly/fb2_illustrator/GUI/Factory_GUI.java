@@ -4,6 +4,7 @@ import com.maxifly.fb2_illustrator.Fb2App;
 import com.maxifly.fb2_illustrator.GUI.Controllers.*;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.*;
 import com.maxifly.fb2_illustrator.model.Illustration;
+import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.fxml.FXMLLoader;
@@ -177,7 +178,7 @@ public class Factory_GUI {
             throws IOException {
         Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Factory_GUI.class.getResource("FormIll.fxml"));
+        loader.setLocation(Factory_GUI.class.getResource("FormIllIco.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
@@ -188,7 +189,22 @@ public class Factory_GUI {
         return new GUI_Obj(pane, loader.getController(), dm_ill);
     }
 
+    public GUI_Obj createProject(Project project)
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        DM_Project dm_project = new DM_Project(project);
 
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormProject.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_Project(factory_gui, dm_project);
+            }
+        });
+        Node node = loader.load();
+        return new GUI_Obj(node, loader.getController(), dm_project);
+    }
 
     public Pane createCertainAction() throws IOException {
         Factory_GUI factory_gui = this;
