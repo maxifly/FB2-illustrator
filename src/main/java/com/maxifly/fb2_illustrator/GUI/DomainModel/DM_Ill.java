@@ -18,13 +18,21 @@ public class DM_Ill {
             new SimpleSetProperty<>();
 
     private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
-
-
     private Illustration ill;
+
+    StringProperty ill_id = new SimpleStringProperty();
+    StringProperty ill_default_desc = new SimpleStringProperty();
+
 
 
     public SetProperty<SearchTemplate_POJO> searchTemplates_Property() {
         return this.searchTemplates;
+    }
+    public StringProperty ill_id_Property() {
+        return this.ill_id;
+    }
+    public StringProperty ill_default_desc_Property() {
+        return this.ill_default_desc;
     }
 
     public ObjectProperty<Path> picture_path_Property() {
@@ -36,6 +44,8 @@ public class DM_Ill {
         ObservableSet<SearchTemplate_POJO> stp = FXCollections.observableSet(ill.getSearchTemplates());
         searchTemplates.setValue(stp);
         picture_path.setValue(ill.getFile());
+        ill_id.setValue(ill.getId());
+        ill_default_desc.setValue(ill.getDescription());
     }
 
     public void addSearchTemplate(SearchTemplate_POJO searchTemplate_pojo) {

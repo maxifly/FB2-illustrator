@@ -16,10 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -32,7 +29,6 @@ import javafx.stage.Window;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.*;
@@ -51,6 +47,12 @@ public class Ctrl_Ill implements Initializable {
     ImageView picture;
     @FXML
     TextField picture_string;
+
+    @FXML
+    TextArea default_desc;
+
+    @FXML
+    Label ill_number;
 
 
 
@@ -170,7 +172,7 @@ public class Ctrl_Ill implements Initializable {
     private void showImage(Path file_path) {
         Image image = null;
          if ( file_path!= null && (file_path.toFile().exists())) {
-            image = new Image(file_path.toString());
+            image = new Image(file_path.toFile().toURI().toString());
         } else {
             image = new Image(defaultPicture);
         }
@@ -181,8 +183,10 @@ public class Ctrl_Ill implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());
-
         picture_path.bindBidirectional(dm_ill.picture_path_Property());
+
+        ill_number.textProperty().bindBidirectional(dm_ill.ill_id_Property());
+        default_desc.textProperty().bindBidirectional(dm_ill.ill_default_desc_Property());
 
         showImage(picture_path.getValue());
 
