@@ -23,5 +23,7 @@ public class Project {
         this.illustrations.add(illustration);
     }
 
-
+    public List<Illustration> getIllustrations() {
+        return illustrations;
+    }
 }

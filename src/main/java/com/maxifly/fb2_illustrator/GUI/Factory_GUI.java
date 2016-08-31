@@ -156,21 +156,22 @@ public class Factory_GUI {
     }
 
 
-    public Pane createIll(Illustration ill)
+    public GUI_Obj createIll(Illustration ill)
             throws IOException {
         Factory_GUI factory_gui = this;
+        DM_Ill dm_ill = new DM_Ill();
+        dm_ill.setIll(ill);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("FormIll.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                DM_Ill dm_ill = new DM_Ill();
-                dm_ill.setIll(ill);
+
                 return new Ctrl_Ill(factory_gui, dm_ill);
             }
         });
-        Pane pane = loader.load();
-        return pane;
+        Node node = loader.load();
+        return new GUI_Obj(node,loader.getController(),dm_ill);
 
     }
 

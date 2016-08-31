@@ -52,6 +52,16 @@ public class DM_MainMenu {
         project.addIll(illustration);
          illustration = createIll("3","lulu");
         project.addIll(illustration);
+        illustration = createIll("4","pupu");
+        project.addIll(illustration);
+         illustration = createIll("11","kuku");
+        project.addIll(illustration);
+         illustration = createIll("12","tutu");
+        project.addIll(illustration);
+         illustration = createIll("13","lulu");
+        project.addIll(illustration);
+        illustration = createIll("14","pupu");
+        project.addIll(illustration);
 
         GUI_Obj gui_obj = factory_gui.createProject(project);
         Scene scene = factory_gui.getMainScene();
@@ -61,10 +71,10 @@ public class DM_MainMenu {
     public void ill() throws IOException {
         Illustration illustration = createIll("2","kuku");
 
-        Pane pane = factory_gui.createIll(illustration);
+        GUI_Obj gui_obj = factory_gui.createIll(illustration);
 
         Scene scene = factory_gui.getMainScene();
-        ( (BorderPane) scene.getRoot()).setCenter(pane);
+        ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
 
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,14 +9,22 @@
 
 <SplitPane dividerPositions="0.3177257525083612" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_Project">
   <items>
-    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0">
+      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="10.0" minWidth="10.0" prefHeight="200.0" prefWidth="150.0" spacing="5.0">
          <children>
-            <VBox layoutX="14.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="161.0">
-               <children>
-                  <ScrollPane minHeight="10.0" minWidth="10.0" prefHeight="800.0" prefWidth="200.0" />
-               </children>
-            </VBox>
-         </children></AnchorPane>
+            <ScrollPane minHeight="10.0" minWidth="10.0" prefHeight="800.0">
+               <content>
+                  <VBox fx:id="illustrations" spacing="5.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="380.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />

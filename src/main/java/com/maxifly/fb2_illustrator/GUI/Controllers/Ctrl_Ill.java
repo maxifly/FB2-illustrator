@@ -36,7 +36,7 @@ import java.util.*;
 /**
  * Created by Maxim.Pantuhin on 29.08.2016.
  */
-public class Ctrl_Ill implements Initializable {
+public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
     @FXML
     VBox templates;
 
