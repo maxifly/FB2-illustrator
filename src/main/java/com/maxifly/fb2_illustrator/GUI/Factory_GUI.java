@@ -55,6 +55,8 @@ public class Factory_GUI {
     private DM_Login dm_login = null;
     private Scene mainScene;
 
+    private Ctrl_Project ctrl_project;
+
 
     public Scene getMainScene() throws IOException {
       if (this.mainScene == null) {
@@ -204,7 +206,14 @@ public class Factory_GUI {
             }
         });
         Node node = loader.load();
-        return new GUI_Obj(node, loader.getController(), dm_project);
+
+        // Надо сохранить эту переменную, чтобы не разрушился биндинг на значение
+        // интересное только контроллеру
+        // подробнее смотри: http://stackoverflow.com/questions/26312651/bidirectional-javafx-binding-is-destroyed-by-unrelated-code
+
+        this.ctrl_project = loader.getController();
+
+        return new GUI_Obj(node, ctrl_project, dm_project);
     }
 
     public Pane createCertainAction() throws IOException {

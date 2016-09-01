@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="10.0" minWidth="10.0" prefHeight="129.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco">
+<VBox fx:id="ico" alignment="TOP_CENTER" minHeight="10.0" minWidth="10.0" onMouseClicked="#mouse_clicked" prefHeight="129.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco">
    <children>
-      <ImageView fx:id="picture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="picture" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></ImageView>
       <Label fx:id="ill_number" text="Label">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
    </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
 </VBox>
