@@ -1,5 +1,9 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
+import com.maxifly.fb2_illustrator.App;
+import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import javafx.beans.property.ObjectProperty;
@@ -13,8 +17,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.net.URL;
 import java.nio.file.Path;
@@ -25,7 +31,10 @@ import java.util.ResourceBundle;
  */
 public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     //TODO Возможно стоит сделать этот класс родительским для DM_Ill?
-
+    public static IMessageConveyor mc = new MessageConveyor(
+            Constants.getLocaleApp());
+    public static LocLogger log = (new LocLoggerFactory(mc))
+            .getLocLogger(Ctrl_IllIco.class.getName());
 
     @FXML
     ImageView picture;
@@ -34,6 +43,7 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     @FXML
     Label ill_number;
+    String kuku = "kuku";
 
     private DM_Ill dm_ill;
     private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
@@ -51,6 +61,31 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     protected void mouse_clicked(MouseEvent mouseEvent) {
         // int i = 1;
         selected_dm_ill.setValue(dm_ill);
+    }
+
+    @FXML
+    protected void drag_detected(MouseEvent mouseEvent){
+        log.debug("Start drag and drop " + ill_number.getText());
+        Dragboard db = ((Node)mouseEvent.getSource()).startDragAndDrop(TransferMode.MOVE);
+        ClipboardContent content = new ClipboardContent();
+        
+        Image drop_image = createImage(picture_path.getValue(), 70, 70);
+
+        content.putString(kuku); //ill_number.getText());
+        db.setContent(content);
+        db.setDragView(drop_image);
+
+        mouseEvent.consume();
+    }
+
+    @FXML
+    protected void drag_over(DragEvent dragEvent) {
+//        log.debug("src: " + dragEvent.getSource() + " gesture: " + dragEvent.getGestureSource());
+        if (dragEvent.getGestureSource() != dragEvent.getSource()) {
+log.debug("true");
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+        }
+        dragEvent.consume();
     }
 
     public ObjectProperty<DM_Ill> selected_dm_ill_Property() {
@@ -77,6 +112,16 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
         }
     }
 
+
+    private Image createImage(Path file_path, int H, int W) {
+        Image image = null;
+        if (file_path != null && (file_path.toFile().exists())) {
+            image = new Image(file_path.toFile().toURI().toString(), H, W, true, false);
+        } else {
+            image = new Image(defaultPicture, H, W, true, false);
+        }
+        return image;
+    }
 
     private void showImage(Path file_path) {
         Image image = null;
