@@ -4,6 +4,7 @@ import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
+import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -26,8 +27,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Maxim.Pantuhin on 31.08.2016.
  */
-public class Ctrl_Project extends Ctrl_Abstract implements Initializable
-{
+public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
     @FXML
     VBox illustrations;
 
@@ -38,10 +38,12 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable
     private DM_Project dm_project;
 
     private ObjectProperty<DM_Ill> selected_ill = new SimpleObjectProperty<>();
+    private ObjectProperty<IllChangeOrder> ill_change_order = new SimpleObjectProperty<>();
+
+
     private Map<DM_Ill, Node> illNodes = new HashMap<>();
 
     private ListProperty<Illustration> illList = new SimpleListProperty<>();
-
 
 
     public Ctrl_Project(Factory_GUI factory_gui, DM_Project dm_project) {
@@ -55,18 +57,25 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable
         document_pane.setCenter(node);
     }
 
+    private void illChangeOrder(ObservableValue<? extends IllChangeOrder> observable, IllChangeOrder oldValue, IllChangeOrder newValue) {
+
+
+    }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         illList.bindBidirectional(dm_project.illustrations_Property());
 
-        for (Illustration ill:illList) {
+        for (Illustration ill : illList) {
             try {
                 GUI_Obj gui_obj = factory_gui.createIll(ill);
-                GUI_Obj gui_obj_ico = factory_gui.createIllIco( (DM_Ill) gui_obj.dm_model);
+                GUI_Obj gui_obj_ico = factory_gui.createIllIco((DM_Ill) gui_obj.dm_model);
 
-                illNodes.put((DM_Ill) gui_obj.dm_model,gui_obj.node);
-                selected_ill.bindBidirectional( ((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
+                illNodes.put((DM_Ill) gui_obj.dm_model, gui_obj.node);
+                selected_ill.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
+                ill_change_order.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).ill_change_order_Property());
 
                 illustrations.getChildren().add(gui_obj_ico.node);
             } catch (IOException e) {
@@ -77,9 +86,18 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable
         selected_ill.addListener(new ChangeListener<DM_Ill>() {
             @Override
             public void changed(ObservableValue<? extends DM_Ill> observable, DM_Ill oldValue, DM_Ill newValue) {
-                changeSelected_Ill(observable,  oldValue,  newValue);
+                changeSelected_Ill(observable, oldValue, newValue);
             }
         });
+
+        ill_change_order.addListener(new ChangeListener<IllChangeOrder>() {
+            @Override
+            public void changed(ObservableValue<? extends IllChangeOrder> observable, IllChangeOrder oldValue, IllChangeOrder newValue) {
+                illChangeOrder(observable, oldValue, newValue);
+            }
+        });
+
+
 
     }
 }

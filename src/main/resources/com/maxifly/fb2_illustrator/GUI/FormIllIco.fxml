@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="ico" alignment="TOP_CENTER" minHeight="10.0" minWidth="10.0" onDragDetected="#drag_detected" onDragOver="#drag_over" onMouseClicked="#mouse_clicked" prefHeight="129.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco">
+<VBox fx:id="ico" alignment="TOP_CENTER" minHeight="10.0" minWidth="10.0" onDragDetected="#drag_detected" onDragDropped="#drag_dropped" onDragEntered="#drag_entered" onDragExited="#drag_exited" onDragOver="#drag_over" onMouseClicked="#mouse_clicked" prefHeight="129.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco">
    <children>
       <ImageView fx:id="picture" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
          <VBox.margin>

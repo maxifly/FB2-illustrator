@@ -6,6 +6,7 @@ import com.maxifly.fb2_illustrator.App;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -43,14 +46,19 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     @FXML
     Label ill_number;
-    String kuku = "kuku";
+    String drag_string = "fb2_ill:";
 
     private DM_Ill dm_ill;
     private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
     private ObjectProperty<DM_Ill> selected_dm_ill = new SimpleObjectProperty<>();
+    private ObjectProperty<IllChangeOrder> ill_change_order = new SimpleObjectProperty<>();
+
+
+
 
 
     private String defaultPicture = Factory_GUI.class.getResource("no_image.png").toString();
+    private Effect dragEnterEffect = new SepiaTone();
 
 
     public Ctrl_IllIco(DM_Ill dm_ill) {
@@ -71,7 +79,7 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
         
         Image drop_image = createImage(picture_path.getValue(), 70, 70);
 
-        content.putString(kuku); //ill_number.getText());
+        content.putString(drag_string); //ill_number.getText());
         db.setContent(content);
         db.setDragView(drop_image);
 
@@ -80,19 +88,67 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     @FXML
     protected void drag_over(DragEvent dragEvent) {
-//        log.debug("src: " + dragEvent.getSource() + " gesture: " + dragEvent.getGestureSource());
-        if (dragEvent.getGestureSource() != dragEvent.getSource()) {
-log.debug("true");
+        if ( dragSuitable(dragEvent)
+                && dragEvent.getGestureSource() != dragEvent.getSource()) {
             dragEvent.acceptTransferModes(TransferMode.MOVE);
         }
         dragEvent.consume();
     }
 
+    @FXML
+    protected void drag_entered(DragEvent dragEvent ) {
+        if (dragSuitable(dragEvent)
+                && dragEvent.getGestureSource() != dragEvent.getSource()) {
+            ((Node)dragEvent.getSource()).setEffect(dragEnterEffect);
+        }
+        dragEvent.consume();
+    }
+
+    @FXML
+    protected void drag_exited(DragEvent dragEvent ) {
+        if (dragSuitable(dragEvent)
+                && dragEvent.getGestureSource() != dragEvent.getSource()) {
+            ((Node)dragEvent.getSource()).setEffect(null);
+        }
+        dragEvent.consume();
+    }
+
+    @FXML
+    protected void drag_dropped(DragEvent dragEvent) {
+        boolean success = false;
+        if(dragSuitable(dragEvent)
+                && dragEvent.getGestureSource() != dragEvent.getSource() ) {
+
+          // Надо на родительском контроле выполнить функцию по перемещению объектов
+
+            success = true;
+        }
+        dragEvent.setDropCompleted(success);
+        dragEvent.consume();
+
+    }
+
+    /**
+     * Определяет подходит ли объект для драг анд дропа или нет
+     * @param dragEvent
+     * @return
+     */
+    private boolean dragSuitable(DragEvent dragEvent) {
+        Object gesture = dragEvent.getGestureSource();
+        return (gesture instanceof Node)
+                && dragEvent.getDragboard().hasString()
+                && dragEvent.getDragboard().getString().indexOf(drag_string) == 0;
+    }
+
+
     public ObjectProperty<DM_Ill> selected_dm_ill_Property() {
 
         return this.selected_dm_ill;
     }
+    public ObjectProperty<IllChangeOrder> ill_change_order_Property() {
 
+        return this.ill_change_order;
+    }
     private void changeSelected(ObservableValue<? extends DM_Ill> observable, DM_Ill oldValue, DM_Ill newValue) {
 
         if (dm_ill.equals(oldValue) && (!dm_ill.equals(newValue))) {
