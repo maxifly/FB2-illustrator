@@ -1,10 +1,14 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
+import com.google.gson.Gson;
+import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.ILL_IllIco_Nodes;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -12,14 +16,17 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -38,10 +45,11 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
     private DM_Project dm_project;
 
     private ObjectProperty<DM_Ill> selected_ill = new SimpleObjectProperty<>();
-    private ObjectProperty<IllChangeOrder> ill_change_order = new SimpleObjectProperty<>();
+//    private ObjectProperty<IllChangeOrder> ill_change_order = new SimpleObjectProperty<>();
 
 
-    private Map<DM_Ill, Node> illNodes = new HashMap<>();
+    private Map<DM_Ill, ILL_IllIco_Nodes> illNodes = new HashMap<>();
+    private Map<Illustration, DM_Ill> ill_model = new HashMap<>();
 
     private ListProperty<Illustration> illList = new SimpleListProperty<>();
 
@@ -53,16 +61,50 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
 
     private void changeSelected_Ill(ObservableValue<? extends DM_Ill> observable, DM_Ill oldValue, DM_Ill newValue) {
-        Node node = illNodes.get(newValue);
+        Node node = illNodes.get(newValue).getIll();
         document_pane.setCenter(node);
     }
 
-    private void illChangeOrder(ObservableValue<? extends IllChangeOrder> observable, IllChangeOrder oldValue, IllChangeOrder newValue) {
+    private void changeIllLIst(ObservableValue<? extends ObservableList<Illustration>> observable, ObservableList<Illustration> oldValue, ObservableList<Illustration> newValue) {
+        ArrayList<Node> changeIll = new ArrayList<>();
+        for (Illustration ill:illList) {
+            DM_Ill dm_ill = ill_model.get(ill);
+            dm_ill.refreshId();
+            changeIll.add(illNodes.get(dm_ill).getIllIco());
+        }
+        illustrations.getChildren().clear();
+        illustrations.getChildren().addAll(changeIll);
 
+        System.out.println("old: " + oldValue.size() + " new: " + newValue.size());
 
     }
 
+    @FXML
+    protected void drag_dropped(DragEvent dragEvent) throws MyException {
+        if (dragEvent.isDropCompleted() && dragSuitable(dragEvent) ) {
+            // Драг и дроп успешно закончился.
+            // Надо перечитать порядок иллюстраций
 
+           String json = getDraggedIllId(dragEvent);
+           IllChangeOrder illChangeOrder = new Gson().fromJson(json, IllChangeOrder.class);
+
+           dm_project.moveIll(illChangeOrder.getMoveIllNum(), illChangeOrder.getBeforeIllNum());
+           dm_project.refreshIllList();
+        }
+        dragEvent.consume();
+    }
+
+    private String getDraggedIllId(DragEvent dragEvent) {
+        String st = dragEvent.getDragboard().getString();
+        return st.substring(Constants.drag_string.length());
+    }
+
+    private boolean dragSuitable(DragEvent dragEvent) {
+        Object gesture = dragEvent.getGestureSource();
+        return (gesture instanceof Node)
+                && dragEvent.getDragboard().hasString()
+                && dragEvent.getDragboard().getString().indexOf(Constants.drag_string) == 0;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,9 +115,10 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
                 GUI_Obj gui_obj = factory_gui.createIll(ill);
                 GUI_Obj gui_obj_ico = factory_gui.createIllIco((DM_Ill) gui_obj.dm_model);
 
-                illNodes.put((DM_Ill) gui_obj.dm_model, gui_obj.node);
+                illNodes.put((DM_Ill) gui_obj.dm_model, new ILL_IllIco_Nodes(gui_obj.node,gui_obj_ico.node) );
+                ill_model.put(ill, (DM_Ill) gui_obj.dm_model);
                 selected_ill.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
-                ill_change_order.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).ill_change_order_Property());
+//                ill_change_order.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).ill_change_order_Property());
 
                 illustrations.getChildren().add(gui_obj_ico.node);
             } catch (IOException e) {
@@ -90,10 +133,10 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
             }
         });
 
-        ill_change_order.addListener(new ChangeListener<IllChangeOrder>() {
+        illList.addListener(new ChangeListener<ObservableList<Illustration>>() {
             @Override
-            public void changed(ObservableValue<? extends IllChangeOrder> observable, IllChangeOrder oldValue, IllChangeOrder newValue) {
-                illChangeOrder(observable, oldValue, newValue);
+            public void changed(ObservableValue<? extends ObservableList<Illustration>> observable, ObservableList<Illustration> oldValue, ObservableList<Illustration> newValue) {
+                changeIllLIst(observable, oldValue, newValue);
             }
         });
 

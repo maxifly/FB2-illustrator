@@ -8,6 +8,7 @@ import java.util.Locale;
 public class Constants {
 
     private static final String applId = "5509552"; // Идентификатор приложения в ВК
+    public  static final String drag_string = "fb2_ill:"; // Признак объекта участвующего в drug and drop при смене порядка иллюстраций
 
 
     static final Locale LOCALE_APP = Locale.ENGLISH;

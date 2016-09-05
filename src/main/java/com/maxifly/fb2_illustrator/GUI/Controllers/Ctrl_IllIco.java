@@ -2,11 +2,15 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.App;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
+import com.maxifly.fb2_illustrator.MyException;
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -46,15 +50,11 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     @FXML
     Label ill_number;
-    String drag_string = "fb2_ill:";
+
 
     private DM_Ill dm_ill;
     private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
     private ObjectProperty<DM_Ill> selected_dm_ill = new SimpleObjectProperty<>();
-    private ObjectProperty<IllChangeOrder> ill_change_order = new SimpleObjectProperty<>();
-
-
-
 
 
     private String defaultPicture = Factory_GUI.class.getResource("no_image.png").toString();
@@ -79,7 +79,7 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
         
         Image drop_image = createImage(picture_path.getValue(), 70, 70);
 
-        content.putString(drag_string); //ill_number.getText());
+        content.putString(Constants.drag_string+ ill_number.getText());
         db.setContent(content);
         db.setDragView(drop_image);
 
@@ -89,8 +89,11 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     @FXML
     protected void drag_over(DragEvent dragEvent) {
         if ( dragSuitable(dragEvent)
-                && dragEvent.getGestureSource() != dragEvent.getSource()) {
-            dragEvent.acceptTransferModes(TransferMode.MOVE);
+                && dragEvent.getGestureSource() != dragEvent.getSource()
+                ) {
+
+            if (Integer.valueOf(ill_number.getText()) != (Integer.valueOf(getDraggedIllId(dragEvent)+1) )) {
+            dragEvent.acceptTransferModes(TransferMode.MOVE);}
         }
         dragEvent.consume();
     }
@@ -114,17 +117,25 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     }
 
     @FXML
-    protected void drag_dropped(DragEvent dragEvent) {
+    protected void drag_dropped(DragEvent dragEvent)  {
         boolean success = false;
         if(dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource() ) {
-
-          // Надо на родительском контроле выполнить функцию по перемещению объектов
-
+          // В клипбоард вставим информацию о том, какой объект и куда переместился
+            IllChangeOrder illChangeOrder = new IllChangeOrder(getDraggedIllId(dragEvent), ill_number.getText());
+            ClipboardContent content = new ClipboardContent();
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
+            String json = gson.toJson(illChangeOrder);
+            content.putString(Constants.drag_string+json);
+            dragEvent.getDragboard().setContent(content);
             success = true;
         }
         dragEvent.setDropCompleted(success);
-        dragEvent.consume();
+
+        // Теперь будет вызвано такое же событие у родительского объекта, который отвечает за проект.
+        // Он и обработает перемещение.
 
     }
 
@@ -137,18 +148,19 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
         Object gesture = dragEvent.getGestureSource();
         return (gesture instanceof Node)
                 && dragEvent.getDragboard().hasString()
-                && dragEvent.getDragboard().getString().indexOf(drag_string) == 0;
+                && dragEvent.getDragboard().getString().indexOf(Constants.drag_string) == 0;
     }
 
+    private String getDraggedIllId(DragEvent dragEvent) {
+        String st = dragEvent.getDragboard().getString();
+        return st.substring(Constants.drag_string.length());
+    }
 
     public ObjectProperty<DM_Ill> selected_dm_ill_Property() {
 
         return this.selected_dm_ill;
     }
-    public ObjectProperty<IllChangeOrder> ill_change_order_Property() {
 
-        return this.ill_change_order;
-    }
     private void changeSelected(ObservableValue<? extends DM_Ill> observable, DM_Ill oldValue, DM_Ill newValue) {
 
         if (dm_ill.equals(oldValue) && (!dm_ill.equals(newValue))) {

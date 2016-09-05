@@ -11,4 +11,12 @@ public class IllChangeOrder {
         this.moveIllNum = moveIllNum;
         this.beforeIllNum = beforeIllNum;
     }
+
+    public String getMoveIllNum() {
+        return moveIllNum;
+    }
+
+    public String getBeforeIllNum() {
+        return beforeIllNum;
+    }
 }

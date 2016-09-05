@@ -1,5 +1,6 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import javafx.beans.property.*;
@@ -55,6 +56,13 @@ public class DM_Ill extends DM_Abstract{
     public void setFile(Path file) {
         ill.setFile(file);
         picture_path.setValue(file);
+    }
+
+//    public void moveIll(String movedIllId) throws MyException {
+//        ill.getProject().moveIll(movedIllId,ill_id.getValue());
+//    }
+    public void refreshId(){
+        ill_id.setValue(ill.getId());
     }
 
 

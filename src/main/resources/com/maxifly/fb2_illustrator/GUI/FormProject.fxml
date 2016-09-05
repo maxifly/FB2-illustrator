@@ -11,7 +11,7 @@
   <items>
       <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="10.0" minWidth="10.0" prefHeight="200.0" prefWidth="150.0" spacing="5.0">
          <children>
-            <ScrollPane minHeight="10.0" minWidth="10.0" prefHeight="800.0">
+            <ScrollPane minHeight="10.0" minWidth="10.0" onDragDropped="#drag_dropped" prefHeight="800.0">
                <content>
                   <VBox fx:id="illustrations" spacing="5.0">
                      <padding>

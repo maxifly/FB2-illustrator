@@ -1,6 +1,12 @@
 package com.maxifly.fb2_illustrator.model;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
+import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco;
 import com.maxifly.fb2_illustrator.MyException;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +17,11 @@ import java.util.Set;
  * Created by Maxim.Pantuhin on 25.08.2016.
  */
 public class Project {
+    public static IMessageConveyor mc = new MessageConveyor(
+            Constants.getLocaleApp());
+    public static LocLogger log = (new LocLoggerFactory(mc))
+            .getLocLogger(Project.class.getName());
+
     private String id = "123456789";
     private Set<SearchTemplate_POJO> bookNameTemplates = new HashSet<>();
     private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
@@ -38,6 +49,8 @@ public class Project {
      * @param beforeIllId - перед какой поставить (если null - то сделать последней)
      */
     public void moveIll(String moveIllId, String beforeIllId ) throws MyException {
+        log.debug("Move ill {} before {} ",moveIllId, beforeIllId);
+
         ArrayList<Illustration> changeList = new ArrayList();
 
         // Сначала найдем иллюстрацию, которую надо передвинуть
@@ -78,7 +91,7 @@ public class Project {
 
         // Скопируем в новый массив элементы, которые идут без изменений
         if (idx != 0) {
-            changeList.addAll(illustrations.subList(0,idx-1));
+            changeList.addAll(illustrations.subList(0,idx));
         }
 
         // Теперь переберем остаток, так как у остатка надо менять id
@@ -111,6 +124,8 @@ public class Project {
         // Теперь вставим новый список вместо старого
         illustrations.clear();
         illustrations.addAll(changeList);
+
+        System.out.println("illustrations: " + illustrations.size());
     }
 
 
