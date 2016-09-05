@@ -29,6 +29,8 @@ public class Illustration {
 
     private Set<SearchTemplate_POJO> searchTemplates;
 
+    private Project project; // Ссылка на проект, в который включена иллюстрация
+
 
     public Illustration(String id, String def_description) {
         this.id = id;
@@ -41,6 +43,16 @@ public class Illustration {
         this(id,def_description);
         this.file = file;
     }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+
 
 
     public Set<SearchTemplate_POJO> getSearchTemplates() {
@@ -107,6 +119,10 @@ public class Illustration {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void addSearchTempale(SearchTemplate_POJO searchTemplate) {
