@@ -192,6 +192,13 @@ public class Factory_GUI {
         return new GUI_Obj(pane, loader.getController(), dm_ill);
     }
 
+    public GUI_Obj createIcoDelimiter() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormIcoDelimiter.fxml"));
+        Node node = loader.load();
+        return new GUI_Obj(node,loader.getController(),null);
+    }
+
     public GUI_Obj createProject(Project project)
             throws IOException {
         Factory_GUI factory_gui = this;
