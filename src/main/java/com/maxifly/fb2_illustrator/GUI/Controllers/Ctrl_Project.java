@@ -81,7 +81,7 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
     @FXML
     protected void drag_dropped(DragEvent dragEvent) throws MyException {
-        if (dragEvent.isDropCompleted() && dragSuitable(dragEvent) ) {
+        if (dragEvent.isDropCompleted() && dragSuitable(dragEvent) ) { //TODO ДОбавить порождение и вставку делимитеров
             // Драг и дроп успешно закончился.
             // Надо перечитать порядок иллюстраций
 
