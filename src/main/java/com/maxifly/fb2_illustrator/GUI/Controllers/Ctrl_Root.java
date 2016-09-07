@@ -16,16 +16,14 @@ public class Ctrl_Root implements Initializable{
  @FXML
     BorderPane root;
 
-    public void setListeners() {
-        root.getScene().widthProperty().addListener(
-                new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                        System.out.println("with " + newValue);
-                        System.out.println("root with "+  root.getWidth());
-                    }
-                });
-    }
+//    public void setListeners() {
+//        root.getScene().widthProperty().addListener(
+//                new ChangeListener<Number>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                    }
+//                });
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -75,7 +75,7 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
         illustrations.getChildren().clear();
         illustrations.getChildren().addAll(changeIll);
 
-        System.out.println("old: " + oldValue.size() + " new: " + newValue.size());
+//        System.out.println("old: " + oldValue.size() + " new: " + newValue.size());
 
     }
 

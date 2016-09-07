@@ -126,7 +126,7 @@ public class Project {
         illustrations.clear();
         illustrations.addAll(changeList);
 
-        System.out.println("illustrations: " + illustrations.size());
+//        System.out.println("illustrations: " + illustrations.size());
     }
 
 

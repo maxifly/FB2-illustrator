@@ -86,7 +86,7 @@ public class Factory_GUI {
 
         Scene scene = new Scene(root, 400, 250);
         Ctrl_Root ctrl_root = loader.getController();
-        ctrl_root.setListeners();
+//        ctrl_root.setListeners();
         scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
         return scene;
     }
@@ -192,12 +192,7 @@ public class Factory_GUI {
         return new GUI_Obj(pane, loader.getController(), dm_ill);
     }
 
-    public GUI_Obj createIcoDelimiter() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Factory_GUI.class.getResource("FormIcoDelimiter.fxml"));
-        Node node = loader.load();
-        return new GUI_Obj(node,loader.getController(),null);
-    }
+
 
     public GUI_Obj createProject(Project project)
             throws IOException {
