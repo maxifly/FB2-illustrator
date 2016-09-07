@@ -50,6 +50,7 @@ public class Project {
      */
     public void moveIll(String moveIllId, String beforeIllId ) throws MyException {
         log.debug("Move ill {} before {} ",moveIllId, beforeIllId);
+        if(moveIllId.equals(beforeIllId)) return;
 
         ArrayList<Illustration> changeList = new ArrayList();
 
@@ -76,9 +77,9 @@ public class Project {
         if (moveIll_idx == -1) {
             throw new MyException("Не найдена иллюстрация с идентификатором " + moveIllId);
         }
-        if (beforeIllId != null && beforeIll_Idx == -1) {
-            throw new MyException("Не найдена иллюстрация с идентификатором " + beforeIllId);
-        }
+//        if (beforeIllId != null && beforeIll_Idx == -1) {
+//            throw new MyException("Не найдена иллюстрация с идентификатором " + beforeIllId);
+//        }
 
         // Сформируем новый список
         if (beforeIll_Idx == -1) {

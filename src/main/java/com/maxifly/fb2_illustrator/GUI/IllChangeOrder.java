@@ -15,7 +15,6 @@ public class IllChangeOrder {
     public String getMoveIllNum() {
         return moveIllNum;
     }
-
     public String getBeforeIllNum() {
         return beforeIllNum;
     }

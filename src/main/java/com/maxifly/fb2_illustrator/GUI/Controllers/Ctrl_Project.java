@@ -114,15 +114,15 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
             try {
                 GUI_Obj gui_obj = factory_gui.createIll(ill);
                 GUI_Obj gui_obj_ico = factory_gui.createIllIco((DM_Ill) gui_obj.dm_model);
-                GUI_Obj gui_obj_delimiter = factory_gui.createIcoDelimiter();
+//                GUI_Obj gui_obj_delimiter = factory_gui.createIcoDelimiter();
 
                 illNodes.put((DM_Ill) gui_obj.dm_model, new ILL_IllIco_Nodes(gui_obj.node,gui_obj_ico.node) );
                 ill_model.put(ill, (DM_Ill) gui_obj.dm_model);
                 selected_ill.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
 //                ill_change_order.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).ill_change_order_Property());
 
-                ((Ctrl_IcoDelimiter) gui_obj_delimiter.controll).setIll_before_id(((DM_Ill) gui_obj.dm_model).ill_id_Property().getValue());
-                illustrations.getChildren().add(gui_obj_delimiter.node); //TODO Переписать драг_and_drop на делимитеры
+//                ((Ctrl_IcoDelimiter) gui_obj_delimiter.controll).setIll_before_id(((DM_Ill) gui_obj.dm_model).ill_id_Property().getValue());
+//                illustrations.getChildren().add(gui_obj_delimiter.node); //TODO Переписать драг_and_drop на делимитеры
                 illustrations.getChildren().add(gui_obj_ico.node);
 
             } catch (IOException e) {

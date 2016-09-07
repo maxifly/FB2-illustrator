@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -50,6 +51,10 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     @FXML
     Label ill_number;
+    @FXML
+    Line line_before;
+    @FXML
+    Line line_after;
 
 
     private DM_Ill dm_ill;
@@ -93,7 +98,21 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
                 ) {
 
             if (Integer.valueOf(ill_number.getText()) != (Integer.valueOf(getDraggedIllId(dragEvent)+1) )) {
-            dragEvent.acceptTransferModes(TransferMode.MOVE);}
+
+                // Определим, в верхней или нижней части находимся
+                double mouseY = dragEvent.getY();
+                double nodeHeight = 90;//((VBox)dragEvent.getSource()).getHeight();
+
+//                log.debug("mouseY: " + mouseY + " nodeHeight: " + nodeHeight);
+                if(mouseY < ((nodeHeight)/2)) {
+                    if (!line_before.isVisible()) line_before.setVisible(true);
+                    if(line_after.isVisible()) line_after.setVisible(false);
+                } else {
+                    if (line_before.isVisible()) line_before.setVisible(false);
+                    if(!line_after.isVisible()) line_after.setVisible(true);
+                }
+
+                dragEvent.acceptTransferModes(TransferMode.MOVE);}
         }
         dragEvent.consume();
     }
@@ -102,7 +121,11 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     protected void drag_entered(DragEvent dragEvent ) {
         if (dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource()) {
-            ((Node)dragEvent.getSource()).setEffect(dragEnterEffect);
+            // Обозначим иконку над которой находится мышка
+            picture.setEffect(dragEnterEffect);
+//            ((Node)dragEvent.getSource()).setEffect(dragEnterEffect);
+
+
         }
         dragEvent.consume();
     }
@@ -111,7 +134,10 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     protected void drag_exited(DragEvent dragEvent ) {
         if (dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource()) {
-            ((Node)dragEvent.getSource()).setEffect(null);
+//            ((Node)dragEvent.getSource()).setEffect(null);
+            picture.setEffect(null);
+            if (line_before.isVisible()) line_before.setVisible(false);
+            if(line_after.isVisible()) line_after.setVisible(false);
         }
         dragEvent.consume();
     }
@@ -122,7 +148,10 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
         if(dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource() ) {
           // В клипбоард вставим информацию о том, какой объект и куда переместился
-            IllChangeOrder illChangeOrder = new IllChangeOrder(getDraggedIllId(dragEvent), ill_number.getText());
+            String before = (line_before.isVisible())?ill_number.getText():
+                    ((Integer)(Integer.valueOf(ill_number.getText())+1)).toString();
+
+            IllChangeOrder illChangeOrder = new IllChangeOrder(getDraggedIllId(dragEvent), before);
             ClipboardContent content = new ClipboardContent();
             Gson gson = new GsonBuilder()
                     .setPrettyPrinting()
@@ -132,6 +161,8 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
             dragEvent.getDragboard().setContent(content);
             success = true;
         }
+        if (line_before.isVisible()) line_before.setVisible(false);
+        if(line_after.isVisible()) line_after.setVisible(false);
         dragEvent.setDropCompleted(success);
 
         // Теперь будет вызвано такое же событие у родительского объекта, который отвечает за проект.
