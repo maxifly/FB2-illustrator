@@ -9,13 +9,10 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
-import com.maxifly.fb2_illustrator.MyException;
-import com.sun.corba.se.impl.orbutil.closure.Constant;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -148,8 +145,8 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
         if(dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource() ) {
           // В клипбоард вставим информацию о том, какой объект и куда переместился
-            String before = (line_before.isVisible())?ill_number.getText():
-                    ((Integer)(Integer.valueOf(ill_number.getText())+1)).toString();
+            Integer before = (line_before.isVisible())? Integer.valueOf(ill_number.getText()):
+                    ((Integer)(Integer.valueOf(ill_number.getText())+1));
 
             IllChangeOrder illChangeOrder = new IllChangeOrder(getDraggedIllId(dragEvent), before);
             ClipboardContent content = new ClipboardContent();
@@ -182,9 +179,9 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
                 && dragEvent.getDragboard().getString().indexOf(Constants.drag_string) == 0;
     }
 
-    private String getDraggedIllId(DragEvent dragEvent) {
+    private Integer getDraggedIllId(DragEvent dragEvent) {
         String st = dragEvent.getDragboard().getString();
-        return st.substring(Constants.drag_string.length());
+        return Integer.valueOf(st.substring(Constants.drag_string.length()));
     }
 
     public ObjectProperty<DM_Ill> selected_dm_ill_Property() {

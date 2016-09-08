@@ -47,7 +47,7 @@ public class IllustrationParser {
         for (Image img : images.getImage()) {
 
             Illustration ill = new Illustration(
-                    "ill" + i,
+                    i,
                     FileSystems.getDefault().getPath(illPath, img.getFile()),
                     img.getDefaultDesc()
             );

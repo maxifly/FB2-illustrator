@@ -46,21 +46,21 @@ public class DM_MainMenu {
     public void project_open() throws IOException {
 
         Project project = new Project();
-        Illustration illustration = createIll("1","kuku");
+        Illustration illustration = createIll(1,"kuku");
         project.addIll(illustration);
-         illustration = createIll("2","tutu");
+         illustration = createIll(2,"tutu");
         project.addIll(illustration);
-         illustration = createIll("3","lulu");
+         illustration = createIll(3,"lulu");
         project.addIll(illustration);
-        illustration = createIll("4","pupu");
+        illustration = createIll(4,"pupu");
         project.addIll(illustration);
-         illustration = createIll("11","kuku");
+         illustration = createIll(11,"kuku");
         project.addIll(illustration);
-         illustration = createIll("12","tutu");
+         illustration = createIll(12,"tutu");
         project.addIll(illustration);
-         illustration = createIll("13","lulu");
+         illustration = createIll(13,"lulu");
         project.addIll(illustration);
-        illustration = createIll("14","pupu");
+        illustration = createIll(14,"pupu");
         project.addIll(illustration);
 
         GUI_Obj gui_obj = factory_gui.createProject(project);
@@ -69,7 +69,7 @@ public class DM_MainMenu {
     }
 
     public void ill() throws IOException {
-        Illustration illustration = createIll("2","kuku");
+        Illustration illustration = createIll(2,"kuku");
 
         GUI_Obj gui_obj = factory_gui.createIll(illustration);
 
@@ -81,7 +81,7 @@ public class DM_MainMenu {
     }
 
 
-    private Illustration createIll(String number, String prefix) {
+    private Illustration createIll(Integer number, String prefix) {
         Illustration illustration = new Illustration(number, FileSystems.getDefault().getPath("file.jpg"), "desc_ill");
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp, prefix + "0","description"));
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,prefix + "1","description1"));

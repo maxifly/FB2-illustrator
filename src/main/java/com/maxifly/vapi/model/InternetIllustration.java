@@ -16,7 +16,9 @@ public class InternetIllustration extends Illustration {
                                 int illSubNum
 
                                 ) {
-        super(id, def_description);
+
+        // TODO надо поменять мдентификатор иллюстрации на Integer
+        super(Integer.valueOf(id), def_description);
         this.url_picture = url_picture;
         this.illNum = illNum;
         this.illSubNum = illSubNum;

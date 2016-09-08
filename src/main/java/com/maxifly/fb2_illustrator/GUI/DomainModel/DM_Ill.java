@@ -45,7 +45,7 @@ public class DM_Ill extends DM_Abstract{
         ObservableSet<SearchTemplate_POJO> stp = FXCollections.observableSet(ill.getSearchTemplates());
         searchTemplates.setValue(stp);
         picture_path.setValue(ill.getFile());
-        ill_id.setValue(ill.getId());
+        ill_id.setValue(ill.getId().toString());
         ill_default_desc.setValue(ill.getDescription());
     }
 
@@ -62,7 +62,7 @@ public class DM_Ill extends DM_Abstract{
 //        ill.getProject().moveIll(movedIllId,ill_id.getValue());
 //    }
     public void refreshId(){
-        ill_id.setValue(ill.getId());
+        ill_id.setValue(ill.getId().toString());
     }
 
 

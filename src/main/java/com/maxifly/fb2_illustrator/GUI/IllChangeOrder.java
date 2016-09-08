@@ -4,18 +4,18 @@ package com.maxifly.fb2_illustrator.GUI;
  * Created by Maxim.Pantuhin on 02.09.2016.
  */
 public class IllChangeOrder {
-    String moveIllNum;    // Номер иллюстрации, сменившей порядок
-    String beforeIllNum;  // Номер иллюстрации, перед которой надо поставить свою
+    Integer moveIllNum;    // Номер иллюстрации, сменившей порядок
+    Integer beforeIllNum;  // Номер иллюстрации, перед которой надо поставить свою
 
-    public IllChangeOrder(String moveIllNum, String beforeIllNum) {
+    public IllChangeOrder(Integer moveIllNum, Integer beforeIllNum) {
         this.moveIllNum = moveIllNum;
         this.beforeIllNum = beforeIllNum;
     }
 
-    public String getMoveIllNum() {
+    public Integer getMoveIllNum() {
         return moveIllNum;
     }
-    public String getBeforeIllNum() {
+    public Integer getBeforeIllNum() {
         return beforeIllNum;
     }
 }

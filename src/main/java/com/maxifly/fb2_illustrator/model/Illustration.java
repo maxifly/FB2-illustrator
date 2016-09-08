@@ -25,21 +25,21 @@ public class Illustration {
     private Path file;
     private String def_description;
     private String illustrated_description = null;
-    private String  id;
+    private Integer  id;
 
     private Set<SearchTemplate_POJO> searchTemplates;
 
     private Project project; // Ссылка на проект, в который включена иллюстрация
 
 
-    public Illustration(String id, String def_description) {
+    public Illustration(Integer id, String def_description) {
         this.id = id;
         this.def_description = def_description;
         this.searchTemplates = new HashSet<>();
     }
 
 
-    public Illustration(String id, Path file, String def_description) {
+    public Illustration(Integer id, Path file, String def_description) {
         this(id,def_description);
         this.file = file;
     }
@@ -117,11 +117,11 @@ public class Illustration {
         }
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

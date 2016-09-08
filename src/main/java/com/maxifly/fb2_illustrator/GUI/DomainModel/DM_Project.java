@@ -40,7 +40,7 @@ public class DM_Project extends DM_Abstract {
         this.illustrations.setValue(FXCollections.observableList(project.getIllustrations()));
     }
 
-    public void moveIll(String movedIllId, String beforeIllId) throws MyException {
+    public void moveIll(Integer movedIllId, Integer beforeIllId) throws MyException {
         log.debug("Move ill " + movedIllId + " set it before ill " + beforeIllId);
         project.moveIll(movedIllId,beforeIllId);
     }

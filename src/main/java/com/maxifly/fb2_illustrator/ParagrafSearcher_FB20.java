@@ -88,7 +88,7 @@ public class ParagrafSearcher_FB20
 
             FictionBook.Binary fictionBookBinary = objectFactory.createFictionBookBinary();
             fictionBookBinary.setValue(data);
-            fictionBookBinary.setId(ill.getId());
+            fictionBookBinary.setId(ill.getId().toString());
             fictionBookBinary.setContentType("image/jpeg");
 
             return fictionBookBinary;
@@ -163,7 +163,7 @@ public class ParagrafSearcher_FB20
     private JAXBElement<?> createIllustration(Illustration ill) {
 
         ImageType imageType = objectFactory.createImageType();
-        imageType.setHref(ill.getId());
+        imageType.setHref(ill.getId().toString());
 
         JAXBElement<ImageType> imageTypeJAXBElement =
                 objectFactory.createStyleTypeImage(imageType);

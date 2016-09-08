@@ -28,20 +28,20 @@ public class TestIllustrations {
         illustrations_2 = new Illustrations();
         illustrations_3 = new Illustrations();
 
-        ill1 = new Illustration("ill_file1", FileSystems.getDefault().getPath("file1"), "desc1");
-        ill2 = new Illustration("ill_file2",FileSystems.getDefault().getPath("file2"), "desc2");
-        ill3 = new Illustration("ill_file3",FileSystems.getDefault().getPath("file3"), "desc3");
+        ill1 = new Illustration(1, FileSystems.getDefault().getPath("file1"), "desc1");
+        ill2 = new Illustration(2,FileSystems.getDefault().getPath("file2"), "desc2");
+        ill3 = new Illustration(3,FileSystems.getDefault().getPath("file3"), "desc3");
         illustrations.addIllustration(ill1);
         illustrations.addIllustration(ill2);
         illustrations.addIllustration(ill3);
 
-        ill21 = new Illustration("ill_file1", FileSystems.getDefault().getPath("file1"), "desc1");
-        ill22 = new Illustration("ill_file2",FileSystems.getDefault().getPath("file2"), "desc2");
+        ill21 = new Illustration(21, FileSystems.getDefault().getPath("file1"), "desc1");
+        ill22 = new Illustration(22,FileSystems.getDefault().getPath("file2"), "desc2");
 
         illustrations_2.addIllustration(ill21);
         illustrations_2.addIllustration(ill22);
 
-        ill31 = new Illustration("ill_file1", FileSystems.getDefault().getPath("file1"), "desc1");
+        ill31 = new Illustration(31, FileSystems.getDefault().getPath("file1"), "desc1");
 
         illustrations_3.addIllustration(ill31);
 

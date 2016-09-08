@@ -90,7 +90,7 @@ public class IllFilter {
 
         String ill_id = "ill" + this.currentIllNum + "_" + this.currentIllSubNum;
         log.debug("New illustration id: ()", ill_id);
-
+//TODO Надо поменять формирование идентификатора иллюстрации, полученной из интернета
         // Создадим иллюстрацию
         InternetIllustration illustration =
                 new InternetIllustration(ill_id, ill_data.dsc, photo.url, this.currentIllNum, this.currentIllSubNum);

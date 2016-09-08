@@ -33,7 +33,7 @@ public class Project {
     }
 
     public void addIll(Illustration illustration) {
-        illustration.setId(Integer.toString(illustrations.size()));
+        illustration.setId(illustrations.size());
         this.illustrations.add(illustration);
         illustration.setProject(this);
     }
@@ -48,7 +48,7 @@ public class Project {
      * @param moveIllId - какую иллюстрацию передвинуть
      * @param beforeIllId - перед какой поставить (если null - то сделать последней)
      */
-    public void moveIll(String moveIllId, String beforeIllId ) throws MyException {
+    public void moveIll(Integer moveIllId, Integer beforeIllId ) throws MyException {
         log.debug("Move ill {} before {} ",moveIllId, beforeIllId);
         if(moveIllId.equals(beforeIllId)) return;
 
@@ -103,12 +103,12 @@ public class Project {
             if (curr_idx != moveIll_idx) {
 
                 if (curr_idx == beforeIll_Idx ) {
-                    moveIll.setId(curr_idx_InNewList.toString());
+                    moveIll.setId(curr_idx_InNewList);
                     changeList.add(moveIll);
                     curr_idx_InNewList++;
                 }
 
-                ill.setId(curr_idx_InNewList.toString());
+                ill.setId(curr_idx_InNewList);
                 changeList.add(ill);
                 curr_idx_InNewList++;
             }
@@ -117,7 +117,7 @@ public class Project {
 
         // Если надо было поставить передвигаемый элемент в конец списка. То добавим его
         if (beforeIll_Idx == -1) {
-            moveIll.setId(curr_idx_InNewList.toString());
+            moveIll.setId(curr_idx_InNewList);
             changeList.add(moveIll);
             curr_idx_InNewList++;
         }
