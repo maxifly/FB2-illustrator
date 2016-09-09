@@ -2,8 +2,11 @@ package com.maxifly.fb2_illustrator.model;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco;
+import com.maxifly.fb2_illustrator.Ill_J_Serializer;
 import com.maxifly.fb2_illustrator.MyException;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -127,6 +130,25 @@ public class Project {
         illustrations.addAll(changeList);
 
 //        System.out.println("illustrations: " + illustrations.size());
+    }
+
+
+    public String toJson() {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Illustration.class, new Ill_J_Serializer())
+                .create();
+
+        return gson.toJson(this);
+
+    }
+
+    static public Project fromJson(String json){
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Illustration.class, new Ill_J_Serializer())
+                .create();
+        return gson.fromJson(json, Project.class);
     }
 
 

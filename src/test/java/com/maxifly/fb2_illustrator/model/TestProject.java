@@ -4,6 +4,10 @@ import com.maxifly.fb2_illustrator.MyException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -25,6 +29,16 @@ public class TestProject {
         project.addIll(ill2);
         project.addIll(ill3);
         project.addIll(ill4);
+
+
+
+        ill1.setFile(FileSystems.getDefault().getPath("c:\\kuku\\f1.jpg"));
+        ill2.setFile(FileSystems.getDefault().getPath("c:\\kuku\\f2.jpg"));
+
+        ill1.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp,"kuku","kuku_desc"));
+        ill1.addSearchTempale(new SearchTemplate_POJO(TemplateType.regexp,"tutu","tutu_desc desc"));
+
+
     }
 
 
@@ -84,5 +98,15 @@ public class TestProject {
         assertEquals("Ill 2 in 3", ((Integer)2), ill2.getId());
         assertEquals("Ill 4 in 4", ((Integer)3), ill4.getId());
 
+    }
+
+    @Test
+    public void toJson() {
+       String st = project.toJson();
+       System.out.println(st);
+
+       Project project1 = Project.fromJson(st);
+//TODO Сделать полноценный тест с проверками
+       int i = 1;
     }
 }
