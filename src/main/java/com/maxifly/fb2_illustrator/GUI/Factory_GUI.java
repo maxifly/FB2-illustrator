@@ -283,12 +283,14 @@ public class Factory_GUI {
 
 
     public MenuBar createMainMenu() throws IOException {
+
+        Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("MainMenu.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
                                         @Override
                                         public Object call(Class<?> aClass) {
-                                            return new Ctrl_MainMenu(dm_mainMenu);
+                                            return new Ctrl_MainMenu(dm_mainMenu, factory_gui);
                                         }
                                     });
         MenuBar menu = loader.load();

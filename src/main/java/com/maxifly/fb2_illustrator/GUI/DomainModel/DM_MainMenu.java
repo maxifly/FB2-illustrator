@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.FileOperations;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.Illustration;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -43,7 +45,15 @@ public class DM_MainMenu {
         stage.show();
     }
 
-    public void project_open() throws IOException {
+    public void project_open(File file) throws IOException {
+        String string_project =  FileOperations.readAll(file);
+        Project project = Project.fromJson(string_project);
+
+        GUI_Obj gui_obj = factory_gui.createProject(project);
+        Scene scene = factory_gui.getMainScene();
+        ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
+    }
+    public void project_test() throws IOException {
 
         Project project = new Project();
         Illustration illustration = createIll(1,"kuku");

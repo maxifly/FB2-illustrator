@@ -133,6 +133,8 @@ public class Project {
     }
 
 
+
+
     public String toJson() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -149,6 +151,8 @@ public class Project {
                 .registerTypeAdapter(Illustration.class, new Ill_J_Serializer())
                 .create();
         return gson.fromJson(json, Project.class);
+
+        // TODO добавить сортировку иллюстраций
     }
 
 
