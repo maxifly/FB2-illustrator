@@ -10,6 +10,8 @@ import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -32,6 +34,8 @@ public class DM_MainMenu {
             .getLocLogger(DM_MainMenu.class.getName());
     private Factory_GUI factory_gui;
 
+    private ObjectProperty<Project> currentProjectProperty = new SimpleObjectProperty<>();
+
     public DM_MainMenu(Factory_GUI factory_gui) {
         this.factory_gui = factory_gui;
     }
@@ -48,11 +52,25 @@ public class DM_MainMenu {
     public void project_open(File file) throws IOException {
         String string_project =  FileOperations.readAll(file);
         Project project = Project.fromJson(string_project);
-
-        GUI_Obj gui_obj = factory_gui.createProject(project);
-        Scene scene = factory_gui.getMainScene();
-        ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
+        project.setProjectFile(file);
+        currentProjectProperty.setValue(project);
+        showProject(project);
     }
+
+    public void project_save(File file) throws IOException {
+        Project project = (Project)currentProjectProperty.getValue();
+        project.setProjectFile(file);
+        String string_project =  project.toJson();
+        FileOperations.writeAll(file,string_project);
+        showProject(project);
+    }
+
+    public void project_new() throws IOException {
+        Project project = new Project();
+        currentProjectProperty.setValue(project);
+        showProject(project);
+    }
+
     public void project_test() throws IOException {
 
         Project project = new Project();
@@ -73,6 +91,12 @@ public class DM_MainMenu {
         illustration = createIll(14,"pupu");
         project.addIll(illustration);
 
+        currentProjectProperty.setValue(project);
+        showProject(project);
+
+    }
+
+    public void showProject(Project project) throws IOException {
         GUI_Obj gui_obj = factory_gui.createProject(project);
         Scene scene = factory_gui.getMainScene();
         ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
@@ -100,6 +124,10 @@ public class DM_MainMenu {
         illustration.addSearchTempale(new SearchTemplate_POJO(TemplateType.substr,prefix + "4","description1"));
         return illustration;
 
+    }
+
+    public ObjectProperty<Project> currentProjectProperty() {
+        return this.currentProjectProperty;
     }
 
 

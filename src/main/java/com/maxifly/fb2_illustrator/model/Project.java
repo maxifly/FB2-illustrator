@@ -11,6 +11,7 @@ import com.maxifly.fb2_illustrator.MyException;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Project {
     private Set<SearchTemplate_POJO> bookNameTemplates = new HashSet<>();
     private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
 
+    private File projectFile;
 
 
     public void addBookNameTempale(SearchTemplate_POJO bookNameTemplate) {
@@ -45,6 +47,13 @@ public class Project {
         return illustrations;
     }
 
+    public File getProjectFile() {
+        return projectFile;
+    }
+
+    public void setProjectFile(File projectFile) {
+        this.projectFile = projectFile;
+    }
 
     /**
      * Меняет порядок иллюстраций

@@ -1,5 +1,8 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.fb2_illustrator.model.Project;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -9,6 +12,7 @@ import javafx.beans.property.StringProperty;
 public class DM_StatusBar {
    private StringProperty login;
    private String token;
+
 
     public DM_StatusBar() {
         this.login = new SimpleStringProperty("login: ");
@@ -26,4 +30,8 @@ public class DM_StatusBar {
     public String getToken() {
         return token;
     }
+
+
+
+
 }
