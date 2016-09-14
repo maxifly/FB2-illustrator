@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Maximus on 07.08.2016.
  */
-public class Ctrl_MainMenu implements Initializable{
+public class Ctrl_MainMenu implements Initializable {
 
 
     private DM_MainMenu dm_mainMenu;
@@ -41,20 +41,21 @@ public class Ctrl_MainMenu implements Initializable{
     @FXML
     private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException {
 
-        switch ( ((MenuItem) actionEvent.getSource()).getId() ) {
+        switch (((MenuItem) actionEvent.getSource()).getId()) {
             case "vk_connect":
                 dm_mainMenu.vk_connect();
                 break;
         }
 
     }
+
     @FXML
     private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException, GUI_Exception {
 
-        switch ( ((MenuItem) actionEvent.getSource()).getId() ) {
+        switch (((MenuItem) actionEvent.getSource()).getId()) {
             case "prj_open":
                 open_project(actionEvent);
-                 break;
+                break;
             case "prj_new":
                 new_project(actionEvent);
                 break;
@@ -80,7 +81,7 @@ public class Ctrl_MainMenu implements Initializable{
     }
 
 
-    protected void open_project (ActionEvent actionEvent) throws IOException, GUI_Exception {
+    protected void open_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, "Открыть проект");
 
@@ -93,7 +94,13 @@ public class Ctrl_MainMenu implements Initializable{
         projectItemsDisable();
     }
 
-    protected void save_as_project (ActionEvent actionEvent) throws IOException, GUI_Exception {
+    protected void save_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
+        dm_mainMenu.project_save();
+        projectItemsDisable();
+    }
+
+
+    protected void save_as_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, "Сохранить проект как");
 
@@ -101,48 +108,26 @@ public class Ctrl_MainMenu implements Initializable{
         File file = fileChooser.showSaveDialog(win);
 
         if (file != null) {
-            boolean isContinue = false;
-
-            if (file.exists()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                        "Файл \n" + file.toString()
-                                + "\n существует. Перезаписать?",
-                        ButtonType.YES, ButtonType.NO);
-                alert.setHeaderText(null);
-                Optional<ButtonType> alert_button = alert.showAndWait();
-
-                if (ButtonType.YES == alert_button.get()) {
-                    isContinue = true;
-                } else {
-                    isContinue = false;
-                }
-            } else {
-            isContinue = true;
-            }
-
-            if (isContinue) {
-                dm_mainMenu.project_save(file);
-            }
-
-
+            dm_mainMenu.project_save(file);
         }
-
 
 
         projectItemsDisable();
     }
 
-    protected void new_project (ActionEvent actionEvent) throws IOException, GUI_Exception {
+    protected void new_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
         dm_mainMenu.project_new();
         projectItemsDisable();
     }
 
 
     private void projectItemsDisable() {
-        if(currentProjectProperty.getValue() != null) {
+        if (currentProjectProperty.getValue() != null) {
             prj_save_as.setDisable(false);
-            if (((Project)currentProjectProperty.getValue()).getProjectFile() != null) {
+            if (((Project) currentProjectProperty.getValue()).getProjectFile() != null) {
                 prj_save.setDisable(false);
+            } else {
+                prj_save.setDisable(true);
             }
         } else {
             prj_save.setDisable(true);

@@ -8,6 +8,9 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco;
 import com.maxifly.fb2_illustrator.Ill_J_Serializer;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.Project_J_Serializer;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -30,7 +33,8 @@ public class Project {
     private Set<SearchTemplate_POJO> bookNameTemplates = new HashSet<>();
     private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
 
-    private File projectFile;
+    private ObjectProperty<File> projectFileProperty = new SimpleObjectProperty<>();
+    //private File projectFile;
 
 
     public void addBookNameTempale(SearchTemplate_POJO bookNameTemplate) {
@@ -48,11 +52,14 @@ public class Project {
     }
 
     public File getProjectFile() {
-        return projectFile;
+        return projectFileProperty.getValue();
     }
 
     public void setProjectFile(File projectFile) {
-        this.projectFile = projectFile;
+        this.projectFileProperty.setValue(projectFile);;
+    }
+    public ObjectProperty<File> projectFile_Property() {
+        return this.projectFileProperty;
     }
 
     /**
@@ -148,6 +155,7 @@ public class Project {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Illustration.class, new Ill_J_Serializer())
+                .registerTypeAdapter(Project.class, new Project_J_Serializer())
                 .create();
 
         return gson.toJson(this);
@@ -158,11 +166,22 @@ public class Project {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Illustration.class, new Ill_J_Serializer())
+                .registerTypeAdapter(Project.class, new Project_J_Serializer())
                 .create();
         return gson.fromJson(json, Project.class);
 
         // TODO добавить сортировку иллюстраций
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public Set<SearchTemplate_POJO> getBookNameTemplates() {
+        return bookNameTemplates;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

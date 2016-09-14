@@ -56,6 +56,7 @@ public class Factory_GUI {
     private Scene mainScene;
 
     private Ctrl_Project ctrl_project;
+    private Ctrl_StatusBar ctrl_statusBar;
 
 
     public Scene getMainScene() throws IOException {
@@ -96,6 +97,7 @@ public class Factory_GUI {
     }
 
     public HBox getStatusBar() throws IOException {
+        Factory_GUI factory_gui = this;
 
         if (this.hBox_statusBar == null) {
             FXMLLoader loader = new FXMLLoader();
@@ -103,12 +105,13 @@ public class Factory_GUI {
             loader.setControllerFactory(new Callback<Class<?>, Object>() {
                 @Override
                 public Object call(Class<?> aClass) {
-                    return new Ctrl_StatusBar(dm_statusBar);
+                    return new Ctrl_StatusBar(dm_statusBar, factory_gui);
                 }
             });
 
 
             this.hBox_statusBar = loader.load();
+            this.ctrl_statusBar = loader.getController();
         }
         return this.hBox_statusBar;
     }

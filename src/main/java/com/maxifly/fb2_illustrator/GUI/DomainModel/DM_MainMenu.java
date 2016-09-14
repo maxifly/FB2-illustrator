@@ -65,6 +65,13 @@ public class DM_MainMenu {
         showProject(project);
     }
 
+    public void project_save() throws IOException {
+        Project project = (Project)currentProjectProperty.getValue();
+        String string_project =  project.toJson();
+        FileOperations.writeAll(project.getProjectFile(),string_project);
+        showProject(project);
+    }
+
     public void project_new() throws IOException {
         Project project = new Project();
         currentProjectProperty.setValue(project);
@@ -99,6 +106,8 @@ public class DM_MainMenu {
     public void showProject(Project project) throws IOException {
         GUI_Obj gui_obj = factory_gui.createProject(project);
         Scene scene = factory_gui.getMainScene();
+        DM_StatusBar statusBar = factory_gui.getDm_statusBar();
+        statusBar.setCurrentProject((DM_Project) gui_obj.dm_model);
         ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
     }
 

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Maximus on 19.04.2016.
  */
-public class Illustration {
+public class Illustration implements Comparable<Illustration>{
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
     private static LocLogger log = (new LocLoggerFactory(mc))
@@ -144,5 +144,10 @@ public class Illustration {
         }
 
 
+    }
+
+    @Override
+    public int compareTo(Illustration o) {
+        return this.id.compareTo(o.getId());
     }
 }

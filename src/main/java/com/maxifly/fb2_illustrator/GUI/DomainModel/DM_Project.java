@@ -7,11 +7,13 @@ import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -43,6 +45,10 @@ public class DM_Project extends DM_Abstract {
     public void moveIll(Integer movedIllId, Integer beforeIllId) throws MyException {
         log.debug("Move ill " + movedIllId + " set it before ill " + beforeIllId);
         project.moveIll(movedIllId,beforeIllId);
+    }
+
+    public ObjectProperty<File> projectFile_Property(){
+        return project.projectFile_Property();
     }
 
 
