@@ -69,6 +69,7 @@ public class DM_MainMenu {
         Project project = (Project)currentProjectProperty.getValue();
         String string_project =  project.toJson();
         FileOperations.writeAll(project.getProjectFile(),string_project);
+        project.setChanged(false);
         showProject(project);
     }
 

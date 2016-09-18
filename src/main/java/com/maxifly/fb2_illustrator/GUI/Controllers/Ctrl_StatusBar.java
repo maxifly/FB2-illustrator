@@ -34,18 +34,22 @@ public class Ctrl_StatusBar implements Initializable{
         this.factory_gui = factory_gui;
     }
 
-    private void project_changed(DM_Project newValue){
+    private void project_property_changed(DM_Project newValue){
         this.projectFileProperty.bindBidirectional(newValue.projectFile_Property());
+        this.changedProjectProperty.bindBidirectional(newValue.getChangeProject_Property());
         show_Title();
     }
-
+    private void project_changed(Boolean oldValue, Boolean newValue){
+        if(oldValue != newValue) show_Title();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userlogin.textProperty().bindBidirectional(dm_statusBar.loginProperty());
         dmProjectProperty.bindBidirectional(dm_statusBar.dmProject_Property());
 
-        dmProjectProperty.addListener((observable, oldValue, newValue) -> project_changed( newValue));
+        dmProjectProperty.addListener((observable, oldValue, newValue) -> project_property_changed( newValue));
+        changedProjectProperty.addListener((observable, oldValue, newValue) -> project_changed(oldValue, newValue));
 
 
     }

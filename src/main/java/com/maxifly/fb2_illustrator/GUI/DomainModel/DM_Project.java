@@ -6,9 +6,7 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -27,14 +25,21 @@ public class DM_Project extends DM_Abstract {
 
     private Project project;
     private ListProperty<Illustration> illustrations = new SimpleListProperty<>();
+    private BooleanProperty changeProjectProperty = new SimpleBooleanProperty();
+
 
     public DM_Project(Project project) {
         this.project = project;
         this.illustrations.setValue(FXCollections.observableList(project.getIllustrations()));
+        this.changeProjectProperty.bindBidirectional(project.changeProject_Property());
+        this.getChangeProject_Property().setValue(false);
     }
 
     public ListProperty<Illustration> illustrations_Property() {
        return illustrations;
+    }
+    public BooleanProperty getChangeProject_Property() {
+        return this.changeProjectProperty;
     }
 
     public void refreshIllList() {
@@ -45,6 +50,7 @@ public class DM_Project extends DM_Abstract {
     public void moveIll(Integer movedIllId, Integer beforeIllId) throws MyException {
         log.debug("Move ill " + movedIllId + " set it before ill " + beforeIllId);
         project.moveIll(movedIllId,beforeIllId);
+        changeProjectProperty.setValue(true);
     }
 
     public ObjectProperty<File> projectFile_Property(){

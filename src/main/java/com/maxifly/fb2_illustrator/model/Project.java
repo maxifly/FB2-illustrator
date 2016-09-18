@@ -9,7 +9,9 @@ import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco;
 import com.maxifly.fb2_illustrator.Ill_J_Serializer;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.Project_J_Serializer;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -34,6 +36,7 @@ public class Project {
     private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
 
     private ObjectProperty<File> projectFileProperty = new SimpleObjectProperty<>();
+    private BooleanProperty changeProjectProperty = new SimpleBooleanProperty();
     //private File projectFile;
 
 
@@ -62,6 +65,13 @@ public class Project {
         return this.projectFileProperty;
     }
 
+    public BooleanProperty changeProject_Property() {
+        return changeProjectProperty;
+    }
+
+    public void setChanged(Boolean isChanged){
+        changeProjectProperty.setValue(isChanged);
+    }
     /**
      * Меняет порядок иллюстраций
      * @param moveIllId - какую иллюстрацию передвинуть

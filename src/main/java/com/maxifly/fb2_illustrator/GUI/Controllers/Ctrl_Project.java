@@ -10,10 +10,7 @@ import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -21,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -45,6 +44,7 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
     private DM_Project dm_project;
 
     private ObjectProperty<DM_Ill> selected_ill = new SimpleObjectProperty<>();
+    private BooleanProperty changed = new SimpleBooleanProperty();
 //    private ObjectProperty<IllChangeOrder> ill_change_order = new SimpleObjectProperty<>();
 
 
@@ -94,6 +94,7 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
         dragEvent.consume();
     }
 
+
     private String getDraggedIllId(DragEvent dragEvent) {
         String st = dragEvent.getDragboard().getString();
         return st.substring(Constants.drag_string.length());
@@ -109,6 +110,7 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         illList.bindBidirectional(dm_project.illustrations_Property());
+        changed.bindBidirectional(dm_project.getChangeProject_Property());
 
         for (Illustration ill : illList) {
             try {
