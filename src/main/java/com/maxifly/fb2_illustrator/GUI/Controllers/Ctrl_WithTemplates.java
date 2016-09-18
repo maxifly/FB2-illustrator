@@ -48,11 +48,11 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
     VBox templates;
 
 
-    private SetProperty<SearchTemplate_POJO> searchTemplates = new SimpleSetProperty<>();
+    protected SetProperty<SearchTemplate_POJO> searchTemplates = new SimpleSetProperty<>();
 
     private Map<SearchTemplate_POJO, GUI_Obj> searchTemplates_GUIs = new HashMap<>();
 
-    private Factory_GUI factory_gui;
+    protected Factory_GUI factory_gui;
 
     private ObservableList<SearchTemplate_POJO> needDeleteList = FXCollections.observableList(new ArrayList<>());
     private ObservableList<SearchTemplate_POJO> needEditList = FXCollections.observableList(new ArrayList<>());
@@ -62,8 +62,8 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
         this.factory_gui = factory_gui;
     }
 
-    @FXML
-    private void btn_add(ActionEvent actionEvent) throws IOException {
+
+    protected SearchTemplate_POJO addTemplate() throws IOException {
         SearchTemplate_POJO stp = new SearchTemplate_POJO(TemplateType.substr,null,null);
         GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
         Stage stage = factory_gui.createModalWindow(gui_obj.node);
@@ -72,6 +72,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
         if (stp.template != null) {
             showSearchTemplate(stp);
         }
+        return stp;
     }
 
 

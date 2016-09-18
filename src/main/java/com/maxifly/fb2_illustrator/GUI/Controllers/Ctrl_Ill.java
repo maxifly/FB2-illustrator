@@ -38,7 +38,7 @@ import java.util.*;
 /**
  * Created by Maxim.Pantuhin on 29.08.2016.
  */
-public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
+public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
     @FXML
     VBox templates;
 
@@ -63,7 +63,6 @@ public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
         System.out.println("W " + gridpane.widthProperty().getValue());
     }
 
-    private SetProperty<SearchTemplate_POJO> searchTemplates = new SimpleSetProperty<>();
     private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
 
 
@@ -74,26 +73,22 @@ public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
 
 
     private DM_Ill dm_ill;
-    private Factory_GUI factory_gui;
+//    private Factory_GUI factory_gui;
 
-    private ObservableList<SearchTemplate_POJO> needDeleteList = FXCollections.observableList(new ArrayList<>());
-    private ObservableList<SearchTemplate_POJO> needEditList = FXCollections.observableList(new ArrayList<>());
+//    private ObservableList<SearchTemplate_POJO> needDeleteList = FXCollections.observableList(new ArrayList<>());
+//    private ObservableList<SearchTemplate_POJO> needEditList = FXCollections.observableList(new ArrayList<>());
 
 
     public Ctrl_Ill(Factory_GUI factory_gui, DM_Ill dm_ill) {
+        super(factory_gui);
         this.dm_ill = dm_ill;
-        this.factory_gui = factory_gui;
     }
 
     @FXML
     private void btn_add(ActionEvent actionEvent) throws IOException {
-        SearchTemplate_POJO stp = new SearchTemplate_POJO(TemplateType.substr,null,null);
-        GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
-        Stage stage = factory_gui.createModalWindow(gui_obj.node);
-        stage.showAndWait();
-
-        if (stp.template != null) {
-            showSearchTemplate(stp);
+        SearchTemplate_POJO stp = super.addTemplate();
+         if (stp.template != null) {
+            dm_ill.addSearchTemplate(stp);
         }
     }
 
@@ -112,38 +107,38 @@ public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
     }
 
 
-    private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change){
-        while (change.next()) {
-            if (change.wasAdded()) {
-                // Надо удалить запись с шаблоном
-               for (SearchTemplate_POJO stp : change.getAddedSubList()) {
-                   System.out.println("delete stp " + stp);
-                   Node node = searchTemplates_GUIs.get(stp).node;
-                   System.out.println("node " + node);
-                   templates.getChildren().remove(node);
-                   searchTemplates.getValue().remove(stp);
-                   searchTemplates_GUIs.remove(stp);
-                   needDeleteList.remove(stp);
-               }
-            }
-        }
-    }
+//    private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change){
+//        while (change.next()) {
+//            if (change.wasAdded()) {
+//                // Надо удалить запись с шаблоном
+//               for (SearchTemplate_POJO stp : change.getAddedSubList()) {
+//                   System.out.println("delete stp " + stp);
+//                   Node node = searchTemplates_GUIs.get(stp).node;
+//                   System.out.println("node " + node);
+//                   templates.getChildren().remove(node);
+//                   searchTemplates.getValue().remove(stp);
+//                   searchTemplates_GUIs.remove(stp);
+//                   needDeleteList.remove(stp);
+//               }
+//            }
+//        }
+//    }
 
-    private void needEdit(ListChangeListener.Change<? extends SearchTemplate_POJO> change) throws IOException {
-        while (change.next()) {
-            if (change.wasAdded()) {
-                // Надо редактировать запись с шаблоном
-                for (SearchTemplate_POJO stp : change.getAddedSubList()) {
-                    GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
-                    Stage stage = factory_gui.createModalWindow(gui_obj.node);
-                    stage.showAndWait();
-                    ((DM_SearchTemplate) searchTemplates_GUIs.get(stp).dm_model).refresh();
-                    ((Ctrl_SearchTemplate) searchTemplates_GUIs.get(stp).controll).refresh();
-                    needEditList.remove(stp);
-                }
-            }
-        }
-    }
+//    private void needEdit(ListChangeListener.Change<? extends SearchTemplate_POJO> change) throws IOException {
+//        while (change.next()) {
+//            if (change.wasAdded()) {
+//                // Надо редактировать запись с шаблоном
+//                for (SearchTemplate_POJO stp : change.getAddedSubList()) {
+//                    GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
+//                    Stage stage = factory_gui.createModalWindow(gui_obj.node);
+//                    stage.showAndWait();
+//                    ((DM_SearchTemplate) searchTemplates_GUIs.get(stp).dm_model).refresh();
+//                    ((Ctrl_SearchTemplate) searchTemplates_GUIs.get(stp).controll).refresh();
+//                    needEditList.remove(stp);
+//                }
+//            }
+//        }
+//    }
 
     private void picture_string_change(ObservableValue<? extends String> observable, String oldValue, String newValue){
         Path newPath = FileSystems.getDefault().getPath(newValue);
@@ -152,24 +147,24 @@ public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
     }
 
 
+//
+//    public void addNeedDelete(SearchTemplate_POJO needDelete_Template){
+//        needDeleteList.add(needDelete_Template);
+//    }
+//
+//    public void addNeedEdit(SearchTemplate_POJO needEdit_Template) {
+//        needEditList.add(needEdit_Template);
+//    }
+//
 
-    public void addNeedDelete(SearchTemplate_POJO needDelete_Template){
-        needDeleteList.add(needDelete_Template);
-    }
-
-    public void addNeedEdit(SearchTemplate_POJO needEdit_Template) {
-        needEditList.add(needEdit_Template);
-    }
-
-
-    private void showSearchTemplate(SearchTemplate_POJO stp) throws IOException {
-        GUI_Obj gui_obj = factory_gui.createSearchTemplate(stp);
-        ((Ctrl_SearchTemplate) gui_obj.controll).setCtrl_ill(this);
-        // Отобразим эту ноду
-        templates.getChildren().add(gui_obj.node);
-        // Запомним связку этой ноды с шаблоном
-        searchTemplates_GUIs.put(stp,gui_obj);
-    }
+//    private void showSearchTemplate(SearchTemplate_POJO stp) throws IOException {
+//        GUI_Obj gui_obj = factory_gui.createSearchTemplate(stp);
+//        ((Ctrl_SearchTemplate) gui_obj.controll).setCtrl_ill(this);
+//        // Отобразим эту ноду
+//        templates.getChildren().add(gui_obj.node);
+//        // Запомним связку этой ноды с шаблоном
+//        searchTemplates_GUIs.put(stp,gui_obj);
+//    }
 
     private void showImage(Path file_path) {
         Image image = null;
@@ -184,6 +179,7 @@ public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());
         picture_path.bindBidirectional(dm_ill.picture_path_Property());
 
@@ -197,31 +193,24 @@ public class Ctrl_Ill extends Ctrl_Abstract implements Initializable {
         }
 
 
+        showSearchTemplates();
 
-        try {
-            for (SearchTemplate_POJO stp : searchTemplates.getValue()) {
-                showSearchTemplate(stp);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        needDeleteList.addListener(new ListChangeListener<SearchTemplate_POJO>() {
-            @Override
-            public void onChanged(Change<? extends SearchTemplate_POJO> c) {
-                needDeleted(c);
-            }
-        });
-        needEditList.addListener(new ListChangeListener<SearchTemplate_POJO>() {
-            @Override
-            public void onChanged(Change<? extends SearchTemplate_POJO> c) {
-                try {
-                    needEdit(c);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        needDeleteList.addListener(new ListChangeListener<SearchTemplate_POJO>() {
+//            @Override
+//            public void onChanged(Change<? extends SearchTemplate_POJO> c) {
+//                needDeleted(c);
+//            }
+//        });
+//        needEditList.addListener(new ListChangeListener<SearchTemplate_POJO>() {
+//            @Override
+//            public void onChanged(Change<? extends SearchTemplate_POJO> c) {
+//                try {
+//                    needEdit(c);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         picture_string.textProperty().addListener(new ChangeListener<String>() {
             @Override
