@@ -29,7 +29,7 @@ public class Ctrl_SearchTemplate
         implements Initializable {
 
     private DM_SearchTemplate dm_searchTemplate;
-    private Ctrl_Ill ctrl_ill;
+    private Ctrl_WithTemplates ctrl_ill;
 
 
     @FXML
@@ -87,7 +87,7 @@ public class Ctrl_SearchTemplate
         this.dm_searchTemplate = dm_searchTemplate;
     }
 
-    public void setCtrl_ill(Ctrl_Ill ctrl_ill) {
+    public void setCtrl_ill(Ctrl_WithTemplates ctrl_ill) {
         this.ctrl_ill = ctrl_ill;
     }
 
