@@ -160,6 +160,22 @@ public class Factory_GUI {
         return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
     }
 
+    public GUI_Obj createProjectInfo(DM_Project dm_project)
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormProjectInfo.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+
+                return new Ctrl_ProjectInfo(factory_gui, dm_project);
+            }
+        });
+        Node node = loader.load();
+        return new GUI_Obj(node,loader.getController(),dm_project);
+
+    }
 
     public GUI_Obj createIll(Illustration ill)
             throws IOException {

@@ -10,10 +10,12 @@ import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.GUI.IllChangeOrder;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
+import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -42,6 +44,7 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
     private Factory_GUI factory_gui;
     private DM_Project dm_project;
+    private Node project_info;
 
     private ObjectProperty<DM_Ill> selected_ill = new SimpleObjectProperty<>();
     private BooleanProperty changed = new SimpleBooleanProperty();
@@ -77,6 +80,15 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
 //        System.out.println("old: " + oldValue.size() + " new: " + newValue.size());
 
+    }
+
+    @FXML
+    protected void project_info_btn(ActionEvent actionEvent) throws IOException {
+        if (this.project_info == null) {
+          GUI_Obj gui_obj =  factory_gui.createProjectInfo(dm_project);
+          this.project_info = gui_obj.node;
+        }
+        document_pane.setCenter(project_info);
     }
 
     @FXML

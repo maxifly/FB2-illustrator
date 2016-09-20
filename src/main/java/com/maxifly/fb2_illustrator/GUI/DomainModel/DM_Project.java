@@ -6,8 +6,10 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
+import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -26,6 +28,8 @@ public class DM_Project extends DM_Abstract {
     private Project project;
     private ListProperty<Illustration> illustrations = new SimpleListProperty<>();
     private BooleanProperty changeProjectProperty = new SimpleBooleanProperty();
+    private SetProperty<SearchTemplate_POJO> searchTemplates =
+            new SimpleSetProperty<>();
 
 
     public DM_Project(Project project) {
@@ -33,6 +37,10 @@ public class DM_Project extends DM_Abstract {
         this.illustrations.setValue(FXCollections.observableList(project.getIllustrations()));
         this.changeProjectProperty.bindBidirectional(project.changeProject_Property());
         this.getChangeProject_Property().setValue(false);
+        ObservableSet<SearchTemplate_POJO> stp = FXCollections.observableSet(this.project.getBookNameTemplates());
+        searchTemplates.setValue(stp);
+
+
     }
 
     public ListProperty<Illustration> illustrations_Property() {
@@ -57,5 +65,12 @@ public class DM_Project extends DM_Abstract {
         return project.projectFile_Property();
     }
 
+    public void addBookNameTempale(SearchTemplate_POJO searchTemplate_pojo) {
+        project.addBookNameTempale(searchTemplate_pojo);
+    }
+
+    public SetProperty<SearchTemplate_POJO> searchTemplates_Property() {
+        return this.searchTemplates;
+    }
 
 }

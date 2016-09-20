@@ -1,6 +1,7 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
@@ -41,8 +42,8 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
     @FXML
     GridPane gridpane;
 
-    @FXML
-    TextArea default_desc;
+//    @FXML
+//    TextArea default_desc;
 
     @FXML
     Label project_id;
@@ -59,23 +60,23 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
 
 
 
-    private DM_Ill dm_ill;
+    private DM_Project dm_project;
 //    private Factory_GUI factory_gui;
 
 //    private ObservableList<SearchTemplate_POJO> needDeleteList = FXCollections.observableList(new ArrayList<>());
 //    private ObservableList<SearchTemplate_POJO> needEditList = FXCollections.observableList(new ArrayList<>());
 
 
-    public Ctrl_ProjectInfo(Factory_GUI factory_gui, DM_Ill dm_ill) {
+    public Ctrl_ProjectInfo(Factory_GUI factory_gui, DM_Project dm_project) {
         super(factory_gui);
-        this.dm_ill = dm_ill;
+        this.dm_project = dm_project;
     }
 
     @FXML
     private void btn_add(ActionEvent actionEvent) throws IOException {
         SearchTemplate_POJO stp = super.addTemplate();
          if (stp.template != null) {
-            dm_ill.addSearchTemplate(stp);
+             dm_project.addBookNameTempale(stp);
         }
     }
 
@@ -115,11 +116,11 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
 //        }
 //    }
 
-    private void picture_string_change(ObservableValue<? extends String> observable, String oldValue, String newValue){
-        Path newPath = FileSystems.getDefault().getPath(newValue);
-        dm_ill.setFile(newPath);
-        showImage(newPath);
-    }
+//    private void picture_string_change(ObservableValue<? extends String> observable, String oldValue, String newValue){
+//        Path newPath = FileSystems.getDefault().getPath(newValue);
+//        dm_ill.setFile(newPath);
+//        showImage(newPath);
+//    }
 
 
 //
@@ -141,31 +142,31 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
 //        searchTemplates_GUIs.put(stp,gui_obj);
 //    }
 
-    private void showImage(Path file_path) {
-        Image image = null;
-         if ( file_path!= null && (file_path.toFile().exists())) {
-            image = new Image(file_path.toFile().toURI().toString());
-        } else {
-            image = new Image(defaultPicture);
-        }
-        picture.setImage(image);
-    }
+//    private void showImage(Path file_path) {
+//        Image image = null;
+//         if ( file_path!= null && (file_path.toFile().exists())) {
+//            image = new Image(file_path.toFile().toURI().toString());
+//        } else {
+//            image = new Image(defaultPicture);
+//        }
+//        picture.setImage(image);
+//    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());
-        picture_path.bindBidirectional(dm_ill.picture_path_Property());
-
-        ill_number.textProperty().bindBidirectional(dm_ill.ill_id_Property());
-        default_desc.textProperty().bindBidirectional(dm_ill.ill_default_desc_Property());
-
-        showImage(picture_path.getValue());
-
-        if (picture_path.getValue() != null) {
-            picture_string.setText(picture_path.getValue().toString());
-        }
+        searchTemplates.bindBidirectional(dm_project.searchTemplates_Property());
+//        picture_path.bindBidirectional(dm_ill.picture_path_Property());
+//
+//        ill_number.textProperty().bindBidirectional(dm_ill.ill_id_Property());
+//        default_desc.textProperty().bindBidirectional(dm_ill.ill_default_desc_Property());
+//
+//        showImage(picture_path.getValue());
+//
+//        if (picture_path.getValue() != null) {
+//            picture_string.setText(picture_path.getValue().toString());
+//        }
 
 
         showSearchTemplates();
@@ -187,27 +188,27 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
 //            }
 //        });
 
-        picture_string.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                picture_string_change(observable, oldValue, newValue);
-            }
-        });
+//        picture_string.textProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                picture_string_change(observable, oldValue, newValue);
+//            }
+//        });
 
 
     }
 
-    private static void configureFileChooser(
-            final FileChooser fileChooser,
-            String title) {
-        fileChooser.setTitle(title);
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
-        fileChooser.getExtensionFilters().addAll(
-//                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg")
-        );
-    }
+//    private static void configureFileChooser(
+//            final FileChooser fileChooser,
+//            String title) {
+//        fileChooser.setTitle(title);
+//        fileChooser.setInitialDirectory(
+//                new File(System.getProperty("user.home"))
+//        );
+//        fileChooser.getExtensionFilters().addAll(
+////                new FileChooser.ExtensionFilter("All Images", "*.*"),
+//                new FileChooser.ExtensionFilter("JPG", "*.jpg")
+//        );
+//    }
 
 }
