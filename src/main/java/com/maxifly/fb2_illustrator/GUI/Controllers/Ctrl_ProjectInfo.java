@@ -42,8 +42,8 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
     @FXML
     GridPane gridpane;
 
-//    @FXML
-//    TextArea default_desc;
+    @FXML
+    TextArea project_paragraf;
 
     @FXML
     Label project_id;
@@ -157,6 +157,9 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         searchTemplates.bindBidirectional(dm_project.searchTemplates_Property());
+        project_id.setText(dm_project.getId());
+        project_paragraf.textProperty().bindBidirectional(dm_project.projectParagraf_Property());
+
 //        picture_path.bindBidirectional(dm_ill.picture_path_Property());
 //
 //        ill_number.textProperty().bindBidirectional(dm_ill.ill_id_Property());

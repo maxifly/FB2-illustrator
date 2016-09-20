@@ -32,6 +32,7 @@ public class Project {
             .getLocLogger(Project.class.getName());
 
     private String id = "123456789";
+    private String projectParagraf;
     private Set<SearchTemplate_POJO> bookNameTemplates = new HashSet<>();
     private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
 
@@ -193,5 +194,13 @@ public class Project {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getProjectParagraf() {
+        return projectParagraf;
+    }
+
+    public void setProjectParagraf(String projectParagraf) {
+        this.projectParagraf = projectParagraf;
     }
 }

@@ -8,6 +8,8 @@ import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import org.slf4j.cal10n.LocLogger;
@@ -30,6 +32,7 @@ public class DM_Project extends DM_Abstract {
     private BooleanProperty changeProjectProperty = new SimpleBooleanProperty();
     private SetProperty<SearchTemplate_POJO> searchTemplates =
             new SimpleSetProperty<>();
+    private StringProperty projectParagrafProperty = new SimpleStringProperty();
 
 
     public DM_Project(Project project) {
@@ -39,6 +42,11 @@ public class DM_Project extends DM_Abstract {
         this.getChangeProject_Property().setValue(false);
         ObservableSet<SearchTemplate_POJO> stp = FXCollections.observableSet(this.project.getBookNameTemplates());
         searchTemplates.setValue(stp);
+        this.projectParagrafProperty.setValue(project.getProjectParagraf());
+
+        projectParagrafProperty.addListener((observable, oldValue, newValue) -> {
+            project.setProjectParagraf(newValue);
+        });
 
 
     }
@@ -48,6 +56,9 @@ public class DM_Project extends DM_Abstract {
     }
     public BooleanProperty getChangeProject_Property() {
         return this.changeProjectProperty;
+    }
+    public StringProperty projectParagraf_Property() {
+        return projectParagrafProperty;
     }
 
     public void refreshIllList() {
@@ -71,6 +82,10 @@ public class DM_Project extends DM_Abstract {
 
     public SetProperty<SearchTemplate_POJO> searchTemplates_Property() {
         return this.searchTemplates;
+    }
+
+    public String getId() {
+        return project.getId();
     }
 
 }

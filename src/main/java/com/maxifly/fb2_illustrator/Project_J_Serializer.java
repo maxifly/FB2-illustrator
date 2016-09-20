@@ -29,6 +29,10 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
 
         result.add("id", new JsonPrimitive(project.getId()));
 
+        if(project.getProjectParagraf()!= null) {
+            result.add("project_paragraf", new JsonPrimitive(project.getProjectParagraf()));
+        }
+
 
         if(project.getBookNameTemplates() != null) {
             JsonElement searchTemplates = jsonSerializationContext.serialize(project.getBookNameTemplates());
@@ -49,11 +53,18 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
 
 
         String id =  jsonObject.get("id").getAsString();
+
         Project project = new Project();
 
         project.setId(id);
 
-        JsonElement je = jsonObject.get("book_name_templates");
+        JsonElement je = jsonObject.get("project_paragraf");
+        if(je != null && !je.isJsonNull()) {
+          project.setProjectParagraf(je.getAsString());
+        }
+
+
+            je = jsonObject.get("book_name_templates");
         if(je != null && !je.isJsonNull()) {
             JsonArray templates = je.getAsJsonArray();
 
