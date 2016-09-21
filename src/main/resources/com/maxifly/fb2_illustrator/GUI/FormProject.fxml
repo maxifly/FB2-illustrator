@@ -4,8 +4,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <SplitPane dividerPositions="0.3177257525083612" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_Project">
@@ -13,6 +16,31 @@
       <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="10.0" minWidth="10.0" prefHeight="200.0" prefWidth="150.0" spacing="5.0">
          <children>
             <Button mnemonicParsing="false" onAction="#project_info_btn" text="О проекте" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Button fx:id="add_ill_btn" disable="true" mnemonicParsing="false" onAction="#add_ill_btn_action" prefHeight="43.0" prefWidth="49.0">
+                     <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/Glyph_Add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="del_ill_btn" disable="true" mnemonicParsing="false" onAction="#del_ill_btn_action" prefHeight="43.0" prefWidth="49.0">
+                     <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/Glyph_Remove.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </HBox>
             <ScrollPane minHeight="10.0" minWidth="10.0" onDragDropped="#drag_dropped" prefHeight="800.0">
                <content>
                   <VBox fx:id="illustrations" spacing="5.0">

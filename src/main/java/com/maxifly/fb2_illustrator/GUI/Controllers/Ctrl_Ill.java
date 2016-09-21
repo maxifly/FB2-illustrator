@@ -183,6 +183,11 @@ public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
     }
 
     @Override
+    protected GUI_Obj createSearchTemplate_Edit(SearchTemplate_POJO stp) throws IOException {
+        return factory_gui.createSearchTemplate_Edit(stp);
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         searchTemplates.bindBidirectional(dm_ill.searchTemplates_Property());

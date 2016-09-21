@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
@@ -41,6 +42,14 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
     @FXML
     BorderPane document_pane;
+
+    @FXML
+    Button add_ill_btn;
+    @FXML
+    Button del_ill_btn;
+
+
+
 
     private Factory_GUI factory_gui;
     private DM_Project dm_project;
@@ -79,6 +88,16 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
         illustrations.getChildren().addAll(changeIll);
 
 //        System.out.println("old: " + oldValue.size() + " new: " + newValue.size());
+
+    }
+
+    @FXML
+    protected void add_ill_btn_action(ActionEvent actionEvent){
+
+    }
+
+    @FXML
+    protected void del_ill_btn_action(ActionEvent actionEvent){
 
     }
 

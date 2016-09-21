@@ -155,14 +155,14 @@ public class Factory_GUI {
     }
 
 
-    public GUI_Obj createSearchTemplate_Edit(SearchTemplate_POJO searchTemplate_pojo)
+    private GUI_Obj innerCreateSearchTemplate_Edit(String FXMLFile, SearchTemplate_POJO searchTemplate_pojo)
             throws IOException {
 //        Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
         DM_SearchTemplate dm_searchTemplate = new DM_SearchTemplate();
         dm_searchTemplate.setSearchTemplate(searchTemplate_pojo);
 
-        loader.setLocation(Factory_GUI.class.getResource("FormSearchTemplate_Edit.fxml"));
+        loader.setLocation(Factory_GUI.class.getResource(FXMLFile));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
@@ -171,6 +171,16 @@ public class Factory_GUI {
         });
         Pane pane = loader.load();
         return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
+    }
+
+
+    public GUI_Obj createSearchTemplate_Edit(SearchTemplate_POJO searchTemplate_pojo)
+            throws IOException {
+        return innerCreateSearchTemplate_Edit("FormSearchTemplate_Edit.fxml", searchTemplate_pojo);
+    }
+    public GUI_Obj createSearchTemplate_Edit_Sht(SearchTemplate_POJO searchTemplate_pojo)
+            throws IOException {
+        return innerCreateSearchTemplate_Edit("FormSearchTemplate_Edit_Sht.fxml", searchTemplate_pojo);
     }
 
     public GUI_Obj createProjectInfo(DM_Project dm_project)

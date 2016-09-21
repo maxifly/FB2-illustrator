@@ -65,7 +65,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
 
     protected SearchTemplate_POJO addTemplate() throws IOException {
         SearchTemplate_POJO stp = new SearchTemplate_POJO(TemplateType.substr,null,null);
-        GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
+        GUI_Obj gui_obj = createSearchTemplate_Edit(stp);
         Stage stage = factory_gui.createModalWindow(gui_obj.node);
         stage.showAndWait();
 
@@ -100,7 +100,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
             if (change.wasAdded()) {
                 // Надо редактировать запись с шаблоном
                 for (SearchTemplate_POJO stp : change.getAddedSubList()) {
-                    GUI_Obj gui_obj = factory_gui.createSearchTemplate_Edit(stp);
+                    GUI_Obj gui_obj = createSearchTemplate_Edit(stp);
                     Stage stage = factory_gui.createModalWindow(gui_obj.node);
                     stage.showAndWait();
                     ((DM_SearchTemplate) searchTemplates_GUIs.get(stp).dm_model).refresh();
@@ -122,6 +122,8 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
 
 
     protected abstract GUI_Obj createSearchTemplate(SearchTemplate_POJO stp) throws IOException;
+    protected abstract GUI_Obj createSearchTemplate_Edit(SearchTemplate_POJO stp) throws IOException;
+
 
     private void showSearchTemplate(SearchTemplate_POJO stp) throws IOException {
         GUI_Obj gui_obj = createSearchTemplate(stp);
