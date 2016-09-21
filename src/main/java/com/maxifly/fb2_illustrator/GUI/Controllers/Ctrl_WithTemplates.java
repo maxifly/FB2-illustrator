@@ -121,8 +121,10 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
     }
 
 
+    protected abstract GUI_Obj createSearchTemplate(SearchTemplate_POJO stp) throws IOException;
+
     private void showSearchTemplate(SearchTemplate_POJO stp) throws IOException {
-        GUI_Obj gui_obj = factory_gui.createSearchTemplate(stp);
+        GUI_Obj gui_obj = createSearchTemplate(stp);
         ((Ctrl_SearchTemplate) gui_obj.controll).setCtrl_ill(this);
         // Отобразим эту ноду
         templates.getChildren().add(gui_obj.node);

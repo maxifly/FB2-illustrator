@@ -129,6 +129,14 @@ public class Illustration implements Comparable<Illustration>{
         this.searchTemplates.add(searchTemplate);
     }
 
+    public void setDef_description(String def_description) {
+        this.def_description = def_description;
+    }
+
+    public String getDef_description() {
+        return def_description;
+    }
+
     @Override
     public String toString() {
         if (this.illustrated_description == null) {

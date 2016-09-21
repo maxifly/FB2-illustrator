@@ -4,6 +4,8 @@ import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -46,7 +48,10 @@ public class DM_Ill extends DM_Abstract{
         searchTemplates.setValue(stp);
         picture_path.setValue(ill.getFile());
         ill_id.setValue(ill.getId().toString());
-        ill_default_desc.setValue(ill.getDescription());
+        ill_default_desc.setValue(ill.getDef_description());
+        ill_default_desc.addListener((observable, oldValue, newValue) -> {
+            ill.setDef_description(newValue);
+        });
     }
 
     public void addSearchTemplate(SearchTemplate_POJO searchTemplate_pojo) {
