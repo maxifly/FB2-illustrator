@@ -35,6 +35,9 @@ public class DM_Project extends DM_Abstract {
     private StringProperty projectParagrafProperty = new SimpleStringProperty();
 
 
+    public void addIll(Illustration ill) {
+        project.addIll(ill);
+    }
     public DM_Project(Project project) {
         this.project = project;
         this.illustrations.setValue(FXCollections.observableList(project.getIllustrations()));

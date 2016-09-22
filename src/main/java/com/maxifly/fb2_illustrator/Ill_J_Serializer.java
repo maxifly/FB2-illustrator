@@ -52,13 +52,16 @@ public class Ill_J_Serializer implements JsonSerializer<Illustration>, JsonDeser
     public Illustration deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        String desc = jsonObject.get("description").getAsString();
+        String desc = null;
         Integer id =  jsonObject.get("id").getAsInt();
 
-
+        JsonElement je = jsonObject.get("description");
+        if (je != null && !je.isJsonNull()) {
+            desc = je.getAsString();
+        }
         Illustration ill = new Illustration(id, desc);
 
-        JsonElement je = jsonObject.get("file");
+        je = jsonObject.get("file");
         if (je != null && !je.isJsonNull()) {
             ill.setFile(FileSystems.getDefault().getPath(je.getAsString()));
         }

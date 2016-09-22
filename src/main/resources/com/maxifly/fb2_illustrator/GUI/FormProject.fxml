@@ -18,7 +18,7 @@
             <Button mnemonicParsing="false" onAction="#project_info_btn" text="О проекте" />
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Button fx:id="add_ill_btn" disable="true" mnemonicParsing="false" onAction="#add_ill_btn_action" prefHeight="43.0" prefWidth="49.0">
+                  <Button fx:id="add_ill_btn" mnemonicParsing="false" onAction="#add_ill_btn_action" prefHeight="43.0" prefWidth="49.0">
                      <graphic>
                         <ImageView fitHeight="45.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>

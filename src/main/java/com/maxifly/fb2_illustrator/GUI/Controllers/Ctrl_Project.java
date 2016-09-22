@@ -73,8 +73,12 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
 
     private void changeSelected_Ill(ObservableValue<? extends DM_Ill> observable, DM_Ill oldValue, DM_Ill newValue) {
-        Node node = illNodes.get(newValue).getIll();
-        document_pane.setCenter(node);
+        System.out.println("newValue " + newValue);
+        if (newValue != null) {
+            Node node = illNodes.get(newValue).getIll();
+            document_pane.setCenter(node);
+        }
+
     }
 
     private void changeIllLIst(ObservableValue<? extends ObservableList<Illustration>> observable, ObservableList<Illustration> oldValue, ObservableList<Illustration> newValue) {
@@ -92,7 +96,13 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
     }
 
     @FXML
-    protected void add_ill_btn_action(ActionEvent actionEvent){
+    protected void add_ill_btn_action(ActionEvent actionEvent) throws IOException {
+        Integer newId = dm_project.illustrations_Property().getValue().size();
+        Illustration ill = new Illustration(newId,null);
+        dm_project.addIll(ill);
+        DM_Ill dm_ill = addIllToControl(ill);
+        System.out.println("newId " + newId);
+        selected_ill.setValue(dm_ill);
 
     }
 
@@ -138,6 +148,16 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
                 && dragEvent.getDragboard().getString().indexOf(Constants.drag_string) == 0;
     }
 
+    private DM_Ill addIllToControl(Illustration ill) throws IOException {
+        GUI_Obj gui_obj = factory_gui.createIll(ill);
+        GUI_Obj gui_obj_ico = factory_gui.createIllIco((DM_Ill) gui_obj.dm_model);
+        illNodes.put((DM_Ill) gui_obj.dm_model, new ILL_IllIco_Nodes(gui_obj.node,gui_obj_ico.node) );
+        ill_model.put(ill, (DM_Ill) gui_obj.dm_model);
+        illustrations.getChildren().add(gui_obj_ico.node);
+        selected_ill.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
+        return (DM_Ill) gui_obj.dm_model;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         illList.bindBidirectional(dm_project.illustrations_Property());
@@ -145,18 +165,19 @@ public class Ctrl_Project extends Ctrl_Abstract implements Initializable {
 
         for (Illustration ill : illList) {
             try {
-                GUI_Obj gui_obj = factory_gui.createIll(ill);
-                GUI_Obj gui_obj_ico = factory_gui.createIllIco((DM_Ill) gui_obj.dm_model);
-//                GUI_Obj gui_obj_delimiter = factory_gui.createIcoDelimiter();
-
-                illNodes.put((DM_Ill) gui_obj.dm_model, new ILL_IllIco_Nodes(gui_obj.node,gui_obj_ico.node) );
-                ill_model.put(ill, (DM_Ill) gui_obj.dm_model);
-                selected_ill.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
-//                ill_change_order.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).ill_change_order_Property());
-
-//                ((Ctrl_IcoDelimiter) gui_obj_delimiter.controll).setIll_before_id(((DM_Ill) gui_obj.dm_model).ill_id_Property().getValue());
-//                illustrations.getChildren().add(gui_obj_delimiter.node); //TODO Переписать драг_and_drop на делимитеры
-                illustrations.getChildren().add(gui_obj_ico.node);
+                addIllToControl(ill);
+//                GUI_Obj gui_obj = factory_gui.createIll(ill);
+//                GUI_Obj gui_obj_ico = factory_gui.createIllIco((DM_Ill) gui_obj.dm_model);
+////                GUI_Obj gui_obj_delimiter = factory_gui.createIcoDelimiter();
+//
+//                illNodes.put((DM_Ill) gui_obj.dm_model, new ILL_IllIco_Nodes(gui_obj.node,gui_obj_ico.node) );
+//                ill_model.put(ill, (DM_Ill) gui_obj.dm_model);
+//                selected_ill.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).selected_dm_ill_Property());
+////                ill_change_order.bindBidirectional(((Ctrl_IllIco) gui_obj_ico.controll).ill_change_order_Property());
+//
+////                ((Ctrl_IcoDelimiter) gui_obj_delimiter.controll).setIll_before_id(((DM_Ill) gui_obj.dm_model).ill_id_Property().getValue());
+////                illustrations.getChildren().add(gui_obj_delimiter.node); //TODO Переписать драг_and_drop на делимитеры
+//                illustrations.getChildren().add(gui_obj_ico.node);
 
             } catch (IOException e) {
                 e.printStackTrace();
