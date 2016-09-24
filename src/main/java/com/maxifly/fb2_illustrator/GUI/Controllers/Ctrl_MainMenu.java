@@ -3,7 +3,11 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Project;
+import com.maxifly.vapi.PhotoLoader;
+import com.maxifly.vapi.PhotoUploader;
+import com.maxifly.vapi.ProjectUploader;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -39,12 +43,23 @@ public class Ctrl_MainMenu implements Initializable {
 
 
     @FXML
-    private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException {
+    private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
 
         switch (((MenuItem) actionEvent.getSource()).getId()) {
             case "vk_connect":
                 dm_mainMenu.vk_connect();
                 break;
+            case "vk_test":
+
+//                Project currproject = dm_mainMenu.currentProjectProperty().getValue();
+//                ProjectUploader projectUploader = new ProjectUploader(factory_gui.getDm_statusBar().getToken(),233176977);
+//                projectUploader.uploadProject(currproject);
+
+
+                PhotoUploader photoUploader = new PhotoUploader(factory_gui.getDm_statusBar().getToken(),233176977);
+                photoUploader.prepare();
+                photoUploader.uploadPhoto(new File("c:\\kuku.jpg"), "desc");
+
         }
 
     }

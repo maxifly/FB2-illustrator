@@ -21,41 +21,42 @@ public class UrlCreator {
 
     /**
      * Складывает права
+     *
      * @param scopeElements - список требуемых прав
      * @return битовая маска прав
      */
     static String computeScope(ScopeElement[] scopeElements) {
         int scope = 0;
 
-        for (int i=0;i<scopeElements.length;i++) {
+        for (int i = 0; i < scopeElements.length; i++) {
 
             scope += scopeElements[i].getCode();
 
         }
 
         if (scope == 0) scope = ScopeElement.photos.getCode();
-        return  String.valueOf(scope);
+        return String.valueOf(scope);
     }
 
 
     public static String getToken(String URL) {
         Pattern ptrn_token = Pattern.compile("#access_token=.+?(&|$)");
-        Matcher matcher = ptrn_token.matcher(URL+"&");
+        Matcher matcher = ptrn_token.matcher(URL + "&");
         if (matcher.find()) {
             String grp = matcher.group();
             return grp.substring(14, grp.length() - 1);
         }
-        return  null;
+        return null;
     }
 
     public static String getEmail(String URL) {
         Pattern ptrn_token = Pattern.compile("&email=.+?(&|$)");
-        Matcher matcher = ptrn_token.matcher(URL+"&");
+        Matcher matcher = ptrn_token.matcher(URL + "&");
         if (matcher.find()) {
             String grp = matcher.group();
             return grp.substring(7, grp.length() - 1);
         }
-        return  null;
+        return null;
     }
 
     public static String getFileType(String URL) {
@@ -65,18 +66,18 @@ public class UrlCreator {
             String grp = matcher.group(1);
             return grp;
         }
-        return  null;
+        return null;
     }
 
     public static String getAuthUrl(String clientId, ScopeElement[] scopes) {
         // https://oauth.vk.com/authorize?client_id=idApp&scope=audio&redirect_url=https://oauth.vk.com/blank.html&display=page&v=5.4&response_type=token
-        return  "http://oauth.vk.com/authorize?" +
-                "client_id="+clientId+
+        return "http://oauth.vk.com/authorize?" +
+                "client_id=" + clientId +
                 "&scope=" + computeScope(scopes) + // scope + //StringUtils.join(scopes, ",") +
-                "&redirect_uri="+redirect_uri+
+                "&redirect_uri=" + redirect_uri +
                 "&v=" + version +
-                "&display="+display+
-                "&response_type="+response_type;
+                "&display=" + display +
+                "&response_type=" + response_type;
 
     }
 
@@ -97,38 +98,65 @@ public class UrlCreator {
                 "&pass=" + password;
     }
 
-    public static String getPhotos(String accessToken, long albumId, int offset, int pageSize )  {
-       return "https://api.vk.com/method/photos.get?" +
-               "album_id=" + String.valueOf(albumId) +
-               "&access_token="+ accessToken +
-               "&v=" + version +
-               "&offset=" + String.valueOf(offset) +
-               "&count=" + String.valueOf(pageSize);
+    public static String getPhotos(String accessToken, long albumId, int offset, int pageSize) {
+        return "https://api.vk.com/method/photos.get?" +
+                "album_id=" + String.valueOf(albumId) +
+                "&access_token=" + accessToken +
+                "&v=" + version +
+                "&offset=" + String.valueOf(offset) +
+                "&count=" + String.valueOf(pageSize);
 
 
     }
 
-    public static String getUploadServer(String accessToken, long albumId )  {
+    public static String getUploadServer(String accessToken, long albumId) {
         return "https://api.vk.com/method/photos.getUploadServer?" +
                 "album_id=" + String.valueOf(albumId) +
-                "&access_token="+ accessToken +
+                "&access_token=" + accessToken +
                 "&v=" + version;
 
 
     }
 
-    public static long getAlbumId(String albumPath) throws Exception {
-       Pattern dg_pattern = Pattern.compile("^\\d+$");
-       if (dg_pattern.matcher(albumPath).matches()) {
-         return  Long.valueOf(albumPath);
-       }
+    public static String photosSave(String accessToken, long albumId,
+                                    Long group_id,
+                                    Long server,
+                                    String photos_list,
+                                    String hash,
+                                    String caption
+    ) {
+        StringBuilder sb = new StringBuilder("https://api.vk.com/method/photos.save?" +
+                "album_id=" + String.valueOf(albumId) +
+                "&access_token=" + accessToken +
+                "&v=" + version);
 
-       Pattern url_pattern = Pattern.compile("\\d+$");
+        if (group_id != null) {
+            sb.append("&group_id=").append(group_id);
+        }
+
+        sb.append("&server=").append(server).
+                append("&photos_list=").append(photos_list).
+                append("&hash=").append(hash).
+                append("&caption=").append(caption);
+
+
+        return sb.toString();
+
+
+    }
+
+    public static long getAlbumId(String albumPath) throws Exception {
+        Pattern dg_pattern = Pattern.compile("^\\d+$");
+        if (dg_pattern.matcher(albumPath).matches()) {
+            return Long.valueOf(albumPath);
+        }
+
+        Pattern url_pattern = Pattern.compile("\\d+$");
         Matcher matcher = url_pattern.matcher(albumPath);
         if (matcher.find()) {
             return
                     Long.valueOf(
-                    matcher.group(0));
+                            matcher.group(0));
         }
 
         throw new Exception("Can not parse album addr " + albumPath);
