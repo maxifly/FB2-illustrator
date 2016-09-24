@@ -73,6 +73,8 @@ public class Project {
     public void setChanged(Boolean isChanged){
         changeProjectProperty.setValue(isChanged);
     }
+
+
     /**
      * Меняет порядок иллюстраций
      * @param moveIllId - какую иллюстрацию передвинуть
@@ -156,7 +158,39 @@ public class Project {
         illustrations.clear();
         illustrations.addAll(changeList);
 
-//        System.out.println("illustrations: " + illustrations.size());
+    }
+
+
+    /**
+     * Удаляет иллюстрацию с указанным идентификатором из списка иллюстраций
+     * Считается, что иллюстрации в списке отсортированы по идентификатору
+     * @param illId
+     */
+    public void delIll(Integer illId) {
+        ArrayList<Illustration> changeList = new ArrayList();
+
+        int idx = illId;
+        // Скопируем в новый массив элементы, которые идут без изменений
+        if (idx > 0) {
+            changeList.addAll(illustrations.subList(0,idx));
+        }
+
+        // Теперь переберем остаток, так как у остатка надо менять id
+        Integer curr_idx_InNewList = changeList.size();
+        idx = illId + 1;
+
+        if (idx < illustrations.size()) {
+
+            for(Illustration ill : illustrations.subList(idx, illustrations.size())) {
+
+                ill.setId(curr_idx_InNewList);
+                changeList.add(ill);
+                curr_idx_InNewList++;
+            }
+        }
+        // Теперь вставим новый список вместо старого
+        illustrations.clear();
+        illustrations.addAll(changeList);
     }
 
 

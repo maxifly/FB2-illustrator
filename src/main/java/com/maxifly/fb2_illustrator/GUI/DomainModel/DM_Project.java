@@ -75,6 +75,12 @@ public class DM_Project extends DM_Abstract {
         changeProjectProperty.setValue(true);
     }
 
+    public void delIll(Integer delIllId) {
+        log.debug("Delete illustration with id " + delIllId);
+        project.delIll(delIllId);
+        changeProjectProperty.setValue(true);
+    }
+
     public ObjectProperty<File> projectFile_Property(){
         return project.projectFile_Property();
     }

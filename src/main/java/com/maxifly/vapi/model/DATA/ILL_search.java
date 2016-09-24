@@ -6,4 +6,5 @@ package com.maxifly.vapi.model.DATA;
 public class ILL_search {
     public String s;
     public String re;
+    public String d;
 }

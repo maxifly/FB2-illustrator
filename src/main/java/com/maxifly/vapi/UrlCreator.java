@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class UrlCreator {
     private static final String METHOD_URL = "https://api.vk.com/method/";
     private static final String redirect_uri = "http://oauth.vk.com/blank.html";
-    private static final String version = "5.52";
+    private static final String version = "5.53";
     private static final String scope = "8";
     //    private static final String display = "popup";
     private static final String display = "page";
@@ -104,6 +104,15 @@ public class UrlCreator {
                "&v=" + version +
                "&offset=" + String.valueOf(offset) +
                "&count=" + String.valueOf(pageSize);
+
+
+    }
+
+    public static String getUploadServer(String accessToken, long albumId )  {
+        return "https://api.vk.com/method/photos.getUploadServer?" +
+                "album_id=" + String.valueOf(albumId) +
+                "&access_token="+ accessToken +
+                "&v=" + version;
 
 
     }

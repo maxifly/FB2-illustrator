@@ -1,6 +1,7 @@
 package com.maxifly.fb2_illustrator.model;
 
 import com.maxifly.fb2_illustrator.MyException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -98,6 +99,52 @@ public class TestProject {
         assertEquals("Ill 2 in 3", ((Integer)2), ill2.getId());
         assertEquals("Ill 4 in 4", ((Integer)3), ill4.getId());
 
+    }
+
+    @Test
+    public void delete_0() {
+
+        project.delIll(0);
+        assertEquals("size",3,project.getIllustrations().size());
+        assertEquals("Ill 2 to 0", ((Integer)0), ill2.getId());
+        assertEquals("Ill 3 to 1", ((Integer)1), ill3.getId());
+        assertEquals("Ill 4 to 2", ((Integer)2), ill4.getId());
+
+        Assert.assertFalse("Ill 1 in list", project.getIllustrations().contains(ill1));
+        Assert.assertTrue("Ill 2 in list", project.getIllustrations().contains(ill2));
+        Assert.assertTrue("Ill 3 in list", project.getIllustrations().contains(ill3));
+        Assert.assertTrue("Ill 4 in list", project.getIllustrations().contains(ill4));
+    }
+
+
+    @Test
+    public void delete_2() {
+
+        project.delIll(2);
+        assertEquals("size",3,project.getIllustrations().size());
+        assertEquals("Ill 1 to 0", ((Integer)0), ill1.getId());
+        assertEquals("Ill 2 to 1", ((Integer)1), ill2.getId());
+        assertEquals("Ill 4 to 2", ((Integer)2), ill4.getId());
+
+        Assert.assertFalse("Ill 3 in list", project.getIllustrations().contains(ill3));
+        Assert.assertTrue("Ill 1 in list", project.getIllustrations().contains(ill1));
+        Assert.assertTrue("Ill 2 in list", project.getIllustrations().contains(ill2));
+        Assert.assertTrue("Ill 4 in list", project.getIllustrations().contains(ill4));
+    }
+
+    @Test
+    public void delete_3() {
+
+        project.delIll(3);
+        assertEquals("size",3,project.getIllustrations().size());
+        assertEquals("Ill 1 to 0", ((Integer)0), ill1.getId());
+        assertEquals("Ill 2 to 1", ((Integer)1), ill2.getId());
+        assertEquals("Ill 3 to 2", ((Integer)2), ill3.getId());
+
+        Assert.assertFalse("Ill 4 in list", project.getIllustrations().contains(ill4));
+        Assert.assertTrue("Ill 1 in list", project.getIllustrations().contains(ill1));
+        Assert.assertTrue("Ill 2 in list", project.getIllustrations().contains(ill2));
+        Assert.assertTrue("Ill 3 in list", project.getIllustrations().contains(ill3));
     }
 
     @Test

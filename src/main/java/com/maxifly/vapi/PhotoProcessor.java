@@ -63,7 +63,7 @@ public class PhotoProcessor {
 
         String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.offset, this.WINDOWS_SIZE);
         RestSender.respDelay();
-        RestResponse restResponse = restSender.sendGet(URL);
+        RestResponse restResponse = restSender.sendGet_withoutDely(URL);
 //TODO count в результате это похоже общее количество итемов, а не количество, полученное в окне. Сколько их получено в окне надо судить по количеству элементов в массиве
         if (restResponse.getResponseCode() != 200) {
             throw new MyException("Error when get photos: \n"

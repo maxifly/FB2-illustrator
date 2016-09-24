@@ -54,6 +54,10 @@ public class DM_Ill extends DM_Abstract{
         });
     }
 
+    public Illustration getIll() {
+        return ill;
+    }
+
     public void addSearchTemplate(SearchTemplate_POJO searchTemplate_pojo) {
         ill.addSearchTempale(searchTemplate_pojo);
     }
