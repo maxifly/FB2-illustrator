@@ -28,8 +28,7 @@ public class IllFilter {
     private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
     private static final LocLogger log = llFactory_uk.getLocLogger(IllFilter.class.getName());
 
-    private String book;
-    private boolean isBookFilter;
+    private String project_id;
 
     private List<InternetIllustration> illustrations = new ArrayList<>();
     private Gson gson = new Gson();
@@ -39,14 +38,13 @@ public class IllFilter {
     private int currentIllSubNum = 0;
 
 
-    public IllFilter(String book, boolean isBookFilter) {
-        this.book = book;
-        this.isBookFilter = isBookFilter;
+    public IllFilter(String project_id) {
+        this.project_id = project_id;
     }
 
-    public IllFilter() {
-        this(null, false);
-    }
+//    public IllFilter() {
+//        this(null);
+//    }
 
 
     /**
@@ -70,10 +68,10 @@ public class IllFilter {
             return;
         }
 
-        if (this.isBookFilter && !this.book.equals(ill_data.bk)) {
-            log.debug("Illustration not compotable by book name {}, {}",
-                    this.book,
-                    ill_data.bk);
+        if (!this.project_id.equals(ill_data.prj)) {
+            log.debug("Illustration not compotable by project id {}, {}",
+                    this.project_id,
+                    ill_data.prj);
             return;
         }
 
@@ -81,19 +79,19 @@ public class IllFilter {
         // Это подходящая иллюстрация
 
 
-        if (ill_data.num != null && this.currentIllNum != ill_data.num) {
-            this.currentIllNum = ill_data.num;
-            this.currentIllSubNum = 0;
-        } else {
-            this.currentIllSubNum++;
-        }
+//        if (ill_data.num != null && this.currentIllNum != ill_data.num) {
+//            this.currentIllNum = ill_data.num;
+//            this.currentIllSubNum = 0;
+//        } else {
+//            this.currentIllSubNum++;
+//        }
 
-        String ill_id = "ill" + this.currentIllNum + "_" + this.currentIllSubNum;
-        log.debug("New illustration id: ()", ill_id);
+//        String ill_id = "ill" + this.currentIllNum + "_" + this.currentIllSubNum;
+        log.debug("New illustration id: ()", ill_data.num);
 //TODO Надо поменять формирование идентификатора иллюстрации, полученной из интернета
         // Создадим иллюстрацию
         InternetIllustration illustration =
-                new InternetIllustration(ill_id, ill_data.dsc, photo.url, this.currentIllNum, this.currentIllSubNum);
+                new InternetIllustration(ill_data.num, ill_data.dsc, photo.url, photo.id);
 
         // Теперь добавим в нее условия поиска
         for (ILL_search ill_search : ill_data.srch) {

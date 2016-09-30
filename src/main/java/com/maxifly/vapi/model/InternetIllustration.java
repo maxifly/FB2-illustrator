@@ -7,21 +7,23 @@ import com.maxifly.fb2_illustrator.model.Illustration;
  */
 public class InternetIllustration extends Illustration {
     private String url_picture;
-    private int illNum;
-    private int illSubNum;
+    private long photo_id;
 
-    public InternetIllustration(String id, String def_description,
+    private int illNum; // TODO Удалить
+    private int illSubNum; // TODO Удалить
+
+
+
+    public InternetIllustration(int id, String def_description,
                                 String url_picture,
-                                int illNum,
-                                int illSubNum
+                                long photo_id
 
                                 ) {
 
         // TODO надо поменять мдентификатор иллюстрации на Integer
-        super(Integer.valueOf(id), def_description);
+        super(id, def_description);
         this.url_picture = url_picture;
-        this.illNum = illNum;
-        this.illSubNum = illSubNum;
+        this.photo_id = photo_id;
     }
 
     public String getUrl_picture() {

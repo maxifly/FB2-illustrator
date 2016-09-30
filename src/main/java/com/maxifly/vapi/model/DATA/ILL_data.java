@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class ILL_data {
     public Integer fb_ill;
-    public String bk;
+    public String  prj;
     public Integer num;
     public String dsc;
     public List<ILL_search> srch = new ArrayList();

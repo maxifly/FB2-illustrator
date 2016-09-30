@@ -28,7 +28,7 @@ public class vk_tst {
         String accessToken = connect.getAccessToken(60000);
 
         PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,233176977, PhotoSize.photo_2560x2048);
-        IllFilter illFilter = new IllFilter();
+        IllFilter illFilter = new IllFilter("123456"); //TODO Это по сути просто тест
         PhotoLoader photoLoader = new PhotoLoader(Files.createTempDirectory("fbill_"));
 
 

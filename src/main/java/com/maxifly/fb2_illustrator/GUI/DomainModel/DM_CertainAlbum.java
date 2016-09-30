@@ -84,7 +84,7 @@ public class DM_CertainAlbum {
 
         // Загрузим иллюстрации
         PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,albumId, PhotoSize.photo_2560x2048);
-        IllFilter illFilter = new IllFilter();
+        IllFilter illFilter = new IllFilter("123456"); //TODO надо как-то пойти от проверки идентификатора проекта
         PhotoLoader photoLoader = new PhotoLoader(Files.createTempDirectory("fbill_"));
 
 
