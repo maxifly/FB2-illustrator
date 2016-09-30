@@ -51,14 +51,14 @@ public class Ctrl_MainMenu implements Initializable {
                 break;
             case "vk_test":
 
-//                Project currproject = dm_mainMenu.currentProjectProperty().getValue();
-//                ProjectUploader projectUploader = new ProjectUploader(factory_gui.getDm_statusBar().getToken(),233176977);
-//                projectUploader.uploadProject(currproject);
+                Project currproject = dm_mainMenu.currentProjectProperty().getValue();
+                ProjectUploader projectUploader = new ProjectUploader(factory_gui.getDm_statusBar().getToken(),233176977);
+                projectUploader.uploadProject(currproject);
 
 
-                PhotoUploader photoUploader = new PhotoUploader(factory_gui.getDm_statusBar().getToken(),233176977);
-                photoUploader.prepare();
-                photoUploader.uploadPhoto(new File("c:\\kuku.jpg"), "desc");
+//                PhotoUploader photoUploader = new PhotoUploader(factory_gui.getDm_statusBar().getToken(),233176977);
+//                photoUploader.prepare();
+//                photoUploader.uploadPhoto(new File("c:\\kuku.jpg"), "de\nsc");
 
         }
 

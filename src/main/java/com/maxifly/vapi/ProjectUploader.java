@@ -2,6 +2,7 @@ package com.maxifly.vapi;
 
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 
 import java.io.File;
@@ -44,8 +45,15 @@ public class ProjectUploader {
 
         photoUploader.prepare();
         // Загрузим информацию о проекте
-       String projectInfo =  ExportProject_Utl.getProjectInfo(project);
-       photoUploader.uploadPhoto(this.book,projectInfo);
+       String description =  ExportProject_Utl.getProjectInfo(project);
+       photoUploader.uploadPhoto(this.book,description);
+
+        // Переберем иллюстрации и тоже их загрузим
+
+        for (Illustration ill : project.getIllustrations()) {
+            description = ExportProject_Utl.getIllInfo(ill);
+            photoUploader.uploadPhoto(ill.getFile().toFile(),description);
+        }
 
 
 

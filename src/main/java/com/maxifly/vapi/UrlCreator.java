@@ -3,6 +3,8 @@ package com.maxifly.vapi;
 import com.maxifly.vapi.model.AuthHeader;
 import com.maxifly.vapi.model.ScopeElement;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,7 +126,7 @@ public class UrlCreator {
                                     String photos_list,
                                     String hash,
                                     String caption
-    ) {
+    ) throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder("https://api.vk.com/method/photos.save?" +
                 "album_id=" + String.valueOf(albumId) +
                 "&access_token=" + accessToken +
@@ -134,10 +136,11 @@ public class UrlCreator {
             sb.append("&group_id=").append(group_id);
         }
 
+        String encode_caption = URLEncoder.encode(caption, "UTF-8");
         sb.append("&server=").append(server).
                 append("&photos_list=").append(photos_list).
                 append("&hash=").append(hash).
-                append("&caption=").append(caption);
+                append("&caption=").append(encode_caption);
 
 
         return sb.toString();

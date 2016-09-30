@@ -52,7 +52,7 @@ public class SearchTemplate_VKJ_Serialiser implements JsonSerializer<SearchTempl
         }
 
         if (searchTemplate_pojo.description != null) {
-            result.add("d", new JsonPrimitive(searchTemplate_pojo.template));
+            result.add("d", new JsonPrimitive(searchTemplate_pojo.description));
         }
 
         return result;

@@ -6,7 +6,9 @@ import com.maxifly.fb2_illustrator.Ill_J_Serializer;
 import com.maxifly.fb2_illustrator.Project_J_Serializer;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
+import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.vapi.model.DATA.ILL_search;
+import com.maxifly.vapi.model.DATA.Ill_VKJ_Serialiser;
 import com.maxifly.vapi.model.DATA.Project_VKJ_Serialiser;
 import com.maxifly.vapi.model.DATA.SearchTemplate_VKJ_Serialiser;
 
@@ -25,7 +27,7 @@ public class ExportProject_Utl {
     public static String getProjectInfo(Project project) {
             Gson gson = new GsonBuilder()
                     .setPrettyPrinting()
-                    .registerTypeAdapter(Illustration.class, new SearchTemplate_VKJ_Serialiser())
+                    .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
                     .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
                     .create();
 
@@ -37,10 +39,21 @@ public class ExportProject_Utl {
 
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
-            .registerTypeAdapter(Illustration.class, new SearchTemplate_VKJ_Serialiser())
+            .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
             .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
             .create();
         return gson.fromJson(projectInfo, Project.class);
+    }
+
+    public static String getIllInfo(Illustration ill) {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
+                .registerTypeAdapter(Illustration.class, new Ill_VKJ_Serialiser())
+                .create();
+
+        return gson.toJson(ill);
+
     }
 
 }
