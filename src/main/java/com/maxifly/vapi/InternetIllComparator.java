@@ -1,28 +1,15 @@
 package com.maxifly.vapi;
 
-import com.maxifly.vapi.model.InternetIllustration;
+import com.maxifly.vapi.model.Illustration_VK;
 
 import java.util.Comparator;
 
 /**
  * Created by Maximus on 16.07.2016.
  */
-public class InternetIllComparator implements Comparator<InternetIllustration> {
+public class InternetIllComparator implements Comparator<Illustration_VK> {
     @Override
-    public int compare(InternetIllustration o1, InternetIllustration o2) {
-        if (o1.getIllNum() < o2.getIllNum()) {
-            return -1;
-        }
-
-        if (o1.getIllNum() == o2.getIllNum()) {
-            if (o1.getIllSubNum() < o2.getIllSubNum()) {
-                return -1;
-            } else if (o1.getIllSubNum() == o2.getIllSubNum()) {
-                return 0;
-            }
-        }
-
-        return 1;
-
+    public int compare(Illustration_VK o1, Illustration_VK o2) {
+        return o1.getId().compareTo(o2.getId());
     }
 }

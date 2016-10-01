@@ -6,7 +6,7 @@ import com.maxifly.fb2_illustrator.BookProcessor_FB20;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Illustrations;
 import com.maxifly.vapi.model.DATA.DATA_photo;
-import com.maxifly.vapi.model.InternetIllustration;
+import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.vapi.model.PhotoSize;
 import com.maxifly.vapi.model.ScopeElement;
 
@@ -46,7 +46,7 @@ public class vk_tst {
 
         int i = 1;
 
-        List<InternetIllustration> illustrationList = illFilter.getIllustrations();
+        List<Illustration_VK> illustrationList = illFilter.getIllustrations();
 
         Collections.sort(illustrationList,new InternetIllComparator());
 

@@ -8,16 +8,14 @@ import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Illustrations;
 import com.maxifly.vapi.*;
 import com.maxifly.vapi.model.DATA.DATA_photo;
-import com.maxifly.vapi.model.InternetIllustration;
+import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.vapi.model.PhotoSize;
-import com.maxifly.vapi.model.ScopeElement;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -101,7 +99,7 @@ public class DM_CertainAlbum {
         photoLoader.download();
 
 
-        List<InternetIllustration> illustrationList = illFilter.getIllustrations();
+        List<Illustration_VK> illustrationList = illFilter.getIllustrations();
 
         Collections.sort(illustrationList,new InternetIllComparator());
 

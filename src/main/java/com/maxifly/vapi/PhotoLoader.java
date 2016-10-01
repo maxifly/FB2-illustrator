@@ -3,7 +3,7 @@ package com.maxifly.vapi;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
-import com.maxifly.vapi.model.InternetIllustration;
+import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.jutils.downloader.*;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -26,7 +26,7 @@ public class PhotoLoader {
 
 
     Path destDir;
-    List<InternetIllustration> illustrationList = new ArrayList<>();
+    List<Illustration_VK> illustrationList = new ArrayList<>();
     Downloader downloader;
 
 
@@ -38,12 +38,12 @@ public class PhotoLoader {
     }
 
 
-    public void setIllustrationList(List<InternetIllustration> illustrationList) {
+    public void setIllustrationList(List<Illustration_VK> illustrationList) {
         this.illustrationList = illustrationList;
     }
 
     public void download() throws IOException, ExecutionException, InterruptedException {
-        for (InternetIllustration illustration : illustrationList) {
+        for (Illustration_VK illustration : illustrationList) {
             String pictureURL = illustration.getUrl_picture();
             String fileType = UrlCreator.getFileType(pictureURL);
             File temp = File.createTempFile("ill", "." + fileType,destDir.toFile());

@@ -3,14 +3,15 @@ package com.maxifly.vapi;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
-import com.maxifly.vapi.model.DATA.DATA_photo;
-import com.maxifly.vapi.model.DATA.ILL_data;
-import com.maxifly.vapi.model.DATA.ILL_search;
-import com.maxifly.vapi.model.InternetIllustration;
+import com.maxifly.vapi.model.DATA.*;
+import com.maxifly.vapi.model.Illustration_VK;
+import com.maxifly.vapi.model.Project_VK;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * Created by Maximus on 12.07.2016.
  * <p>
  * Фильтрует, подходящие по критериям иллюстрации и накапливает их в себе.
+ * Кроме того фильтрует описание проекта
  * Потом пачкой отдает
  */
 public class IllFilter {
@@ -30,9 +32,12 @@ public class IllFilter {
 
     private String project_id;
 
-    private List<InternetIllustration> illustrations = new ArrayList<>();
-    private Gson gson = new Gson();
+    private List<Illustration_VK> illustrations = new ArrayList<>();
+    private Project_VK project_vk;
 
+
+    private Gson gson_project;
+    private Gson gson_ill;
 
     private int currentIllNum = 0;
     private int currentIllSubNum = 0;
@@ -40,6 +45,18 @@ public class IllFilter {
 
     public IllFilter(String project_id) {
         this.project_id = project_id;
+
+
+        gson_project = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
+                .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
+                .create();
+        gson_ill = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
+                .registerTypeAdapter(Illustration_VK.class, new Ill_VKJ_Serialiser(project_id))
+                .create();
     }
 
 //    public IllFilter() {
@@ -48,72 +65,51 @@ public class IllFilter {
 
 
     /**
-     * Проверяет, что фотография является иллюстрацией
+     * Проверяет, что фотография является иллюстрацией или описанием проекта
      * что она является подходящей иллюстрацией и добавляет ее к общему списку иллюстраций
      * @param photo
      */
 
     public void add(DATA_photo photo) {
-        ILL_data ill_data = null;
 
+        // Проверим, может это проект, если мы еще еuо ищем
+        if (this.project_vk == null) {
+            try {
+                project_vk = gson_project.fromJson(photo.text,Project_VK.class);
+                if (project_vk != null) {
+                    project_vk.setPhoto_id(photo.id);
+
+                    for (Illustration_VK ill : illustrations) {
+                        ill.setProject(project_vk);
+                    }
+                }
+            }
+            catch (JsonSyntaxException e) {
+                log.warn("Can not parse project description {}", e);
+            }
+        }
+
+
+
+
+        Illustration_VK illustration = null;
         try {
-            ill_data = gson.fromJson(photo.text, ILL_data.class);
+            illustration = gson_ill.fromJson(photo.text,Illustration_VK.class);
         } catch (JsonSyntaxException e) {
             log.warn("Can not parse photo description {}", e);
             return;
         }
 
-        if (ill_data.fb_ill == null) {
-            log.warn("Photo is not illustration");
-            return;
-        }
+        if (illustration == null) return;
 
-        if (!this.project_id.equals(ill_data.prj)) {
-            log.debug("Illustration not compotable by project id {}, {}",
-                    this.project_id,
-                    ill_data.prj);
-            return;
-        }
+        illustration.setPhoto_id(photo.id);
+        illustration.setUrl_picture(photo.url);
 
-        // Проверки пройдены.
-        // Это подходящая иллюстрация
-
-
-//        if (ill_data.num != null && this.currentIllNum != ill_data.num) {
-//            this.currentIllNum = ill_data.num;
-//            this.currentIllSubNum = 0;
-//        } else {
-//            this.currentIllSubNum++;
-//        }
-
-//        String ill_id = "ill" + this.currentIllNum + "_" + this.currentIllSubNum;
-        log.debug("New illustration id: ()", ill_data.num);
-//TODO Надо поменять формирование идентификатора иллюстрации, полученной из интернета
-        // Создадим иллюстрацию
-        InternetIllustration illustration =
-                new InternetIllustration(ill_data.num, ill_data.dsc, photo.url, photo.id);
-
-        // Теперь добавим в нее условия поиска
-        for (ILL_search ill_search : ill_data.srch) {
-            SearchTemplate_POJO searchTemplate_pojo;
-
-            if (ill_search.s != null) {
-                // Условия поиска простая строка
-                searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr, ill_search.s, null);
-            } else if (ill_search.re != null) {
-                // Условия поиска регулярное выражение
-                searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.regexp, ill_search.re, null);
-            } else {
-                searchTemplate_pojo = null;
-            }
-
-            if (searchTemplate_pojo != null) {
-                illustration.addSearchTempale(searchTemplate_pojo);
-            }
+        if (project_vk != null) {
+            illustration.setProject(project_vk);
         }
 
         this.illustrations.add(illustration);
-
 
     }
 
@@ -121,9 +117,11 @@ public class IllFilter {
      * Получить список накопленных иллюстраций
      * @return список иллюстраций
      */
-    public List<InternetIllustration> getIllustrations() {
+    public List<Illustration_VK> getIllustrations() {
         return this.illustrations;
     }
 
-
+    public Project_VK getProject_vk() {
+        return project_vk;
+    }
 }

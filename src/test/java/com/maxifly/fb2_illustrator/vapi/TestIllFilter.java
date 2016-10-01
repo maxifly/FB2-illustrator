@@ -26,7 +26,7 @@ public class TestIllFilter {
 
         DATA_photo data_photo = new DATA_photo();
         data_photo.url = "url_test";
-        data_photo.text =  "{\"fb_ill\":1,\"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
+        data_photo.text =  "{\"fb_ill\":1,\"ill_info\":1, \"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
 
         illFilter.add(data_photo);
         assertEquals("add_without_project",0,illFilter.getIllustrations().size());
@@ -39,11 +39,11 @@ public class TestIllFilter {
         illFilter.add(data_photo);
         assertEquals("add not json",0,illFilter.getIllustrations().size());
 
-        data_photo.text =  "{\"fb_ill\":1,\"bk\":\"prj_code_456\", \"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
+        data_photo.text =  "{\"fb_ill\":1,\"ill_info\":1, \"prj\":\"prj_code_456\", \"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
         illFilter.add(data_photo);
         assertEquals("add_incorrect_project",0,illFilter.getIllustrations().size());
 
-        data_photo.text =  "{\"fb_ill\":1,\"prj\":\"prj_code_123\", \"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
+        data_photo.text =  "{\"fb_ill\":1,\"ill_info\":1,\"prj\":\"prj_code_123\", \"num\":1,\"dsc\":\"подпись1\",\"srch\":[{\"s\":\"строка поиска 1\"}, {\"s\":\"строка поиска 2\"},{\"re\":\"регулярное выражение 1\"}]}";
         illFilter.add(data_photo);
         assertEquals("add_correct_book",1,illFilter.getIllustrations().size());
 
