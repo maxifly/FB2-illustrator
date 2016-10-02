@@ -1,21 +1,16 @@
-package com.maxifly.vapi.model;
-
-import com.maxifly.fb2_illustrator.model.Project;
-import com.maxifly.vapi.model.DATA.PrjObj;
+package com.maxifly.vapi.model.DATA;
 
 /**
  * Created by Maximus on 01.10.2016.
  */
-public class Project_VK extends Project
-implements PrjObj{
-    private long photo_id;
+public class SimplePrjOpj implements PrjObj{
+    private Long photo_id;
     private int ownerId;
 
     @Override
     public Long getPhoto_id() {
-        return photo_id;
+        return this.photo_id;
     }
-
     @Override
     public void setPhoto_id(Long photo_id) {
         this.photo_id = photo_id;
@@ -29,5 +24,13 @@ implements PrjObj{
     @Override
     public int getOwnerId() {
         return ownerId;
+    }
+
+    @Override
+    public String toString() {
+        return "SimplePrjOpj{" +
+                "photo_id=" + photo_id +
+                ", ownerId=" + ownerId +
+                '}';
     }
 }

@@ -2,12 +2,9 @@ package com.maxifly.vapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.maxifly.fb2_illustrator.Ill_J_Serializer;
-import com.maxifly.fb2_illustrator.Project_J_Serializer;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
-import com.maxifly.vapi.model.DATA.ILL_search;
 import com.maxifly.vapi.model.DATA.Ill_VKJ_Serialiser;
 import com.maxifly.vapi.model.DATA.Project_VKJ_Serialiser;
 import com.maxifly.vapi.model.DATA.SearchTemplate_VKJ_Serialiser;

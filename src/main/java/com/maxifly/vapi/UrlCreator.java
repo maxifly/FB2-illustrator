@@ -111,6 +111,17 @@ public class UrlCreator {
 
     }
 
+    public static String delPhoto(String accessToken, long albumId, int ownerId, long photoId) {
+        return "https://api.vk.com/method/photos.delete?" +
+                "album_id=" + String.valueOf(albumId) +
+                "&access_token=" + accessToken +
+                "&v=" + version +
+                "&owner_id=" + String.valueOf(ownerId) +
+                "&photo_id=" + String.valueOf(photoId);
+
+
+    }
+
     public static String getUploadServer(String accessToken, long albumId) {
         return "https://api.vk.com/method/photos.getUploadServer?" +
                 "album_id=" + String.valueOf(albumId) +

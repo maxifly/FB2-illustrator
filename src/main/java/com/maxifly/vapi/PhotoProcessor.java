@@ -43,7 +43,7 @@ public class PhotoProcessor {
     }
 
 
-    public boolean hasNext() throws Exception {
+    public boolean hasNext() throws MyException {
         if (!iterator.hasNext()) {
             // Надо получить новую порцию
             return getNewPortion() != 0;
@@ -57,13 +57,13 @@ public class PhotoProcessor {
     }
 
 
-    private int getNewPortion() throws Exception {
+    private int getNewPortion() throws MyException { //throws Exception {
         iterator = null;
         container.clear();
 
         String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.offset, this.WINDOWS_SIZE);
-        RestSender.respDelay();
-        RestResponse restResponse = restSender.sendGet_withoutDely(URL);
+//        RestSender.respDelay();
+        RestResponse restResponse = restSender.sendGet(URL);
 //TODO count в результате это похоже общее количество итемов, а не количество, полученное в окне. Сколько их получено в окне надо судить по количеству элементов в массиве
         if (restResponse.getResponseCode() != 200) {
             throw new MyException("Error when get photos: \n"
@@ -86,9 +86,13 @@ public class PhotoProcessor {
         if (rest_result_photo.response != null) {
             if (rest_result_photo.response.count > 0) {
                 for (REST_photo rest_photo : rest_result_photo.response.items) {
-                    DATA_photo data_photo = new DATA_photo();
+                    DATA_photo data_photo = new DATA_photo(); //TODO переделать создание на конструктор с rest_result_photo
                     data_photo.text = rest_photo.text;
                     data_photo.url = rest_photo.getPhotoUrl();
+                    data_photo.id = rest_photo.id;
+                    data_photo.owner_id = rest_photo.owner_id;
+                    log.debug("add DATA_photo {}", data_photo);
+
                     container.add(data_photo);
                 }
                 iterator = container.iterator();

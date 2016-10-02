@@ -8,7 +8,6 @@ import com.google.gson.JsonSyntaxException;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
-import com.maxifly.fb2_illustrator.model.TemplateType;
 import com.maxifly.vapi.model.DATA.*;
 import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.vapi.model.Project_VK;
@@ -34,6 +33,7 @@ public class IllFilter {
 
     private List<Illustration_VK> illustrations = new ArrayList<>();
     private Project_VK project_vk;
+    private List<PrjObj> project_objects = new ArrayList<>();
 
 
     private Gson gson_project;
@@ -71,25 +71,7 @@ public class IllFilter {
      */
 
     public void add(DATA_photo photo) {
-
-        // Проверим, может это проект, если мы еще еuо ищем
-        if (this.project_vk == null) {
-            try {
-                project_vk = gson_project.fromJson(photo.text,Project_VK.class);
-                if (project_vk != null) {
-                    project_vk.setPhoto_id(photo.id);
-
-                    for (Illustration_VK ill : illustrations) {
-                        ill.setProject(project_vk);
-                    }
-                }
-            }
-            catch (JsonSyntaxException e) {
-                log.warn("Can not parse project description {}", e);
-            }
-        }
-
-
+        addAsProject(photo);
 
 
         Illustration_VK illustration = null;
@@ -112,6 +94,32 @@ public class IllFilter {
         this.illustrations.add(illustration);
 
     }
+
+    /**
+     * Пытается разобрать объект как описание проекта
+     *
+     * @param photo
+     * @return - операция успешна
+     */
+    private boolean addAsProject(DATA_photo photo) {
+        // Проверим, может это проект, если мы еще еuо ищем
+        if (this.project_vk == null) {
+
+            project_vk = gson_project.fromJson(photo.text, Project_VK.class);
+            if (project_vk != null) {
+                project_vk.setPhoto_id(photo.id);
+
+                for (Illustration_VK ill : illustrations) {
+                    ill.setProject(project_vk);
+                }
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
 
     /**
      * Получить список накопленных иллюстраций

@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Maximus on 11.07.2016.
  */
 public class ILL_data {
+    //TODO Удалить
     public Integer fb_ill;
     public String  prj;
     public Integer num;

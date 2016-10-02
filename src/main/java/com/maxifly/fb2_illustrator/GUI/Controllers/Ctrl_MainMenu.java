@@ -49,6 +49,10 @@ public class Ctrl_MainMenu implements Initializable {
             case "vk_connect":
                 dm_mainMenu.vk_connect();
                 break;
+            case "del_project":
+                ProjectUploader projectUploader1 = new ProjectUploader(factory_gui.getDm_statusBar().getToken(),233176977);
+                projectUploader1.deleteProject("123456789");
+                break;
             case "vk_test":
 
                 Project currproject = dm_mainMenu.currentProjectProperty().getValue();

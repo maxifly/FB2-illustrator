@@ -40,7 +40,7 @@ public class PhotoUploader {
 
         RestResponse restResponse = restSender.sendGet(url);
         if (restResponse.getResponseCode() != 200) {
-            throw new MyException("Error when get upluad Server: \n"
+            throw new MyException("Error when get upload Server: \n"
                     + "REST responce code != 200 (responce code:"
                     + restResponse.getResponseCode() + ")");
         }
