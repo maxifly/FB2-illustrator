@@ -25,7 +25,7 @@
         <MenuItem id="vk_connect" mnemonicParsing="false" onAction="#action_vk" text="Connect" />
             <MenuItem id="vk_disconnect" mnemonicParsing="false" onAction="#action_vk" text="Disconnect" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem id="del_project" mnemonicParsing="false" onAction="#action_vk" text="Delete project" />
+            <MenuItem id="del_project" fx:id="vk_prj_del" mnemonicParsing="false" onAction="#action_vk" text="Delete project" />
             <MenuItem id="vk_test" mnemonicParsing="false" onAction="#action_vk" text="vk_test" />
       </items>
     </Menu>

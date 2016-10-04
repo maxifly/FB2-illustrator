@@ -234,7 +234,21 @@ public class Factory_GUI {
         return new GUI_Obj(pane, loader.getController(), dm_ill);
     }
 
+    public GUI_Obj createProjectDelete()
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("Form_DeleteVKProj.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_DeleteVKProject(factory_gui);
+            }
+        });
+        Node node = loader.load();
 
+        return new GUI_Obj(node, loader.getController(), null);
+    }
 
     public GUI_Obj createProject(Project project)
             throws IOException {

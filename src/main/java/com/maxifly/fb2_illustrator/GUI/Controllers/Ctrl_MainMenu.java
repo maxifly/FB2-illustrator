@@ -1,8 +1,11 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
+import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.vapi.PhotoLoader;
@@ -14,9 +17,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -41,6 +46,8 @@ public class Ctrl_MainMenu implements Initializable {
     @FXML
     private MenuItem prj_save_as;
 
+    @FXML
+    private MenuItem vk_prj_del;
 
     @FXML
     private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
@@ -50,13 +57,12 @@ public class Ctrl_MainMenu implements Initializable {
                 dm_mainMenu.vk_connect();
                 break;
             case "del_project":
-                ProjectUploader projectUploader1 = new ProjectUploader(factory_gui.getDm_statusBar().getToken(),233176977);
-                projectUploader1.deleteProject("123456789");
+                del_project();
                 break;
             case "vk_test":
 
                 Project currproject = dm_mainMenu.currentProjectProperty().getValue();
-                ProjectUploader projectUploader = new ProjectUploader(factory_gui.getDm_statusBar().getToken(),233176977);
+                ProjectUploader projectUploader = new ProjectUploader(factory_gui.getDm_statusBar().getToken(), 233176977);
                 projectUploader.uploadProject(currproject);
 
 
@@ -99,6 +105,12 @@ public class Ctrl_MainMenu implements Initializable {
         this.factory_gui = factory_gui;
     }
 
+
+    private void del_project() throws IOException {
+        GUI_Obj gui_obj = factory_gui.createProjectDelete();
+        Scene scene = factory_gui.getMainScene();
+        ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
+    }
 
     protected void open_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
         FileChooser fileChooser = new FileChooser();
@@ -155,6 +167,17 @@ public class Ctrl_MainMenu implements Initializable {
 
 
     }
+
+
+//    private void vkItemsDisable() {
+//       if (factory_gui.getDm_statusBar().getToken() == null) {
+//            vk_prj_del.setDisable(true);
+//        } else {
+//            vk_prj_del.setDisable(false);
+//        }
+//
+//    }
+
 
     private static void configureFileChooser(
             final FileChooser fileChooser,
