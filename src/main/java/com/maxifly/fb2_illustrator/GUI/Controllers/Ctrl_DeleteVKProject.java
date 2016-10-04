@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -58,6 +59,11 @@ public class Ctrl_DeleteVKProject extends Ctrl_Abstract
 
             ProjectUploader projectUploader = new ProjectUploader(dm_statusBar.getToken(), albumId);
             projectUploader.deleteProject(prj_code.getText().trim());
+
+        Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
+        info.setHeaderText(null);
+        info.showAndWait();
+
 
 
     }
