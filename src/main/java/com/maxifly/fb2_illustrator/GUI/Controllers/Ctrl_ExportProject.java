@@ -39,14 +39,20 @@ public class Ctrl_ExportProject extends Ctrl_Abstract
     @FXML
     protected void action_export(ActionEvent actionEvent) throws MyException {
 
+        long album_id;
         if(rb_exists.isSelected()) {
-            dm_exportProject.export(album_addr.getText());
+            album_id = dm_exportProject.export(album_addr.getText());
         } else {
-            dm_exportProject.export(null);
+            album_id = dm_exportProject.export(null);
         }
-        //TODO Сообщить об успехе
 
+        Alert info = new Alert(Alert.AlertType.INFORMATION,
+                "Проект экспортирован в альбом с идентификатором " + album_id);
+        info.setHeaderText(null);
+        info.showAndWait();
 
+        Stage stage = (Stage) btn_export.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

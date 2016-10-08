@@ -4,32 +4,31 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
 import com.maxifly.fb2_illustrator.Constants;
-import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.vapi.model.DATA.DATA_photo;
 import com.maxifly.vapi.model.DATA.PrjObj;
+import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.vapi.model.PhotoSize;
-import com.maxifly.vapi.model.REST.REST_Result;
+import com.maxifly.vapi.model.Project_VK;
 import com.maxifly.vapi.model.REST.REST_Result_deletePhoto;
-import com.maxifly.vapi.model.REST.REST_Result_savePhotos;
 import com.maxifly.vapi.model.RestResponse;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Maximus on 24.09.2016.
  */
-public class ProjectUploader { // TODO Переименовать класс?
+public class ProjectProcessor { // TODO Переименовать класс?
 
     private static final IMessageConveyor mc = new MessageConveyor(Constants.getLocaleApp());
     private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
-    private static final LocLogger log = llFactory_uk.getLocLogger(ProjectUploader.class.getName());
+    private static final LocLogger log = llFactory_uk.getLocLogger(ProjectProcessor.class.getName());
 
     private String accessToken;
     private long albumId;
@@ -38,14 +37,44 @@ public class ProjectUploader { // TODO Переименовать класс?
     private RestSender restSender = new RestSender();
     private PhotoUploader photoUploader;
 
-    Gson g = new Gson();
+    private Gson g = new Gson();
 
-    public ProjectUploader(String accessToken, long albumId) {
+    public ProjectProcessor(String accessToken, long albumId) {
         this.accessToken = accessToken;
         this.albumId = albumId;
 
         photoUploader = new PhotoUploader(accessToken,albumId);
 
+    }
+
+
+    public Project importProject(String project_id) throws MyException {
+        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_2560x2048);
+        IllFilter illFilter = new IllFilter(project_id);
+
+        while(photoProcessor.hasNext()) {
+            DATA_photo data_photo = photoProcessor.next();
+            illFilter.add(data_photo);
+        }
+
+        Project_VK project_vk = illFilter.getProject_vk();
+
+        if (project_vk == null) {
+            throw new MyException("Не найдена информация о проекте");
+        }
+
+        List<Illustration_VK> illustrations =  illFilter.getIllustrations();
+
+        // Отсортируем иллюстрации по их номероу
+        Collections.sort(illustrations);
+
+        for (Illustration_VK ill : illustrations) {
+            project_vk.addIll(ill);
+        }
+
+
+
+       return project_vk;
     }
 
 

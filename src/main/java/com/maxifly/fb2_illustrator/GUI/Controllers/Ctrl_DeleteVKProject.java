@@ -3,13 +3,10 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
-import com.maxifly.fb2_illustrator.model.Project;
-import com.maxifly.vapi.ProjectUploader;
+import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,8 +54,8 @@ public class Ctrl_DeleteVKProject extends Ctrl_Abstract
 
             albumId = UrlCreator.getAlbumId(album_addr.getText());
 
-            ProjectUploader projectUploader = new ProjectUploader(dm_statusBar.getToken(), albumId);
-            projectUploader.deleteProject(prj_code.getText().trim());
+            ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), albumId);
+            projectProcessor.deleteProject(prj_code.getText().trim());
 
         Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
         info.setHeaderText(null);

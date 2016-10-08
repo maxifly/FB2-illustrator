@@ -105,6 +105,11 @@ public class IllFilter {
         // Проверим, может это проект, если мы еще еuо ищем
         if (this.project_vk == null) {
 
+            log.debug("Try check photo desc {}", photo.text);
+
+            try {
+
+
             project_vk = gson_project.fromJson(photo.text, Project_VK.class);
             if (project_vk != null) {
                 project_vk.setPhoto_id(photo.id);
@@ -113,6 +118,10 @@ public class IllFilter {
                     ill.setProject(project_vk);
                 }
                 return true;
+            }
+            }
+            catch (JsonSyntaxException e) {
+                log.warn("Can not parse photo description {}", e);
             }
         }
 
@@ -129,6 +138,10 @@ public class IllFilter {
         return this.illustrations;
     }
 
+    /**
+     * Получить данные о проекте
+     * @return
+     */
     public Project_VK getProject_vk() {
         return project_vk;
     }

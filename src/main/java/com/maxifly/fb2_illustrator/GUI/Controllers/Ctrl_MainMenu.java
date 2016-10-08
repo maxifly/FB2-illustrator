@@ -1,25 +1,19 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Project;
-import com.maxifly.vapi.PhotoLoader;
-import com.maxifly.vapi.PhotoUploader;
-import com.maxifly.vapi.ProjectUploader;
+import com.maxifly.vapi.ProjectProcessor;
+import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -29,7 +23,6 @@ import javafx.stage.Window;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -69,10 +62,9 @@ public class Ctrl_MainMenu implements Initializable {
                 break;
             case "vk_test":
 
-                Project currproject = dm_mainMenu.currentProjectProperty().getValue();
-                ProjectUploader projectUploader = new ProjectUploader(factory_gui.getDm_statusBar().getToken(), 233176977);
-                projectUploader.uploadProject(currproject);
-
+                ProjectProcessor projectProcessor = new ProjectProcessor(factory_gui.getDm_statusBar().getToken(), 233176977);
+                Project projectVk = projectProcessor.importProject("123456789");
+int i = 1;
 
 //                PhotoUploader photoUploader = new PhotoUploader(factory_gui.getDm_statusBar().getToken(),233176977);
 //                photoUploader.prepare();
@@ -176,7 +168,7 @@ public class Ctrl_MainMenu implements Initializable {
 
     }
 
-
+// TODO Обеспечить недоступность пунктов меню при отсутсвии токена
 //    private void vkItemsDisable() {
 //       if (factory_gui.getDm_statusBar().getToken() == null) {
 //            vk_prj_del.setDisable(true);
