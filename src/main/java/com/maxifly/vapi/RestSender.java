@@ -8,6 +8,7 @@ import com.maxifly.fb2_illustrator.fb2_xml.model.FictionBook;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.vapi.model.*;
 import com.maxifly.vapi.model.REST.REST_FileUpload;
+import com.maxifly.vapi.model.REST.REST_POST_Data;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -38,13 +39,13 @@ public class RestSender {
         }
         return sendGet_withoutDely(url);
     }
-    public RestResponse sendPost(String url){
+    public RestResponse sendPost(REST_POST_Data rest_post_data){
         try {
             respDelay();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return sendPost_withoutDely(url);
+        return sendPost_withoutDely(rest_post_data);
     }
 
     public RestResponse sendGet_withoutDely(String url) {
@@ -76,19 +77,34 @@ public class RestSender {
     }
 
 
-    public RestResponse sendPost_withoutDely(String url) {
+    public RestResponse sendPost_withoutDely(REST_POST_Data rest_post_data) {
         RestResponse result = new RestResponse();
         HttpURLConnection con = null;
 
         try {
-            URL obj = new URL(url);
+            URL obj = new URL(rest_post_data.url);
             con = (HttpURLConnection) obj.openConnection();
+            con.setUseCaches(false);
+            con.setDoOutput(true);
 
             con.setRequestMethod("POST");
+            con.setRequestProperty("Connection", "Keep-Alive");
+            con.setRequestProperty("Cache-Control", "no-cache");
+            con.setRequestProperty(
+                    "Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("Content-Length", "" + rest_post_data.body.getBytes().length);
+
+            DataOutputStream request = new DataOutputStream(
+                    con.getOutputStream());
+
+            request.writeBytes(rest_post_data.body);
+            request.flush();
+            request.close();
+
             result.setResponseCode(con.getResponseCode());
 
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Response Code : " + result.getResponseCode());
+            log.debug("Sending 'POST' request to URL : {} \n body {} ",rest_post_data.url, rest_post_data.body);
+            log.debug("Response Code : {}", result.getResponseCode());
             readRestResponse(result, con);
         } catch (Exception e) {
             e.printStackTrace();

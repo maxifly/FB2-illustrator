@@ -84,11 +84,11 @@ public class PhotoUploader {
 
         // Фотография загружена. Добавим ее в альбом
 
-        String url = UrlCreator.photosSave(accessToken,albumId,null,rest_result_upload.server,
+        REST_POST_Data rest_post_data = UrlCreator.photosSave(accessToken,albumId,null,rest_result_upload.server,
                 rest_result_upload.photos_list,
                 rest_result_upload.hash,
                 description);
-        RestResponse restResponse_Save = restSender.sendGet(url);
+        RestResponse restResponse_Save = restSender.sendPost(rest_post_data);
         if (restResponse_Save.getResponseCode() != 200 ) {
             throw new MyException("Error code " + restResponse_Save.getResponseCode() +"when save photo in album ");
         }

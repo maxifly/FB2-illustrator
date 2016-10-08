@@ -1,6 +1,9 @@
 package com.maxifly.vapi;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.maxifly.vapi.model.AuthHeader;
+import com.maxifly.vapi.model.REST.REST_POST_Data;
 import com.maxifly.vapi.model.ScopeElement;
 
 import java.io.UnsupportedEncodingException;
@@ -131,30 +134,32 @@ public class UrlCreator {
 
     }
 
-    public static String photosSave(String accessToken, long albumId,
-                                    Long group_id,
-                                    Long server,
-                                    String photos_list,
-                                    String hash,
-                                    String caption
+    public static REST_POST_Data photosSave(String accessToken, long albumId,
+                                            Long group_id,
+                                            Long server,
+                                            String photos_list,
+                                            String hash,
+                                            String caption
     ) throws UnsupportedEncodingException {
-        StringBuilder sb = new StringBuilder("https://api.vk.com/method/photos.save?" +
-                "album_id=" + String.valueOf(albumId) +
+        StringBuilder sb_url = new StringBuilder("https://api.vk.com/method/photos.save");
+
+
+        StringBuilder sb_param = new StringBuilder(
                 "&access_token=" + accessToken +
-                "&v=" + version);
+                "&v=" + version
+        + "&album_id=" + albumId);
 
         if (group_id != null) {
-            sb.append("&group_id=").append(group_id);
+            sb_param.append("&group_id=").append(group_id);
         }
 
         String encode_caption = URLEncoder.encode(caption, "UTF-8");
-        sb.append("&server=").append(server).
+        sb_param.append("&server=").append(server).
                 append("&photos_list=").append(photos_list).
                 append("&hash=").append(hash).
                 append("&caption=").append(encode_caption);
 
-
-        return sb.toString();
+        return new REST_POST_Data(sb_url.toString(), sb_param.toString());
 
 
     }
