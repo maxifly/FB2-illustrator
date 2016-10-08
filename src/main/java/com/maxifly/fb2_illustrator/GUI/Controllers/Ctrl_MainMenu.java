@@ -23,6 +23,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
@@ -48,6 +49,8 @@ public class Ctrl_MainMenu implements Initializable {
 
     @FXML
     private MenuItem vk_prj_del;
+    @FXML
+    private MenuItem vk_prj_exp;
 
     @FXML
     private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
@@ -58,6 +61,11 @@ public class Ctrl_MainMenu implements Initializable {
                 break;
             case "del_project":
                 del_project();
+                break;
+            case "export_project":
+                GUI_Obj gui_obj =  factory_gui.createExportProject();
+                Stage stage = factory_gui.createModalWindow(gui_obj.node);
+                stage.showAndWait();
                 break;
             case "vk_test":
 

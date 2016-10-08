@@ -6,6 +6,7 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.FileOperations;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
@@ -72,6 +73,7 @@ public class DM_MainMenu {
         project.setChanged(false);
         showProject(project);
     }
+
 
 
 

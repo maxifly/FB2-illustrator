@@ -2,6 +2,7 @@ package com.maxifly.vapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.vapi.model.AuthHeader;
 import com.maxifly.vapi.model.REST.REST_POST_Data;
 import com.maxifly.vapi.model.ScopeElement;
@@ -134,6 +135,27 @@ public class UrlCreator {
 
     }
 
+    public static String createPhotoAlbum(
+            String accessToken,
+            String title,
+            Long group_id,
+            String description) throws UnsupportedEncodingException {
+
+        StringBuilder sb_url = new StringBuilder("https://api.vk.com/method/photos.createAlbum?"
+                + "&access_token=" + accessToken
+                + "&v=" + version
+        + "&title="  + URLEncoder.encode(title, "UTF-8")
+        + "&description=" + URLEncoder.encode(description, "UTF-8")
+        );
+
+        if (group_id != null) {
+            sb_url.append("&group_id=").append(group_id);
+        }
+
+        return sb_url.toString();
+    }
+
+
     public static REST_POST_Data photosSave(String accessToken, long albumId,
                                             Long group_id,
                                             Long server,
@@ -146,8 +168,8 @@ public class UrlCreator {
 
         StringBuilder sb_param = new StringBuilder(
                 "&access_token=" + accessToken +
-                "&v=" + version
-        + "&album_id=" + albumId);
+                        "&v=" + version
+                        + "&album_id=" + albumId);
 
         if (group_id != null) {
             sb_param.append("&group_id=").append(group_id);
@@ -164,7 +186,7 @@ public class UrlCreator {
 
     }
 
-    public static long getAlbumId(String albumPath) throws Exception {
+    public static long getAlbumId(String albumPath) throws MyException {
         Pattern dg_pattern = Pattern.compile("^\\d+$");
         if (dg_pattern.matcher(albumPath).matches()) {
             return Long.valueOf(albumPath);
@@ -178,7 +200,7 @@ public class UrlCreator {
                             matcher.group(0));
         }
 
-        throw new Exception("Can not parse album addr " + albumPath);
+        throw new MyException("Can not parse album addr " + albumPath);
         // http://vk.com/albums320470599
 
     }

@@ -97,4 +97,7 @@ public class DM_Project extends DM_Abstract {
         return project.getId();
     }
 
+    public Project getProject() {
+        return project;
+    }
 }
