@@ -59,9 +59,7 @@ public class Ctrl_MainMenu implements Initializable {
                 del_project();
                 break;
             case "export_project":
-                GUI_Obj gui_obj =  factory_gui.createExportProject();
-                Stage stage = factory_gui.createModalWindow(gui_obj.node);
-                stage.showAndWait();
+                export_project();
                 break;
             case "vk_test":
 
@@ -85,6 +83,8 @@ int i = 1;
         }
 
     }
+
+
 
     @FXML
     private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException, GUI_Exception {
@@ -120,6 +120,12 @@ int i = 1;
 
     private void del_project() throws IOException {
         GUI_Obj gui_obj = factory_gui.createProjectDelete();
+        Stage stage = factory_gui.createModalWindow(gui_obj.node);
+        stage.showAndWait();
+    }
+
+    private void export_project() throws IOException {
+        GUI_Obj gui_obj =  factory_gui.createExportProject();
         Stage stage = factory_gui.createModalWindow(gui_obj.node);
         stage.showAndWait();
     }
