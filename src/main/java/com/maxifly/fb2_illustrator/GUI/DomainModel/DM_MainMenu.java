@@ -76,6 +76,10 @@ public class DM_MainMenu {
 
 
 
+    public void setAndShowNewCurrentProject(Project project) throws IOException {
+        currentProjectProperty.setValue(project);
+        showProject(project);
+    }
 
     public void project_new() throws IOException {
         Project project = new Project();

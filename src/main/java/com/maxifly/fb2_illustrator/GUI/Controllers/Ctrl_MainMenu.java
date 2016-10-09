@@ -5,8 +5,10 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.vapi.ProjectProcessor;
+import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,6 +25,7 @@ import javafx.stage.Window;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 
 /**
@@ -63,8 +66,17 @@ public class Ctrl_MainMenu implements Initializable {
             case "vk_test":
 
                 ProjectProcessor projectProcessor = new ProjectProcessor(factory_gui.getDm_statusBar().getToken(), 233176977);
-                Project projectVk = projectProcessor.importProject("123456789");
+                Project_VK projectVk = projectProcessor.importProject("123456789");
+
+                projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), projectVk);
+
+                dm_mainMenu.setAndShowNewCurrentProject(projectVk);
+
 int i = 1;
+
+//                for (Illustration ill : projectVk.getIllustrations()) {
+//                  System.out.println(   ((Illustration_VK) ill ).getUrl_picture());
+//                }
 
 //                PhotoUploader photoUploader = new PhotoUploader(factory_gui.getDm_statusBar().getToken(),233176977);
 //                photoUploader.prepare();
@@ -108,8 +120,8 @@ int i = 1;
 
     private void del_project() throws IOException {
         GUI_Obj gui_obj = factory_gui.createProjectDelete();
-        Scene scene = factory_gui.getMainScene();
-        ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
+        Stage stage = factory_gui.createModalWindow(gui_obj.node);
+        stage.showAndWait();
     }
 
     protected void open_project(ActionEvent actionEvent) throws IOException, GUI_Exception {

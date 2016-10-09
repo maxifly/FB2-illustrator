@@ -18,8 +18,12 @@ import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Maximus on 24.09.2016.
@@ -48,7 +52,25 @@ public class ProjectProcessor { // TODO Переименовать класс?
     }
 
 
-    public Project importProject(String project_id) throws MyException {
+    public void downloadPhotos(Path dest_dir, Project_VK project_vk) throws MyException {
+        PhotoLoader photoLoader = new PhotoLoader(dest_dir);
+
+
+        List<Illustration_VK> ills_VK = new ArrayList<>();
+        for (Illustration ill : project_vk.getIllustrations()) {
+          photoLoader.addIllustration((Illustration_VK) ill);
+        }
+
+        try {
+            photoLoader.download();
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            log.error("Ошибка загрузки файлов: {}", e);
+            throw new MyException("Ошибка загрузки файлов", e);
+        }
+
+    }
+
+    public Project_VK importProject(String project_id) throws MyException {
         PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_2560x2048);
         IllFilter illFilter = new IllFilter(project_id);
 
@@ -68,7 +90,10 @@ public class ProjectProcessor { // TODO Переименовать класс?
         // Отсортируем иллюстрации по их номероу
         Collections.sort(illustrations);
 
+        int i = 0;
         for (Illustration_VK ill : illustrations) {
+            ill.setId(i);
+            i++;
             project_vk.addIll(ill);
         }
 

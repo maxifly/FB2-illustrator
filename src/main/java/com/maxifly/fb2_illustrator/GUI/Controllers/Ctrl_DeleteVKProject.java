@@ -14,7 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-
+import javafx.stage.Stage;
 
 
 import java.net.URL;
@@ -61,8 +61,15 @@ public class Ctrl_DeleteVKProject extends Ctrl_Abstract
         info.setHeaderText(null);
         info.showAndWait();
 
+        Stage stage = (Stage) btn_del.getScene().getWindow();
+        stage.close();
 
+    }
 
+    @FXML
+    protected void action_cancel(ActionEvent actionEvent) {
+        Stage stage = (Stage) btn_del.getScene().getWindow();
+        stage.close();
     }
 
     public Ctrl_DeleteVKProject(Factory_GUI factory_gui) {

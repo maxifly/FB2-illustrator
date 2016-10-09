@@ -42,6 +42,10 @@ public class PhotoLoader {
         this.illustrationList = illustrationList;
     }
 
+    public void addIllustration(Illustration_VK ill) {
+        this.illustrationList.add(ill);
+    }
+
     public void download() throws IOException, ExecutionException, InterruptedException {
         for (Illustration_VK illustration : illustrationList) {
             String pictureURL = illustration.getUrl_picture();

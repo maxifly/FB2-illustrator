@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -18,41 +19,47 @@
             <Font size="41.0" />
          </font>
       </Label>
-      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="5.0">
+      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="162.0" prefWidth="595.0" vgap="5.0">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="219.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="381.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="258.0" minHeight="1.0" prefHeight="56.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="331.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="28.0" prefWidth="203.0" text="Адрес или код альбома:" GridPane.rowIndex="3">
+            <Label prefHeight="28.0" prefWidth="203.0" text="Адрес или код альбома:" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="album_addr" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="btn_del" mnemonicParsing="false" onAction="#btn_del_action" text="Удалить проект" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Код проекта:" GridPane.rowIndex="2">
+            <TextField fx:id="album_addr" prefHeight="29.0" prefWidth="349.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Код проекта:" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <CheckBox fx:id="current_prj_code" mnemonicParsing="false" onAction="#chckBox" text="Код проекта как у текущего" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <CheckBox fx:id="current_prj_code" mnemonicParsing="false" onAction="#chckBox" text="Код проекта как у текущего" GridPane.columnIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
             </CheckBox>
-            <TextField fx:id="prj_code" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="prj_code" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="btn_del" mnemonicParsing="false" onAction="#btn_del_action" text="Удалить проект" />
+            <Button mnemonicParsing="false" onAction="#action_cancel" text="Отмена" />
+         </children>
+      </HBox>
    </children>
    <opaqueInsets>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </opaqueInsets>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </VBox>
