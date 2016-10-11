@@ -77,7 +77,7 @@ public class UrlCreator {
 
     public static String getAuthUrl(String clientId, ScopeElement[] scopes) {
         // https://oauth.vk.com/authorize?client_id=idApp&scope=audio&redirect_url=https://oauth.vk.com/blank.html&display=page&v=5.4&response_type=token
-        return "http://oauth.vk.com/authorize?" +
+        return "https://oauth.vk.com/authorize?" +
                 "client_id=" + clientId +
                 "&scope=" + computeScope(scopes) + // scope + //StringUtils.join(scopes, ",") +
                 "&redirect_uri=" + redirect_uri +

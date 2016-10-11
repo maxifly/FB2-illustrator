@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu">
+<MenuBar minHeight="-Infinity" prefHeight="32.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_MainMenu">
   <menus>
     <Menu mnemonicParsing="false" text="Project">
       <items>
@@ -27,6 +27,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem id="del_project" fx:id="vk_prj_del" mnemonicParsing="false" onAction="#action_vk" text="Delete project" />
             <MenuItem id="export_project" fx:id="vk_prj_exp" mnemonicParsing="false" onAction="#action_vk" text="Export current project" />
+            <MenuItem id="import_project" fx:id="vk_prj_imp" mnemonicParsing="false" onAction="#action_vk" text="Import project" />
             <MenuItem id="vk_test" mnemonicParsing="false" onAction="#action_vk" text="vk_test" />
       </items>
     </Menu>

@@ -268,6 +268,22 @@ public class Factory_GUI {
         return new GUI_Obj(node, loader.getController(), null);
     }
 
+    public GUI_Obj createImportVKProject()
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        DM_ImportVKProject dm_importVKProject = new DM_ImportVKProject(factory_gui.getDm_statusBar());
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("Form_ImportVKProj.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_ImportVKProject(factory_gui,dm_importVKProject);
+            }
+        });
+        Node node = loader.load();
+
+        return new GUI_Obj(node, loader.getController(), dm_importVKProject);
+    }
     public GUI_Obj createProject(Project project)
             throws IOException {
         Factory_GUI factory_gui = this;

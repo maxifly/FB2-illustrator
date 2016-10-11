@@ -65,7 +65,9 @@ public class Ctrl_ImportVKProject extends Ctrl_Abstract
     }
 
     private void change_text() {
-        if ("".equals(album_addr.textProperty().getValue().trim()) ||
+        if (album_addr.textProperty().getValue() == null ||
+                "".equals(album_addr.textProperty().getValue().trim()) ||
+                prj_code.textProperty().getValue() == null ||
                 "".equals(prj_code.textProperty().getValue().trim())
                 ) {
             btn_import.setDisable(true);

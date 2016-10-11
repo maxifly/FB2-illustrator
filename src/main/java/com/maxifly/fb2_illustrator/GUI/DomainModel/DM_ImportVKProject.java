@@ -42,6 +42,7 @@ public class DM_ImportVKProject extends DM_Abstract{
         return albumAddr;
     }
 
-
-
+    public Project_VK getProject_vk() {
+        return project_vk;
+    }
 }

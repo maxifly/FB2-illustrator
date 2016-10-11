@@ -1,5 +1,6 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_ImportVKProject;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
@@ -47,6 +48,8 @@ public class Ctrl_MainMenu implements Initializable {
     private MenuItem vk_prj_del;
     @FXML
     private MenuItem vk_prj_exp;
+    @FXML
+    private MenuItem vk_prj_imp;
 
     @FXML
     private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
@@ -61,6 +64,9 @@ public class Ctrl_MainMenu implements Initializable {
             case "export_project":
                 export_project();
                 break;
+            case "import_project":
+                import_project();
+                break;
             case "vk_test":
 
                 ProjectProcessor projectProcessor = new ProjectProcessor(factory_gui.getDm_statusBar().getToken(), 233176977);
@@ -70,7 +76,7 @@ public class Ctrl_MainMenu implements Initializable {
 
                 dm_mainMenu.setAndShowNewCurrentProject(projectVk);
 
-int i = 1;
+                int i = 1;
 
 //                for (Illustration ill : projectVk.getIllustrations()) {
 //                  System.out.println(   ((Illustration_VK) ill ).getUrl_picture());
@@ -83,7 +89,6 @@ int i = 1;
         }
 
     }
-
 
 
     @FXML
@@ -124,8 +129,18 @@ int i = 1;
         stage.showAndWait();
     }
 
+    private void import_project() throws IOException {
+        GUI_Obj gui_obj = factory_gui.createImportVKProject();
+        Stage stage = factory_gui.createModalWindow(gui_obj.node);
+        stage.showAndWait();
+        Project_VK project_vk = ((DM_ImportVKProject) gui_obj.dm_model).getProject_vk();
+        if (project_vk != null) {
+            dm_mainMenu.setAndShowNewCurrentProject(project_vk);
+        }
+    }
+
     private void export_project() throws IOException {
-        GUI_Obj gui_obj =  factory_gui.createExportProject();
+        GUI_Obj gui_obj = factory_gui.createExportProject();
         Stage stage = factory_gui.createModalWindow(gui_obj.node);
         stage.showAndWait();
     }
