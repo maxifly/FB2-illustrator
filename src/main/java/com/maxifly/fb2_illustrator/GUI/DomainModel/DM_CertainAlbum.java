@@ -10,6 +10,7 @@ import com.maxifly.vapi.*;
 import com.maxifly.vapi.model.DATA.DATA_photo;
 import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.vapi.model.PhotoSize;
+import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -80,42 +81,24 @@ public class DM_CertainAlbum {
         String accessToken = factory_gui.getDm_statusBar().getToken();
         long albumId = UrlCreator.getAlbumId(album_addr.getValue());
 
-        // Загрузим иллюстрации
-        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,albumId, PhotoSize.photo_2560x2048);
-        IllFilter illFilter = new IllFilter("123456"); //TODO надо как-то пойти от проверки идентификатора проекта
-        PhotoLoader photoLoader = new PhotoLoader(Files.createTempDirectory("fbill_"));
+        // Загрузим проект
+        ProjectProcessor projectProcessor = new ProjectProcessor(accessToken,albumId);
+        Project_VK project_vk = projectProcessor.importProject("123456789"); //TODO надо как-то пойти от проверки идентификатора проекта
+        projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk);
 
-
-
-        while(photoProcessor.hasNext()) {
-            DATA_photo data_photo = photoProcessor.next();
-            System.out.println(data_photo.text +"\n"+data_photo.url);
-            illFilter.add(data_photo);
-        }
-
-        System.out.println("Illustrations count " + illFilter.getIllustrations().size());
-
-        photoLoader.setIllustrationList(illFilter.getIllustrations());
-        photoLoader.download();
-
-
-        List<Illustration_VK> illustrationList = illFilter.getIllustrations();
-
-        Collections.sort(illustrationList,new InternetIllComparator());
 
         Illustrations illustrations = new Illustrations();
 
-        for (Illustration illustration : illustrationList) {
+        for (Illustration illustration : project_vk.getIllustrations()) {
             illustrations.addIllustration(illustration);
         }
 
 
         // Вставим иллюстрации
-
-
-        // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.processBook(illustrations,inputFile,outputFile);
+
+        // TODO Есть подозрение, что когда иллюстрация называется "1" и тп, то она не отображается корректно.
 
     }
 }
