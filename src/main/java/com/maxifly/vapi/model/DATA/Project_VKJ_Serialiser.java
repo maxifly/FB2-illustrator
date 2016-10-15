@@ -41,7 +41,13 @@ public class Project_VKJ_Serialiser implements JsonSerializer<Project>, JsonDese
             Project_VK project = new Project_VK();
             project.setId(id);
 
-            JsonElement je = jsonObject.get("srch");
+            JsonElement je = jsonObject.get("prj_desc");
+            if (je != null && !je.isJsonNull()) {
+                project.setProjectParagraf(je.getAsString());
+            }
+
+
+            je = jsonObject.get("srch");
             if (je != null && !je.isJsonNull()) {
                 JsonArray templates = je.getAsJsonArray();
 

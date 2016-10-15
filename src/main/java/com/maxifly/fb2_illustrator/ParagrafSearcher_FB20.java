@@ -30,6 +30,12 @@ public class ParagrafSearcher_FB20
             .getLocLogger(BookProcessor_FB20.class.getName());
     private Illustrations illustrations;
 
+    private int currentParagrafNumber;
+    private int lastParagrafNumber;
+
+    private String projectInfo;
+
+
     @Override
     public void search(FictionBook fictionBook, Illustrations illustrations, Paragrafs paragrafs) {
 
@@ -46,10 +52,13 @@ public class ParagrafSearcher_FB20
 
 
     @Override
-    public FictionBook process(FictionBook fictionBook, Illustrations illustrations, Paragrafs paragrafs) {
+    public FictionBook process(FictionBook fictionBook, Illustrations illustrations, Paragrafs paragrafs, String projectInfo) {
 
         this.illustrations = illustrations;
         this.paragrafs = paragrafs;
+        this.projectInfo = projectInfo;
+        this.currentParagrafNumber = 0;
+
         FictionBook.Body mainBody = fictionBook.getBody().iterator().next();
 
         ArrayList<SectionType> newSectionList = new ArrayList<>();
@@ -113,9 +122,14 @@ public class ParagrafSearcher_FB20
                 case "PType":
                     log.debug("Paragraf");
                     List<JAXBElement<?>> newElementsList = paragrafProcessor((JAXBElement<PType>) element);
+
+
                     for (JAXBElement<?> newElement : newElementsList) {
                         newSectionObjectsList.add(newElement);
                     }
+
+
+
 
                     break;
                 case "SectionType":
@@ -127,6 +141,19 @@ public class ParagrafSearcher_FB20
                     break;
                 default:
                     newSectionObjectsList.add(element);
+            }
+
+            // Выясним последний это был параграф или нет
+            this.currentParagrafNumber++;
+            if (this.currentParagrafNumber == this.lastParagrafNumber) {
+                log.debug("last paragraf {}", this.currentParagrafNumber);
+
+                PType pType_projectInfo = objectFactory.createPType();
+                List<Serializable> contentPTypeDesc = pType_projectInfo.getContent();
+                contentPTypeDesc.add(this.projectInfo);
+
+                newSectionObjectsList.add(objectFactory.createSectionTypeP(pType_projectInfo));
+
             }
 
         }
@@ -192,7 +219,7 @@ public class ParagrafSearcher_FB20
     private void sectionParser(SectionType section) {
 
         for (JAXBElement<?> element : section.getImageOrAnnotationOrSection()) {
-
+            this.lastParagrafNumber ++;
             switch (element.getDeclaredType().getSimpleName()) {
                 case "PType":
                     log.debug("Paragraf");

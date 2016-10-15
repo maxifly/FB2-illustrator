@@ -12,12 +12,14 @@ public interface BookProcessor {
      * Обрабатывает файл, вставляя в него иллюстрации
      *
      * @param illustrations - список иллюстраций
+     * @param projectInfo - информация о проекте, добавляемя в конец книги
      * @param inputFile - ссылка на исходный файл
      * @param outputFile - ссылка на итоговый файл
      * @throws Exception
      */
     void processBook(
             Illustrations illustrations,
+            String projectInfo,
             Path inputFile,
             Path outputFile
                             ) throws Exception;

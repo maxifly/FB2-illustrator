@@ -22,7 +22,7 @@ public class BookProcessor_FB20 implements BookProcessor {
 
 
     @Override
-    public void processBook(Illustrations illustrations, Path inputFile, Path outputFile) throws Exception {
+    public void processBook(Illustrations illustrations, String projectInfo, Path inputFile, Path outputFile) throws Exception {
         log.debug("Book XML " + inputFile);
 
         // Разберем XML
@@ -40,7 +40,7 @@ public class BookProcessor_FB20 implements BookProcessor {
 
         // Теперь вставим иллюстрации в книгу
 
-        ps.process(fictionBook, illustrations, paragrafs);
+        ps.process(fictionBook, illustrations, paragrafs, projectInfo);
 
         Marshaller marshaller = jc.createMarshaller();
         marshaller.marshal(fictionBook, outputFile.toFile());

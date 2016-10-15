@@ -61,7 +61,7 @@ public class vk_tst {
         Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
         Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
         BookProcessor bookParse = new BookProcessor_FB20();
-        bookParse.processBook(illustrations,inputFile,outputFile);
+        bookParse.processBook(illustrations," ",inputFile,outputFile);
 
 
 

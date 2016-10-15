@@ -50,7 +50,7 @@ public class IllFilter {
         gson_project = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
-                .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
+                .registerTypeAdapter(Project_VK.class, new Project_VKJ_Serialiser(project_id))
                 .create();
         gson_ill = new GsonBuilder()
                 .setPrettyPrinting()

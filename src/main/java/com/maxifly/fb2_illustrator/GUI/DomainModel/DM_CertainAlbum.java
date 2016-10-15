@@ -96,7 +96,9 @@ public class DM_CertainAlbum {
 
         // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
-        bookParse.processBook(illustrations,inputFile,outputFile);
+        bookParse.processBook(illustrations,project_vk.getProjectParagraf(), inputFile,outputFile);
+
+        System.out.println("getProjectParagraf: " + project_vk.getProjectParagraf());
 
         // TODO Есть подозрение, что когда иллюстрация называется "1" и тп, то она не отображается корректно.
 
