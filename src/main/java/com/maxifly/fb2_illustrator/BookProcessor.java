@@ -8,19 +8,24 @@ import java.nio.file.Path;
  * Created by Maximus on 17.05.2016.
  */
 public interface BookProcessor {
+
+    /**
+     * Загружает файл
+     * @param inputFile - ссылка на исходный файл
+     */
+    public void loadBook(Path inputFile)throws Exception;
+
     /**
      * Обрабатывает файл, вставляя в него иллюстрации
      *
      * @param illustrations - список иллюстраций
      * @param projectInfo - информация о проекте, добавляемя в конец книги
-     * @param inputFile - ссылка на исходный файл
      * @param outputFile - ссылка на итоговый файл
      * @throws Exception
      */
-    void processBook(
+    public void processBook(
             Illustrations illustrations,
             String projectInfo,
-            Path inputFile,
             Path outputFile
                             ) throws Exception;
 

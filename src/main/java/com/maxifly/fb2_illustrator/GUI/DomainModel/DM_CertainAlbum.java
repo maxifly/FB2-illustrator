@@ -96,7 +96,8 @@ public class DM_CertainAlbum {
 
         // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
-        bookParse.processBook(illustrations,project_vk.getProjectParagraf(), inputFile,outputFile);
+        bookParse.loadBook(inputFile);
+        bookParse.processBook(illustrations,project_vk.getProjectParagraf(), outputFile);
 
         System.out.println("getProjectParagraf: " + project_vk.getProjectParagraf());
 

@@ -102,7 +102,8 @@ System.out.println("book_dst_file "+ book_dst_file);
 
         // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
-        bookParse.processBook(illustrations,project.getProjectParagraf(), inputFile,outputFile);
+        bookParse.loadBook(inputFile);
+        bookParse.processBook(illustrations,project.getProjectParagraf(), outputFile);
 
         System.out.println("getProjectParagraf: " + project.getProjectParagraf());
 

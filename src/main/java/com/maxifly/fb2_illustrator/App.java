@@ -51,7 +51,8 @@ public class App {
 //                FileSystems.getDefault().getPath("priv_fales", "ill3.jpg"),
 //                "трансформирует"));
 
-        bookParse.processBook(illustrations," ", inputFile,outputFile);
+        bookParse.loadBook(inputFile);
+        bookParse.processBook(illustrations," ", outputFile);
     }
 
     private void shutdown() {
