@@ -2,6 +2,8 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_ImportVKProject;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_MainMenu;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
@@ -69,14 +71,10 @@ public class Ctrl_MainMenu implements Initializable {
                 break;
             case "vk_test":
 
-                ProjectProcessor projectProcessor = new ProjectProcessor(factory_gui.getDm_statusBar().getToken(), 233176977);
-                Project_VK projectVk = projectProcessor.importProject("123456789");
+                GUI_Obj gui_obj = this.factory_gui.createBookFromCurProj();
+                Scene scene = this.factory_gui.getMainScene();
+                ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
 
-                projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), projectVk);
-
-                dm_mainMenu.setAndShowNewCurrentProject(projectVk);
-
-                int i = 1;
 
 //                for (Illustration ill : projectVk.getIllustrations()) {
 //                  System.out.println(   ((Illustration_VK) ill ).getUrl_picture());

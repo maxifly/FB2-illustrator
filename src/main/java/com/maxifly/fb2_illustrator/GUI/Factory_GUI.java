@@ -308,6 +308,32 @@ public class Factory_GUI {
         return new GUI_Obj(node, ctrl_project, dm_project);
     }
 
+    public GUI_Obj createBookFromCurProj()
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        DM_Book_from_Proj dm_book_from_proj = new DM_Book_from_Proj(this);
+
+
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormBook_from_CurrProject.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_Book_from_Proj(dm_book_from_proj);
+            }
+        });
+        Node node = loader.load();
+
+        // Надо сохранить эту переменную, чтобы не разрушился биндинг на значение
+        // интересное только контроллеру
+        // подробнее смотри: http://stackoverflow.com/questions/26312651/bidirectional-javafx-binding-is-destroyed-by-unrelated-code
+
+        Ctrl_Book_from_Proj ctrl_book_from_proj = loader.getController();
+        return new GUI_Obj(node, ctrl_book_from_proj, dm_book_from_proj);
+    }
+
+
     public Pane createCertainAction() throws IOException {
         Factory_GUI factory_gui = this;
         FXMLLoader loader = new FXMLLoader();
