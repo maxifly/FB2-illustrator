@@ -25,6 +25,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -54,7 +55,7 @@ public class Ctrl_MainMenu implements Initializable {
     private MenuItem vk_prj_imp;
 
     @FXML
-    private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
+    private void action_vk(ActionEvent actionEvent) throws IOException, InterruptedException, MyException, JAXBException {
 
         switch (((MenuItem) actionEvent.getSource()).getId()) {
             case "vk_connect":

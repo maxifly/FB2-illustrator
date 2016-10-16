@@ -16,6 +16,12 @@ public interface BookProcessor {
     public void loadBook(Path inputFile)throws Exception;
 
     /**
+     * Получить название книги
+     * @return Название книги
+     */
+    public String getTitle();
+
+    /**
      * Обрабатывает файл, вставляя в него иллюстрации
      *
      * @param illustrations - список иллюстраций

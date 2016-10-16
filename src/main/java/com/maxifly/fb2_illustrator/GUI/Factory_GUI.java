@@ -21,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 /**
@@ -309,7 +310,7 @@ public class Factory_GUI {
     }
 
     public GUI_Obj createBookFromCurProj()
-            throws IOException {
+            throws IOException, JAXBException {
         Factory_GUI factory_gui = this;
         DM_Book_from_Proj dm_book_from_proj = new DM_Book_from_Proj(this);
 

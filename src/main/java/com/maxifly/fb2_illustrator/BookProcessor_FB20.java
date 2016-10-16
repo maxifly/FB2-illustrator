@@ -40,6 +40,15 @@ public class BookProcessor_FB20 implements BookProcessor {
     }
 
     @Override
+    public String getTitle() {
+        try {
+            return fictionBook.getDescription().getTitleInfo().getBookTitle().getValue();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    @Override
     public void processBook(Illustrations illustrations, String projectInfo, Path outputFile) throws Exception {
 
         // Поищем иллюстрации

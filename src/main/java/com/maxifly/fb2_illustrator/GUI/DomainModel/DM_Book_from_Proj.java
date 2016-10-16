@@ -1,7 +1,10 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.BookProcessor;
 import com.maxifly.fb2_illustrator.BookProcessor_FB20;
+import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.model.Illustration;
@@ -11,7 +14,10 @@ import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
 import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.*;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -23,6 +29,12 @@ import java.nio.file.Path;
 public class DM_Book_from_Proj
     extends DM_Abstract
 {
+
+    private static IMessageConveyor mc = new MessageConveyor(
+            Constants.getLocaleApp());
+    private static LocLogger log = (new LocLoggerFactory(mc))
+            .getLocLogger(DM_Book_from_Proj.class.getName());
+
     private StringProperty book_name;
 
     private StringProperty book_src_file;
@@ -32,6 +44,9 @@ public class DM_Book_from_Proj
 
     private ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
     private ObjectProperty<DM_Project> dm_projectObjectProperty = new SimpleObjectProperty<>();
+
+
+    private BookProcessor bookParse;
 
 
     public Project getProjectObjectProperty() {
@@ -50,7 +65,25 @@ public class DM_Book_from_Proj
         }
     };
 
-    public DM_Book_from_Proj(Factory_GUI factory_gui) {
+    private void change_srcFile(String newValue) {
+        Path inputFile = (FileSystems.getDefault().getPath(newValue));
+        log.debug("Src file: {}",newValue);
+
+        File src_file = inputFile.toFile();
+        if ((src_file.exists() && src_file.isFile()))   {
+            try {
+                bookParse.loadBook(inputFile);
+                book_name.setValue(bookParse.getTitle());
+                log.debug("title: {}", book_name.getValue());
+            } catch (Exception e) {
+                log.error("Error {}", e);
+            }
+        } else {
+            book_name.setValue(null);
+        }
+    }
+
+    public DM_Book_from_Proj(Factory_GUI factory_gui) throws JAXBException {
         book_name = new SimpleStringProperty();
         book_src_file = new SimpleStringProperty();
         book_dst_file = new SimpleStringProperty();
@@ -58,6 +91,9 @@ public class DM_Book_from_Proj
         projectObjectProperty = new SimpleObjectProperty<>();
         dm_projectObjectProperty.bindBidirectional(factory_gui.getDm_statusBar().dmProject_Property());
         dm_projectObjectProperty.addListener((observable, oldValue, newValue) -> change_dmProject(newValue));
+        book_src_file.addListener((observable, oldValue, newValue) -> change_srcFile(newValue));
+        bookParse = new BookProcessor_FB20();
+
         change_dmProject(factory_gui.getDm_statusBar().dmProject_Property().getValue());
     }
 
@@ -83,6 +119,7 @@ public class DM_Book_from_Proj
 
 System.out.println("book_dst_file "+ book_dst_file);
 
+        // Проверка наличия исходного файла 
         File src_file = inputFile.toFile();
         if (!(src_file.exists() && src_file.isFile())) {
            throw new GUI_Exception("Исходный файл \n" + src_file.toString() + "\n не найден.");
@@ -101,8 +138,6 @@ System.out.println("book_dst_file "+ book_dst_file);
 
 
         // Вставим иллюстрации
-        BookProcessor bookParse = new BookProcessor_FB20();
-        bookParse.loadBook(inputFile);
         bookParse.processBook(illustrations,project.getProjectParagraf(), outputFile);
 
         System.out.println("getProjectParagraf: " + project.getProjectParagraf());
