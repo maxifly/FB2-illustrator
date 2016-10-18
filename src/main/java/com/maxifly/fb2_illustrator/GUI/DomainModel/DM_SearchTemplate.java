@@ -64,15 +64,15 @@ public class DM_SearchTemplate extends DM_Abstract {
     }
 
     public void save() {
-        searchTemplate.description = description.getValue();
-        searchTemplate.template = template.getValue();
-        searchTemplate.templateType = templateTypeObjectProperty.get();
+        searchTemplate.setDescription(description.getValue());
+        searchTemplate.setTemplate(template.getValue());
+        searchTemplate.setTemplateType(templateTypeObjectProperty.get());
     }
 
     public void cancel() {
-        description.setValue(searchTemplate.description);
-        template.setValue(searchTemplate.template);
-        templateTypeObjectProperty.setValue(searchTemplate.templateType);
+        description.setValue(searchTemplate.getDescription());
+        template.setValue(searchTemplate.getTemplate());
+        templateTypeObjectProperty.setValue(searchTemplate.getTemplateType());
     }
 
     public void refresh() {

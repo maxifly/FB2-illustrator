@@ -43,16 +43,16 @@ public class SearchTemplate_VKJ_Serialiser implements JsonSerializer<SearchTempl
     public JsonElement serialize(SearchTemplate_POJO searchTemplate_pojo, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject result = new JsonObject();
 
-        switch (searchTemplate_pojo.templateType){
+        switch (searchTemplate_pojo.getTemplateType()){
             case regexp:
-                result.add("re", new JsonPrimitive(searchTemplate_pojo.template));
+                result.add("re", new JsonPrimitive(searchTemplate_pojo.getTemplate()));
                 break;
             case substr:
-                result.add("s", new JsonPrimitive(searchTemplate_pojo.template));
+                result.add("s", new JsonPrimitive(searchTemplate_pojo.getTemplate()));
         }
 
-        if (searchTemplate_pojo.description != null) {
-            result.add("d", new JsonPrimitive(searchTemplate_pojo.description));
+        if (searchTemplate_pojo.getDescription() != null) {
+            result.add("d", new JsonPrimitive(searchTemplate_pojo.getDescription()));
         }
 
         return result;

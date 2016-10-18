@@ -27,8 +27,7 @@ import java.nio.file.Path;
  * Created by Maximus on 31.07.2016.
  */
 public class DM_Book_from_Proj
-    extends DM_Abstract
-{
+        extends DM_Abstract {
 
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
@@ -57,29 +56,33 @@ public class DM_Book_from_Proj
         return projectObjectProperty;
     }
 
-    private void change_dmProject(DM_Project newValue){
+    private void change_dmProject(DM_Project newValue) {
         if (newValue != null) {
             projectObjectProperty.setValue(newValue.getProject());
         } else {
             projectObjectProperty.setValue(null);
         }
-    };
+    }
+
+    ;
 
     private void change_srcFile(String newValue) {
-        Path inputFile = (FileSystems.getDefault().getPath(newValue));
-        log.debug("Src file: {}",newValue);
+        if (newValue != null && !"".equals(newValue)) {
+            Path inputFile = (FileSystems.getDefault().getPath(newValue));
+            log.debug("Src file: {}", newValue);
 
-        File src_file = inputFile.toFile();
-        if ((src_file.exists() && src_file.isFile()))   {
-            try {
-                bookParse.loadBook(inputFile);
-                book_name.setValue(bookParse.getTitle());
-                log.debug("title: {}", book_name.getValue());
-            } catch (Exception e) {
-                log.error("Error {}", e);
+            File src_file = inputFile.toFile();
+            if ((src_file.exists() && src_file.isFile())) {
+                try {
+                    bookParse.loadBook(inputFile);
+                    book_name.setValue(bookParse.getTitle());
+                    log.debug("title: {}", book_name.getValue());
+                } catch (Exception e) {
+                    log.error("Error {}", e);
+                }
+            } else {
+                book_name.setValue(null);
             }
-        } else {
-            book_name.setValue(null);
         }
     }
 
@@ -100,9 +103,11 @@ public class DM_Book_from_Proj
     public StringProperty book_name_Propery() {
         return book_name;
     }
+
     public StringProperty book_src_file_Propery() {
         return book_src_file;
     }
+
     public StringProperty book_dst_file_Propery() {
         return book_dst_file;
     }
@@ -117,15 +122,13 @@ public class DM_Book_from_Proj
         Path inputFile = (FileSystems.getDefault().getPath(book_src_file.getValue()));
         Path outputFile = (FileSystems.getDefault().getPath(book_dst_file.getValue()));
 
-System.out.println("book_dst_file "+ book_dst_file);
+        System.out.println("book_dst_file " + book_dst_file);
 
-        // Проверка наличия исходного файла 
+        // Проверка наличия исходного файла
         File src_file = inputFile.toFile();
         if (!(src_file.exists() && src_file.isFile())) {
-           throw new GUI_Exception("Исходный файл \n" + src_file.toString() + "\n не найден.");
+            throw new GUI_Exception("Исходный файл \n" + src_file.toString() + "\n не найден.");
         }
-
-
 
 
         Project project = projectObjectProperty.getValue();
@@ -138,7 +141,7 @@ System.out.println("book_dst_file "+ book_dst_file);
 
 
         // Вставим иллюстрации
-        bookParse.processBook(illustrations,project.getProjectParagraf(), outputFile);
+        bookParse.processBook(illustrations, project.getProjectParagraf(), outputFile);
 
         System.out.println("getProjectParagraf: " + project.getProjectParagraf());
 

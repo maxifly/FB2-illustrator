@@ -69,20 +69,20 @@ public class Illustration implements Comparable<Illustration>{
 
        // TODO переписать проверку, подходит ли иллюстрация под текст параграфа
         for (SearchTemplate_POJO searchTemplate : searchTemplates) {
-            switch (searchTemplate.templateType) {
+            switch (searchTemplate.getTemplateType()) {
                 case substr:
-                    if (paragrafText.contains(searchTemplate.template)) {
-                        this.illustrated_description = searchTemplate.description;
+                    if (paragrafText.contains(searchTemplate.getTemplate())) {
+                        this.illustrated_description = searchTemplate.getDescription();
                         return true;
                     }
                     break;
                 case regexp:
                     try {
                         //TODO Перенести компиляцию условия на момент разбора иллюстраций
-                        Pattern pattern = Pattern.compile(searchTemplate.template);
+                        Pattern pattern = Pattern.compile(searchTemplate.getTemplate());
                         Matcher matcher = pattern.matcher(paragrafText);
                         if (matcher.matches()) {
-                            this.illustrated_description = searchTemplate.description;
+                            this.illustrated_description = searchTemplate.getDescription();
                             return true;
                         }
                     }
@@ -94,7 +94,7 @@ public class Illustration implements Comparable<Illustration>{
 
 
                 default:
-                    log.warn("Search type {} unsupported",searchTemplate.templateType);
+                    log.warn("Search type {} unsupported",searchTemplate.getTemplateType());
 
             }
         }

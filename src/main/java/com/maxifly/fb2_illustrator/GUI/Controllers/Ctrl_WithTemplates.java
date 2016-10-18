@@ -69,7 +69,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
         Stage stage = factory_gui.createModalWindow(gui_obj.node);
         stage.showAndWait();
 
-        if (stp.template != null) {
+        if (stp.getTemplate() != null) {
             showSearchTemplate(stp);
         }
         return stp;

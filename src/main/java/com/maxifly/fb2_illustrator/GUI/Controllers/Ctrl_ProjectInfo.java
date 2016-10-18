@@ -75,7 +75,7 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
     @FXML
     private void btn_add(ActionEvent actionEvent) throws IOException {
         SearchTemplate_POJO stp = super.addTemplate();
-         if (stp.template != null) {
+         if (stp.getTemplate() != null) {
              dm_project.addBookNameTempale(stp);
         }
     }
