@@ -3,10 +3,7 @@ package com.maxifly.fb2_illustrator;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.fb2_xml.model.*;
-import com.maxifly.fb2_illustrator.model.Illustration;
-import com.maxifly.fb2_illustrator.model.Illustrations;
-import com.maxifly.fb2_illustrator.model.Paragraf;
-import com.maxifly.fb2_illustrator.model.Paragrafs;
+import com.maxifly.fb2_illustrator.model.*;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -246,25 +243,26 @@ public class ParagrafSearcher_FB20
 
         Iterator<Illustration> illIter = this.illustrations.getNotChained();
 
+        // Подготовим данные для сравнения
+        List<ComparedText> comparedTexts = new ArrayList<>();
+        for (Object element : pType.getValue().getContent()) {
+            if (element instanceof String) {
+                comparedTexts.add(new ComparedText((String) element));
+            }
+        }
+
         exitlabel:
         while (illIter.hasNext()) {
             Illustration ill = illIter.next();
 
-            // Теперь проверим, что эта иллюстрация подходит к параграфу
-            for (Object element : pType.getValue().getContent()) {
-
-                if (element instanceof String) {
-                    //log.debug("Paragraf string {}",(String)element);
-                    // Отлично. Это строка. Проверим, что она подходит под одну из новых иллюстраций
-                    if (ill.isSuitable((String) element)) {
-                        // Этот параграф подходит
-                        illustrations.illustratedParagraf(paragraf, ill);
-                        // Выйдем из цикла перебора иллюстраций
-                        break exitlabel;
-                    }
+            for (ComparedText comparedText:comparedTexts) {
+                if (ill.isSuitable(comparedText)) {
+                    // Этот параграф подходит
+                    illustrations.illustratedParagraf(paragraf, ill);
+                    // Выйдем из цикла перебора иллюстраций
+                    break exitlabel;
                 }
             }
-
         }
     }
 

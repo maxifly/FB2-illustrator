@@ -1,11 +1,6 @@
 package com.maxifly.fb2_illustrator;
 
-import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -16,11 +11,11 @@ public class UtilsTest {
 
     @Test
     public void clearPunctuation() {
-        String s = Utils.clearPunctuation(" qwer,ty.uio");
+        String s = Utils.normalize(" qwer,ty.uio");
 
         assertEquals("qwer ty uio", s);
 
-        s = Utils.clearPunctuation(" Мама .. мыла \n раму!?");
+        s = Utils.normalize(" Мама .. мыла \n раму!?");
         assertEquals("Мама мыла раму", s);
 
 

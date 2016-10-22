@@ -9,18 +9,13 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
 import com.maxifly.fb2_illustrator.Utils;
 import com.maxifly.fb2_illustrator.model.*;
-import com.maxifly.vapi.ProjectProcessor;
-import com.maxifly.vapi.UrlCreator;
-import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -88,7 +83,7 @@ public class DM_Book_from_Proj
 
 
     private void change_BookName(String newValue) {
-        normilizeBookName = (newValue == null) ? null : Utils.clearPunctuation(newValue);
+        normilizeBookName = (newValue == null) ? null : Utils.normalize(newValue);
 
         if (newValue == null || "".equals(newValue.trim())) {
             warnings.setValue("Название книги не задано");

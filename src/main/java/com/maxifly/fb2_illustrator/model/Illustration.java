@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Maximus on 19.04.2016.
  */
-public class Illustration implements Comparable<Illustration>{
+public class Illustration implements Comparable<Illustration> {
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
     private static LocLogger log = (new LocLoggerFactory(mc))
@@ -25,7 +25,7 @@ public class Illustration implements Comparable<Illustration>{
     private Path file;
     private String def_description;
     private String illustrated_description = null;
-    private Integer  id;
+    private Integer id;
 
     private Set<SearchTemplate_POJO> searchTemplates;
 
@@ -40,7 +40,7 @@ public class Illustration implements Comparable<Illustration>{
 
 
     public Illustration(Integer id, Path file, String def_description) {
-        this(id,def_description);
+        this(id, def_description);
         this.file = file;
     }
 
@@ -53,52 +53,25 @@ public class Illustration implements Comparable<Illustration>{
     }
 
 
-
-
     public Set<SearchTemplate_POJO> getSearchTemplates() {
         return searchTemplates;
     }
 
     /**
      * Проверяет, подходит ли иллюстрация под текст параграфа
+     *
      * @param paragrafText текст параграфа
      * @return - подходит или нет
      */
-    public boolean isSuitable(String paragrafText) {
-
-
-       // TODO переписать проверку, подходит ли иллюстрация под текст параграфа
+    public boolean isSuitable(ValueToTest paragrafText) {
         for (SearchTemplate_POJO searchTemplate : searchTemplates) {
-            switch (searchTemplate.getTemplateType()) {
-                case substr:
-                    if (paragrafText.contains(searchTemplate.getTemplate())) {
-                        this.illustrated_description = searchTemplate.getDescription();
-                        return true;
-                    }
-                    break;
-                case regexp:
-                    try {
-                        //TODO Перенести компиляцию условия на момент разбора иллюстраций
-                        Pattern pattern = Pattern.compile(searchTemplate.getTemplate());
-                        Matcher matcher = pattern.matcher(paragrafText);
-                        if (matcher.matches()) {
-                            this.illustrated_description = searchTemplate.getDescription();
-                            return true;
-                        }
-                    }
-                    catch (Exception e) {
-                        log.error("Exception when check regexp: {}",e);
-                        return false;
-                    }
-                    break;
-
-
-                default:
-                    log.warn("Search type {} unsupported",searchTemplate.getTemplateType());
-
+            try {
+                if (searchTemplate.checkString(paragrafText)) return true;
+            } catch (Check_Exception e) {
+                log.error("Exception when check {}: {}", searchTemplate, e);
             }
         }
-        return  false;
+        return false;
     }
 
 
@@ -112,7 +85,8 @@ public class Illustration implements Comparable<Illustration>{
 
     public String getDescription() {
         if (illustrated_description == null) {
-        return def_description; } else {
+            return def_description;
+        } else {
             return illustrated_description;
         }
     }

@@ -2,7 +2,6 @@ package com.maxifly.fb2_illustrator.model;
 
 import com.maxifly.fb2_illustrator.Utils;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -89,7 +88,7 @@ public class SearchTemplate_POJO {
 
     private void genNormaliseTemplate() {
         if (normaliseTemplate == null) {
-            normaliseTemplate = Utils.clearPunctuation(template);
+            normaliseTemplate = Utils.normalize(template);
         }
     }
 
