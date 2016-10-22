@@ -237,4 +237,5 @@ public class Project {
     public void setProjectParagraf(String projectParagraf) {
         this.projectParagraf = projectParagraf;
     }
+
 }

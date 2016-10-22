@@ -7,13 +7,13 @@ import com.maxifly.fb2_illustrator.BookProcessor_FB20;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
-import com.maxifly.fb2_illustrator.model.Illustration;
-import com.maxifly.fb2_illustrator.model.Illustrations;
-import com.maxifly.fb2_illustrator.model.Project;
+import com.maxifly.fb2_illustrator.Utils;
+import com.maxifly.fb2_illustrator.model.*;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
 import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -27,14 +27,18 @@ import java.nio.file.Path;
  * Created by Maximus on 31.07.2016.
  */
 public class DM_Book_from_Proj
-        extends DM_Abstract {
+        extends DM_Abstract
+        implements ValueToTest {
 
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
     private static LocLogger log = (new LocLoggerFactory(mc))
             .getLocLogger(DM_Book_from_Proj.class.getName());
 
+    private StringProperty warnings = new SimpleStringProperty();
     private StringProperty book_name;
+    private String normilizeBookName;
+    private String book_name_FromFile = "";
 
     private StringProperty book_src_file;
     private StringProperty book_dst_file;
@@ -66,6 +70,37 @@ public class DM_Book_from_Proj
 
     ;
 
+    private boolean checkBookName() {
+        if (projectObjectProperty.getValue() != null) {
+            for (SearchTemplate_POJO searchTemplate_pojo : projectObjectProperty.getValue().getBookNameTemplates()) {
+                try {
+                    if (searchTemplate_pojo.checkAsSubstring(this)) return true;
+                } catch (Check_Exception e) {
+                    log.warn("Error when check book name: {}", e);
+                }
+            }
+
+        }
+
+        return false;
+
+    }
+
+
+    private void change_BookName(String newValue) {
+        normilizeBookName = (newValue == null) ? null : Utils.clearPunctuation(newValue);
+
+        if (newValue == null || "".equals(newValue.trim())) {
+            warnings.setValue("Название книги не задано");
+        } else {
+            if (!checkBookName()) {
+                warnings.setValue("Название книги не соответствует шаблону проекта");
+            } else {
+                warnings.setValue("");
+            }
+        }
+    }
+
     private void change_srcFile(String newValue) {
         if (newValue != null && !"".equals(newValue)) {
             Path inputFile = (FileSystems.getDefault().getPath(newValue));
@@ -75,6 +110,7 @@ public class DM_Book_from_Proj
             if ((src_file.exists() && src_file.isFile())) {
                 try {
                     bookParse.loadBook(inputFile);
+                    book_name_FromFile = bookParse.getTitle();
                     book_name.setValue(bookParse.getTitle());
                     log.debug("title: {}", book_name.getValue());
                 } catch (Exception e) {
@@ -82,8 +118,13 @@ public class DM_Book_from_Proj
                 }
             } else {
                 book_name.setValue(null);
+                book_name_FromFile = "";
             }
         }
+    }
+
+    public void setBookNameFromFile() {
+        book_name.setValue(book_name_FromFile);
     }
 
     public DM_Book_from_Proj(Factory_GUI factory_gui) throws JAXBException {
@@ -94,6 +135,7 @@ public class DM_Book_from_Proj
         projectObjectProperty = new SimpleObjectProperty<>();
         dm_projectObjectProperty.bindBidirectional(factory_gui.getDm_statusBar().dmProject_Property());
         dm_projectObjectProperty.addListener((observable, oldValue, newValue) -> change_dmProject(newValue));
+        book_name.addListener((observable, oldValue, newValue) -> change_BookName(newValue));
         book_src_file.addListener((observable, oldValue, newValue) -> change_srcFile(newValue));
         bookParse = new BookProcessor_FB20();
 
@@ -112,6 +154,14 @@ public class DM_Book_from_Proj
         return book_dst_file;
     }
 
+
+    public String getWarnings() {
+        return warnings.get();
+    }
+
+    public StringProperty warningsProperty() {
+        return warnings;
+    }
 
     /**
      * Загрузка иллюстраций
@@ -145,5 +195,15 @@ public class DM_Book_from_Proj
 
         System.out.println("getProjectParagraf: " + project.getProjectParagraf());
 
+    }
+
+    @Override
+    public String getNormalize() {
+        return normilizeBookName;
+    }
+
+    @Override
+    public String getOriginal() {
+        return book_name.getValue();
     }
 }

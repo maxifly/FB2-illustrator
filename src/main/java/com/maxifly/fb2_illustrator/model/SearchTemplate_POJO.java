@@ -56,16 +56,16 @@ public class SearchTemplate_POJO {
 
     /**
      * Проверка образца по шаблону
-      * @param str образец
+     *
+     * @param valueToTest образец
      * @return true - подходит
      */
-    public boolean checkString(String str) {
+    public boolean checkString(ValueToTest valueToTest) throws Check_Exception {
         switch (templateType) {
             case regexp:
-                if (checkRegular(str)) return true;
-                else return false;
+                return checkRegular(valueToTest.getOriginal());
             case substr:
-                return checkSimple(str);
+                return checkSimple(valueToTest.getNormalize());
         }
         return false;
     }
@@ -73,18 +73,20 @@ public class SearchTemplate_POJO {
     /**
      * Проверка образца по шаблону, при этом считается,
      * что образец может быть подстрокой шаблона, если шаблон не регулярное выражение
-     * @param str - образец
+     *
+     * @param valueToTest - образец
      * @return true - совпадение
      */
-    public boolean checkAsSubstring(String str) throws Exception {
+    public boolean checkAsSubstring(ValueToTest valueToTest) throws Check_Exception {
         switch (templateType) {
             case regexp:
-                return checkRegular(str);
+                return checkRegular(valueToTest.getOriginal());
             case substr:
-                return checkSimpleAsSubstr(str);
+                return checkSimpleAsSubstr(valueToTest.getNormalize());
         }
         return false;
     }
+
     private void genNormaliseTemplate() {
         if (normaliseTemplate == null) {
             normaliseTemplate = Utils.clearPunctuation(template);
@@ -99,20 +101,23 @@ public class SearchTemplate_POJO {
 
     private boolean checkSimpleAsSubstr(String str) {
         genNormaliseTemplate();
-        return !"".equals(normaliseTemplate) && (normaliseTemplate.contains(str));
+        return str!=null&& !"".equals(normaliseTemplate) && (normaliseTemplate.contains(str));
     }
 
     private boolean checkSimple(String str) {
         genNormaliseTemplate();
-        return !"".equals(normaliseTemplate) && (str.contains(normaliseTemplate));
+        return str != null && !"".equals(normaliseTemplate) && (str.contains(normaliseTemplate));
     }
 
-    private boolean checkRegular(String str) throws  { //TODO Добавить исключение и потом обработать его при проверке вхождения иллюстрации
-            compilePattern();
-            return pattern.matcher(str).matches();
+    private boolean checkRegular(String str) throws Check_Exception {
+        try {
+
+        } catch (Exception e) {
+            throw new Check_Exception("Error when check regular template " + this.template, e);
+        }
+        compilePattern();
+        return str != null && pattern.matcher(str).matches();
     }
-
-
 
 
 }

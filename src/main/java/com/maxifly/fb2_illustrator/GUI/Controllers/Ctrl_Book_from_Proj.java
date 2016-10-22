@@ -36,6 +36,10 @@ public class Ctrl_Book_from_Proj
     @FXML
     private Button btnLoad;
 
+    @FXML
+    private TextArea warnings;
+
+
     private StringProperty book_dst = new SimpleStringProperty();
     private ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
 
@@ -104,6 +108,12 @@ public class Ctrl_Book_from_Proj
         }
     }
 
+
+    @FXML
+    protected void btnFromFile_action(ActionEvent actionEvent) {
+        dm_book_from_proj.setBookNameFromFile();
+    }
+
     @FXML
     protected void button_dst_file_action(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -140,6 +150,9 @@ public class Ctrl_Book_from_Proj
         }
     }
 
+    private void change_warnings(String newValue) {
+        warnings.setVisible(newValue != null && !"".equals(newValue));
+    }
 
     public Ctrl_Book_from_Proj(DM_Book_from_Proj dm_book_from_proj) {
         this.dm_book_from_proj = dm_book_from_proj;
@@ -151,9 +164,10 @@ public class Ctrl_Book_from_Proj
         book_src_file.textProperty().bindBidirectional(dm_book_from_proj.book_src_file_Propery());
         book_dst.bindBidirectional(dm_book_from_proj.book_dst_file_Propery());
         projectObjectProperty.bindBidirectional(dm_book_from_proj.projectObjectPropertyProperty());
+        warnings.textProperty().bindBidirectional(dm_book_from_proj.warningsProperty());
 
         book_src_file.textProperty().addListener((observable, oldValue, newValue) -> srcFileChange(newValue));
-
+        warnings.textProperty().addListener((observable, oldValue, newValue) -> change_warnings(newValue));
 
         enableLoad =
                 new BooleanBinding() {
