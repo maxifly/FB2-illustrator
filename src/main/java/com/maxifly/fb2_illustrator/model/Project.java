@@ -9,10 +9,7 @@ import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco;
 import com.maxifly.fb2_illustrator.Ill_J_Serializer;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.Project_J_Serializer;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -35,6 +32,9 @@ public class Project {
 
     private ObjectProperty<File> projectFileProperty = new SimpleObjectProperty<>();
     private BooleanProperty changeProjectProperty = new SimpleBooleanProperty();
+
+    private StringProperty bookName = new SimpleStringProperty();
+
     //private File projectFile;
 
 
@@ -238,6 +238,18 @@ public class Project {
 
     public void setProjectParagraf(String projectParagraf) {
         this.projectParagraf = projectParagraf;
+    }
+
+    public String getBookName() {
+        return bookName.get();
+    }
+
+    public StringProperty bookNameProperty() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName.set(bookName);
     }
 
     /**

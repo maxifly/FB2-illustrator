@@ -44,6 +44,11 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
             result.add("illustrations", searchTemplates);
         }
 
+        if (project.getBookName() != null) {
+            JsonElement bookName = jsonSerializationContext.serialize(project.getBookName());
+            result.add("book_name",bookName);
+        }
+
         return result;
     }
 
@@ -72,6 +77,11 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
                 SearchTemplate_POJO stp = jsonDeserializationContext.deserialize(jel, SearchTemplate_POJO.class);
                 project.addBookNameTempale(stp);
             }
+        }
+
+        je = jsonObject.get("book_name");
+        if (je != null && !je.isJsonNull()) {
+            project.setBookName(je.getAsString());
         }
 
         List<Illustration> illList = new ArrayList<>();

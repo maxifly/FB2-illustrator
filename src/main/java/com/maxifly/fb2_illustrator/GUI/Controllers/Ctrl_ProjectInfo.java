@@ -47,6 +47,8 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
 
     @FXML
     Label project_id;
+    @FXML
+    TextArea default_book_name;
 
 
 
@@ -169,6 +171,7 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
         searchTemplates.bindBidirectional(dm_project.searchTemplates_Property());
         project_id.setText(dm_project.getId());
         project_paragraf.textProperty().bindBidirectional(dm_project.projectParagraf_Property());
+        default_book_name.textProperty().bindBidirectional(dm_project.getProject().bookNameProperty());
 
 //        picture_path.bindBidirectional(dm_ill.picture_path_Property());
 //

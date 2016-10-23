@@ -33,8 +33,10 @@
                </font>
             </Label>
             <HBox prefHeight="34.0" prefWidth="350.0" spacing="10.0" />
+            <Label text="Название книги (по умолчанию)" />
+            <TextArea fx:id="default_book_name" prefHeight="200.0" prefWidth="332.0" />
             <Label text="Абзац, добавляемый в конец книги" />
-            <TextArea fx:id="project_paragraf" prefHeight="413.0" prefWidth="332.0" />
+            <TextArea fx:id="project_paragraf" prefHeight="455.0" prefWidth="332.0" />
          </children>
       </VBox>
       <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-border-style: solid; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1">

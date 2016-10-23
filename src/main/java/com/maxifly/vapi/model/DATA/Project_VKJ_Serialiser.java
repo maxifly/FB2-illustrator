@@ -6,6 +6,7 @@ import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.vapi.model.Project_VK;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Created by Maximus on 24.09.2016.
@@ -57,6 +58,18 @@ public class Project_VKJ_Serialiser implements JsonSerializer<Project>, JsonDese
                 }
             }
 
+            je = jsonObject.get("prj_book_name");
+            if (je!=null && !je.isJsonNull()) {
+                project.setBookName(je.getAsString());
+            }
+
+            je = jsonObject.get("ill_cnt");
+            if(je!=null && je.isJsonNull()) {
+                project.setIllCount(je.getAsInt());
+            } else {
+                project.setIllCount(0);
+            }
+
             return project;
         } catch (JsonParseException e) {
             throw e;
@@ -74,6 +87,8 @@ public class Project_VKJ_Serialiser implements JsonSerializer<Project>, JsonDese
 
         result.add("prj", new JsonPrimitive(project.getId()));
 
+        result.add("prj_book_name", new JsonPrimitive(project.getBookName()));
+
         if (project.getProjectParagraf() != null) {
             result.add("prj_desc", new JsonPrimitive(project.getProjectParagraf()));
         }
@@ -82,6 +97,12 @@ public class Project_VKJ_Serialiser implements JsonSerializer<Project>, JsonDese
             JsonElement searchTemplates = jsonSerializationContext.serialize(project.getBookNameTemplates());
             result.add("srch", searchTemplates);
         }
+
+        List<?> illustrations = project.getIllustrations();
+        if (illustrations != null) {
+            result.add("ill_cnt", new JsonPrimitive(illustrations.size()));
+        }
+
 
         return result;
     }

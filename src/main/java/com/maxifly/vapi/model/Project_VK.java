@@ -10,6 +10,7 @@ public class Project_VK extends Project
 implements PrjObj{
     private long photo_id;
     private int ownerId;
+    private int illCount;
 
     @Override
     public Long getPhoto_id() {
@@ -30,4 +31,13 @@ implements PrjObj{
     public int getOwnerId() {
         return ownerId;
     }
+
+    public int getIllCount() {
+        return illCount;
+    }
+
+    public void setIllCount(int illCount) {
+        this.illCount = illCount;
+    }
 }
+
