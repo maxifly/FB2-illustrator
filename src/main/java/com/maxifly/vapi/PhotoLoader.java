@@ -62,6 +62,12 @@ public class PhotoLoader {
             Thread.sleep(10000);
         }
         log.debug("Illustration load");
+
+        try {
+            downloader.close();
+        } catch (Exception e) {
+            log.error("Error when try close downloader {}",e);
+        }
     }
 
 
