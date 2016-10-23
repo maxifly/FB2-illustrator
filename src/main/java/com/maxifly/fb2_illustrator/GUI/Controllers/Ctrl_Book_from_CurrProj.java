@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Maximus on 31.07.2016.
  */
-public class Ctrl_Book_from_Proj
+public class Ctrl_Book_from_CurrProj
         extends Ctrl_Abstract
         implements Initializable {
     final private DM_Book_from_Proj dm_book_from_proj;
@@ -154,7 +154,7 @@ public class Ctrl_Book_from_Proj
         warnings.setVisible(newValue != null && !"".equals(newValue));
     }
 
-    public Ctrl_Book_from_Proj(DM_Book_from_Proj dm_book_from_proj) {
+    public Ctrl_Book_from_CurrProj(DM_Book_from_Proj dm_book_from_proj) {
         this.dm_book_from_proj = dm_book_from_proj;
     }
 

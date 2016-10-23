@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -312,7 +311,7 @@ public class Factory_GUI {
     public GUI_Obj createBookFromCurProj()
             throws IOException, JAXBException {
         Factory_GUI factory_gui = this;
-        DM_Book_from_Proj dm_book_from_proj = new DM_Book_from_Proj(this);
+        DM_Book_from_CurrProj dm_book_from_proj = new DM_Book_from_CurrProj(this);
 
 
 
@@ -321,7 +320,7 @@ public class Factory_GUI {
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                return new Ctrl_Book_from_Proj(dm_book_from_proj);
+                return new Ctrl_Book_from_CurrProj(dm_book_from_proj);
             }
         });
         Node node = loader.load();
@@ -330,8 +329,8 @@ public class Factory_GUI {
         // интересное только контроллеру
         // подробнее смотри: http://stackoverflow.com/questions/26312651/bidirectional-javafx-binding-is-destroyed-by-unrelated-code
 
-        Ctrl_Book_from_Proj ctrl_book_from_proj = loader.getController();
-        return new GUI_Obj(node, ctrl_book_from_proj, dm_book_from_proj);
+        Ctrl_Book_from_CurrProj ctrl_book_from_Curr_proj = loader.getController();
+        return new GUI_Obj(node, ctrl_book_from_Curr_proj, dm_book_from_proj);
     }
 
 

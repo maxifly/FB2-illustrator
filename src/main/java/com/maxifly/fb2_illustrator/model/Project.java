@@ -28,7 +28,7 @@ public class Project {
     public static LocLogger log = (new LocLoggerFactory(mc))
             .getLocLogger(Project.class.getName());
 
-    private String id = "123456789";
+    private String id;
     private String projectParagraf;
     private Set<SearchTemplate_POJO> bookNameTemplates = new HashSet<>();
     private List<Illustration> illustrations = new ArrayList(); //TODO тут надо как-то сохранять порядок вставки
