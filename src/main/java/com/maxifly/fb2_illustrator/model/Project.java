@@ -17,10 +17,7 @@ import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Maxim.Pantuhin on 25.08.2016.
@@ -40,6 +37,11 @@ public class Project {
     private BooleanProperty changeProjectProperty = new SimpleBooleanProperty();
     //private File projectFile;
 
+
+    public Project() {
+        super();
+        generateId();
+    }
 
     public void addBookNameTempale(SearchTemplate_POJO bookNameTemplate) {
         this.bookNameTemplates.add(bookNameTemplate);
@@ -236,6 +238,14 @@ public class Project {
 
     public void setProjectParagraf(String projectParagraf) {
         this.projectParagraf = projectParagraf;
+    }
+
+    /**
+     * Генерирует новый идентификатор
+     */
+    public void generateId() {
+        Random rnd = new Random();
+        this.id = ""+(new Date()).getTime()+rnd.nextInt(100);
     }
 
 }
