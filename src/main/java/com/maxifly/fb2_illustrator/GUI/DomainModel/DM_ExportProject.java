@@ -24,7 +24,7 @@ public class DM_ExportProject extends DM_Abstract {
         try {
             Long albumId = null;
 
-            if (albumId == null) {
+            if (albumAddr == null) {
                 VK_Metods vk_metods = new VK_Metods(statusBar.getToken());
 
                 albumId = vk_metods.createAlbum();
