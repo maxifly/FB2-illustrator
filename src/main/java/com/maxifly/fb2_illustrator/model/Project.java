@@ -4,16 +4,18 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.*;
 import com.maxifly.fb2_illustrator.GUI.Controllers.Ctrl_IllIco;
-import com.maxifly.fb2_illustrator.Ill_J_Serializer;
-import com.maxifly.fb2_illustrator.MyException;
-import com.maxifly.fb2_illustrator.Project_J_Serializer;
 import javafx.beans.property.*;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 /**
@@ -62,8 +64,10 @@ public class Project {
     }
 
     public void setProjectFile(File projectFile) {
-        this.projectFileProperty.setValue(projectFile);;
+        this.projectFileProperty.setValue(projectFile);
+        ;
     }
+
     public ObjectProperty<File> projectFile_Property() {
         return this.projectFileProperty;
     }
@@ -72,19 +76,70 @@ public class Project {
         return changeProjectProperty;
     }
 
-    public void setChanged(Boolean isChanged){
+    public void setChanged(Boolean isChanged) {
         changeProjectProperty.setValue(isChanged);
     }
 
 
     /**
+     * Убеждается, что есть каталог для файлов проекта
+     * @return
+     * @throws IOException
+     */
+    public File ensureProjectDirectory() throws IOException {
+        File project_file = this.getProjectFile();
+        Path projectFilePath = project_file.toPath();
+        String dir_name =
+                FileOperations.stripExtension(projectFilePath.getFileName().toFile().toString()) + "_files";
+
+        Path dir_path = projectFilePath.getParent().resolve(dir_name);
+        File dir_file = dir_path.toFile();
+        if (dir_file.exists()) {
+            return dir_file;
+        } else {
+            return Files.createDirectories(dir_path).toFile();
+        }
+
+    }
+
+    /**
+     * Переносит все иллюстрации в определенный каталог
+     * @param ill_dir Каталог, в который надо перенести иллюстрации
+     */
+    public void copyIllToDir(File ill_dir) throws MyException {
+        Path ill_dir_path = ill_dir.toPath();
+
+        for (Illustration ill : this.illustrations) {
+            Path ill_path = ill.getFile();
+            if (ill_path != null && !ill_dir_path.equals(ill_path.getParent()) ) {
+                Path dest = ill_dir_path.resolve(ill_path.getFileName());
+
+                log.debug("Copy ill from {} to {}", ill_path, dest);
+
+                try {
+                    Files.copy(ill_path, dest, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    throw new MyException("Can not copy illustration", e);
+                }
+
+                ill.setFile(dest);
+
+            }
+        }
+
+
+    }
+
+
+    /**
      * Меняет порядок иллюстраций
-     * @param moveIllId - какую иллюстрацию передвинуть
+     *
+     * @param moveIllId   - какую иллюстрацию передвинуть
      * @param beforeIllId - перед какой поставить (если null - то сделать последней)
      */
-    public void moveIll(Integer moveIllId, Integer beforeIllId ) throws MyException {
-        log.debug("Move ill {} before {} ",moveIllId, beforeIllId);
-        if(moveIllId.equals(beforeIllId)) return;
+    public void moveIll(Integer moveIllId, Integer beforeIllId) throws MyException {
+        log.debug("Move ill {} before {} ", moveIllId, beforeIllId);
+        if (moveIllId.equals(beforeIllId)) return;
 
         ArrayList<Illustration> changeList = new ArrayList();
 
@@ -95,7 +150,7 @@ public class Project {
 
         int idx = 0;
 
-        for (Illustration ill:illustrations) {
+        for (Illustration ill : illustrations) {
             if (ill.getId().equals(moveIllId)) {
                 moveIll = ill;
                 moveIll_idx = idx;
@@ -118,7 +173,7 @@ public class Project {
         // Сформируем новый список
         if (beforeIll_Idx == -1) {
             idx = moveIll_idx;
-        } else if (beforeIll_Idx < moveIll_idx ) {
+        } else if (beforeIll_Idx < moveIll_idx) {
             idx = beforeIll_Idx;
         } else {
             idx = moveIll_idx;
@@ -126,17 +181,17 @@ public class Project {
 
         // Скопируем в новый массив элементы, которые идут без изменений
         if (idx != 0) {
-            changeList.addAll(illustrations.subList(0,idx));
+            changeList.addAll(illustrations.subList(0, idx));
         }
 
         // Теперь переберем остаток, так как у остатка надо менять id
         Integer curr_idx_InNewList = changeList.size();
         int curr_idx = idx;
 
-        for(Illustration ill : illustrations.subList(idx, illustrations.size())) {
+        for (Illustration ill : illustrations.subList(idx, illustrations.size())) {
             if (curr_idx != moveIll_idx) {
 
-                if (curr_idx == beforeIll_Idx ) {
+                if (curr_idx == beforeIll_Idx) {
                     moveIll.setId(curr_idx_InNewList);
                     changeList.add(moveIll);
                     curr_idx_InNewList++;
@@ -166,6 +221,7 @@ public class Project {
     /**
      * Удаляет иллюстрацию с указанным идентификатором из списка иллюстраций
      * Считается, что иллюстрации в списке отсортированы по идентификатору
+     *
      * @param illId
      */
     public void delIll(Integer illId) {
@@ -174,7 +230,7 @@ public class Project {
         int idx = illId;
         // Скопируем в новый массив элементы, которые идут без изменений
         if (idx > 0) {
-            changeList.addAll(illustrations.subList(0,idx));
+            changeList.addAll(illustrations.subList(0, idx));
         }
 
         // Теперь переберем остаток, так как у остатка надо менять id
@@ -183,7 +239,7 @@ public class Project {
 
         if (idx < illustrations.size()) {
 
-            for(Illustration ill : illustrations.subList(idx, illustrations.size())) {
+            for (Illustration ill : illustrations.subList(idx, illustrations.size())) {
 
                 ill.setId(curr_idx_InNewList);
                 changeList.add(ill);
@@ -194,8 +250,6 @@ public class Project {
         illustrations.clear();
         illustrations.addAll(changeList);
     }
-
-
 
 
     public String toJson() {
@@ -209,7 +263,7 @@ public class Project {
 
     }
 
-    static public Project fromJson(String json){
+    static public Project fromJson(String json) {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Illustration.class, new Ill_J_Serializer())
@@ -257,7 +311,7 @@ public class Project {
      */
     public void generateId() {
         Random rnd = new Random();
-        this.id = ""+(new Date()).getTime()+rnd.nextInt(100);
+        this.id = "" + (new Date()).getTime() + rnd.nextInt(100);
     }
 
 }

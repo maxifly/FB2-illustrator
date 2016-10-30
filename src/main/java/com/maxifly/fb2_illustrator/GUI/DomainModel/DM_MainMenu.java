@@ -58,16 +58,20 @@ public class DM_MainMenu {
         showProject(project);
     }
 
-    public void project_save(File file) throws IOException {
-        Project project = (Project)currentProjectProperty.getValue();
+    public void project_save(File file) throws IOException, MyException {
+        Project project = currentProjectProperty.getValue();
         project.setProjectFile(file);
+
+        File projectDid = project.ensureProjectDirectory();
+        project.copyIllToDir(projectDid);
+
         String string_project =  project.toJson();
         FileOperations.writeAll(file,string_project);
         showProject(project);
     }
 
     public void project_save() throws IOException {
-        Project project = (Project)currentProjectProperty.getValue();
+        Project project = currentProjectProperty.getValue();
         String string_project =  project.toJson();
         FileOperations.writeAll(project.getProjectFile(),string_project);
         project.setChanged(false);

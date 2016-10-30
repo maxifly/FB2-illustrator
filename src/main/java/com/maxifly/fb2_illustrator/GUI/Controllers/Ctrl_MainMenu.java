@@ -74,7 +74,7 @@ public class Ctrl_MainMenu implements Initializable {
 
                 GUI_Obj gui_obj = this.factory_gui.createBookFromCurProj();
                 Scene scene = this.factory_gui.getMainScene();
-                ( (BorderPane) scene.getRoot()).setCenter(gui_obj.node);
+                ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
 
 
 //                for (Illustration ill : projectVk.getIllustrations()) {
@@ -91,7 +91,7 @@ public class Ctrl_MainMenu implements Initializable {
 
 
     @FXML
-    private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException, GUI_Exception {
+    private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
 
         switch (((MenuItem) actionEvent.getSource()).getId()) {
             case "prj_open":
@@ -104,7 +104,7 @@ public class Ctrl_MainMenu implements Initializable {
                 save_as_project(actionEvent);
                 break;
             case "prj_save":
-                save_project(actionEvent); // TODO Сделать сохранение
+                save_project(actionEvent);
                 break;
             case "prj_test":
                 dm_mainMenu.project_test();
@@ -146,7 +146,8 @@ public class Ctrl_MainMenu implements Initializable {
 
     protected void open_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
         FileChooser fileChooser = new FileChooser();
-        configureFileChooser(fileChooser, "Открыть проект");
+        configureFileChooser(fileChooser, "Открыть проект",
+                this.factory_gui.getDm_statusBar().getSettings().getProjectsDir());
 
         Window win = factory_gui.getMainScene().getWindow(); // ((Node) actionEvent.getSource()).getScene().getWindow();
         File file = fileChooser.showOpenDialog(win);
@@ -163,9 +164,9 @@ public class Ctrl_MainMenu implements Initializable {
     }
 
 
-    protected void save_as_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
+    protected void save_as_project(ActionEvent actionEvent) throws IOException, MyException {
         FileChooser fileChooser = new FileChooser();
-        configureFileChooser(fileChooser, "Сохранить проект как");
+        configureFileChooser(fileChooser, "Сохранить проект как", this.factory_gui.getDm_statusBar().getSettings().getProjectsDir());
 
         Window win = factory_gui.getMainScene().getWindow(); // ((Node) actionEvent.getSource()).getScene().getWindow();
         File file = fileChooser.showSaveDialog(win);
@@ -213,11 +214,23 @@ public class Ctrl_MainMenu implements Initializable {
 
     private static void configureFileChooser(
             final FileChooser fileChooser,
-            String title) {
+            String title,
+            String startDir) {
         fileChooser.setTitle(title);
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
+
+        File startDirFile = null;
+        if (startDir != null) {
+            startDirFile = new File(startDir);
+
+            if (!startDirFile.exists()) {
+                startDirFile = new File(System.getProperty("user.home"));
+            }
+
+        } else {
+            startDirFile = new File(System.getProperty("user.home"));
+        }
+
+        fileChooser.setInitialDirectory(startDirFile);
         fileChooser.getExtensionFilters().addAll(
 //                new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PILL", "*.pill")
