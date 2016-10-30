@@ -1,5 +1,6 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.fb2_illustrator.Settings;
 import com.maxifly.fb2_illustrator.model.Project;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,6 +14,8 @@ public class DM_StatusBar {
    private StringProperty login;
    private String token;
    private ObjectProperty<DM_Project> dmProjectProperty = new SimpleObjectProperty<>();
+
+   private Settings settings;
 
 
     public DM_StatusBar() {
@@ -40,8 +43,11 @@ public class DM_StatusBar {
         this.dmProjectProperty.set(dm_project);
     }
 
+    public Settings getSettings() {
+        return settings;
+    }
 
-
-
-
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
 }

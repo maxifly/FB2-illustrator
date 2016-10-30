@@ -4,6 +4,8 @@ package com.maxifly.fb2_illustrator;
 import com.maxifly.vapi.model.ScopeElement;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Locale;
 
 public class Constants {
@@ -57,16 +59,18 @@ public class Constants {
 
         File dir = new File(workDirName);
 
+        System.out.println( "App data dir " + dir);
+
         if (dir.isDirectory()) {
             return dir;
         } else {
             if (dir.exists()) {
-                throw new MyException("Can not create directory " + workDirName);
+                throw new MyException("Can not create directory (1) " + workDirName);
             } else {
                 if (dir.mkdir()) {
                     return dir;
                 } else {
-                    throw new MyException("Can not create directory " + workDirName);
+                    throw new MyException("Can not create directory (2)" + workDirName);
                 }
             }
         }
@@ -94,17 +98,24 @@ public class Constants {
             return dir;
         } else {
             if (dir.exists()) {
-                throw new MyException("Can not create directory " + workDirName);
+                throw new MyException("Can not create directory (3)" + workDirName);
             } else {
-                if (dir.mkdir()) {
-                    return dir;
-                } else {
-                    throw new MyException("Can not create directory " + workDirName);
-                }
+                try {
+                    if (Files.createDirectories(dir.toPath()) != null) {
+                        return dir;
+                    } else {
+                        throw new MyException("Can not create directory (4)" + workDirName);
+                    }
+                } catch (IOException e) {
+                    throw new MyException("Can not create directory (5)" + workDirName, e);
             }
         }
 
 
     }
 
+
+
+
+    }
 }

@@ -41,7 +41,7 @@ public class DM_MainMenu {
         this.factory_gui = factory_gui;
     }
 
-    public void vk_connect() throws IOException, InterruptedException {
+    public void vk_connect() throws IOException, InterruptedException, MyException {
         log.debug("connect");
         Stage stage = factory_gui.createLoginWindow();
         DM_Login dm_login = factory_gui.getDm_login();

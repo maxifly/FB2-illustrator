@@ -1,8 +1,13 @@
 package com.maxifly.fb2_illustrator.GUI;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
+import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.Fb2App;
 import com.maxifly.fb2_illustrator.GUI.Controllers.*;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.*;
+import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.Settings;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
@@ -19,6 +24,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -27,27 +34,9 @@ import java.io.IOException;
  * Created by Maximus on 23.07.2016.
  */
 public class Factory_GUI {
-//    StatusUser status_user;
-//
-//    public StatusUser getStatus_user() {
-//        if (status_user == null) {
-//            status_user = new StatusUser();
-//        }
-//        return status_user;
-//    }
-
-
-//    public HBox getStateRow() {
-//        HBox stateRow = new HBox(10);
-//        stateRow.setAlignment(Pos.CENTER_RIGHT);
-//        stateRow.getChildren().add(this.getStatus_user());
-//
-//        stateRow.setStyle("-fx-border-color: blue");
-//        stateRow.setSpacing(10);
-//        stateRow.setPadding(new Insets(5,10,5,10));
-//        return stateRow;
-//    }
-
+    private static final IMessageConveyor mc = new MessageConveyor(Constants.getLocaleApp());
+    private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
+    private static final LocLogger log = llFactory_uk.getLocLogger(Factory_GUI.class.getName());
 
     final private DM_StatusBar dm_statusBar = new DM_StatusBar();
     final private DM_MainMenu dm_mainMenu = new DM_MainMenu(this);
@@ -59,14 +48,11 @@ public class Factory_GUI {
     private Ctrl_StatusBar ctrl_statusBar;
 
 
-    public Scene getMainScene() throws IOException {
-      if (this.mainScene == null) {
-          this.mainScene = createMainScene();
-      }
+    public Scene getMainScene(){
       return this.mainScene;
     }
 
-    private Scene createMainScene() throws IOException {
+    public Scene createMainScene() throws IOException, MyException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("Root.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -83,12 +69,22 @@ public class Factory_GUI {
         root.setBottom(statusBar);
         root.setAlignment(statusBar, Pos.BOTTOM_RIGHT);
         root.setTop(this.createMainMenu());
+        Settings settings = null;
+        try {
+            settings = Settings.readSettings(Constants.ensureAppDataDir());
+        } catch (MyException e) {
+            log.warn("Exception when read settings: {}", e);
+        }
 
+        if (settings == null) settings = Settings.createNewSettings();
 
-        Scene scene = new Scene(root, 400, 250);
+        this.getDm_statusBar().setSettings(settings);
+
+        Scene scene = new Scene(root, settings.getWinSize_W(), settings.getWinSize_H());
         Ctrl_Root ctrl_root = loader.getController();
-//        ctrl_root.setListeners();
+
         scene.getStylesheets().add(Fb2App.class.getResource("GUI/fb2ill.css").toExternalForm());
+        this.mainScene = scene;
         return scene;
     }
 
@@ -350,7 +346,7 @@ public class Factory_GUI {
 
     }
 
-    public Stage createLoginWindow() throws IOException {
+    public Stage createLoginWindow() throws IOException, MyException {
         Factory_GUI factory_gui = this;
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();

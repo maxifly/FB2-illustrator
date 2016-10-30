@@ -4,6 +4,7 @@ import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Ill;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_SearchTemplate;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
 import javafx.beans.property.ObjectProperty;

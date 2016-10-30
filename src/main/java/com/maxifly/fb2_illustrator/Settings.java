@@ -1,5 +1,10 @@
 package com.maxifly.fb2_illustrator;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.maxifly.fb2_illustrator.model.Illustration;
+import com.maxifly.fb2_illustrator.model.Project;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -22,6 +27,33 @@ public class Settings {
         File projectDir = Constants.ensureAppProjectDir();
         settings.setProjectsDir(projectDir.getCanonicalPath());
         return settings;
+    }
+
+    public static Settings readSettings(File appDataDir) throws IOException {
+        File settingFile = new File(appDataDir,"fb2_ill.cfg");
+
+            if (settingFile.exists()) {
+                String string_settings =  FileOperations.readAll(settingFile);
+
+                Gson gson = new GsonBuilder()
+                        .setPrettyPrinting()
+                        .create();
+                return gson.fromJson(string_settings, Settings.class);
+
+        } else {
+            return null;
+        }
+
+    }
+
+    public void writeSettings(File appDataDir) throws IOException {
+        File settingFile = new File(appDataDir,"fb2_ill.cfg");
+
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+        String settings_string = gson.toJson(this);
+        FileOperations.writeAll(settingFile, settings_string);
     }
 
     public Integer getWinSize_W() {
@@ -47,4 +79,6 @@ public class Settings {
     public void setProjectsDir(String projectsDir) {
         this.projectsDir = projectsDir;
     }
+
+
 }

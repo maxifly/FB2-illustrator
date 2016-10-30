@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Project;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_StatusBar;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.MyException;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -63,10 +64,8 @@ public class Ctrl_StatusBar implements Initializable{
             title = title + " (*)";
         }
 
-        try {
+
             ((Stage)factory_gui.getMainScene().getWindow()).setTitle(title);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 }
