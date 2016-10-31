@@ -25,9 +25,9 @@ public abstract class DM_Book_from_Proj
         extends DM_Abstract
         implements ValueToTest {
 
-    private static IMessageConveyor mc = new MessageConveyor(
+    protected static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
-    private static LocLogger log = (new LocLoggerFactory(mc))
+    protected static LocLogger log = (new LocLoggerFactory(mc))
             .getLocLogger(DM_Book_from_Proj.class.getName());
 
     private StringProperty warnings = new SimpleStringProperty();
@@ -38,7 +38,7 @@ public abstract class DM_Book_from_Proj
     private StringProperty book_src_file;
     private StringProperty book_dst_file;
 
-    private Factory_GUI factory_gui;
+    protected Factory_GUI factory_gui;
 
     private ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
     private ObjectProperty<DM_Project> dm_projectObjectProperty = new SimpleObjectProperty<>();
@@ -65,9 +65,9 @@ public abstract class DM_Book_from_Proj
 
     ;
 
-    private boolean checkBookName() {
-        if (projectObjectProperty.getValue() != null) {
-            for (SearchTemplate_POJO searchTemplate_pojo : projectObjectProperty.getValue().getBookNameTemplates()) {
+    protected boolean checkBookname(Project project) {
+        if (project != null) {
+            for (SearchTemplate_POJO searchTemplate_pojo : project.getBookNameTemplates()) {
                 try {
                     if (searchTemplate_pojo.checkAsSubstring(this)) return true;
                 } catch (Check_Exception e) {
@@ -78,7 +78,10 @@ public abstract class DM_Book_from_Proj
         }
 
         return false;
+    }
 
+    private boolean checkBookName() {
+        return checkBookname(projectObjectProperty.getValue());
     }
 
 

@@ -15,6 +15,8 @@
             <MenuItem id="prj_save" fx:id="prj_save" mnemonicParsing="false" onAction="#action_prj" text="Save" />
             <MenuItem id="prj_save_as" fx:id="prj_save_as" mnemonicParsing="false" onAction="#action_prj" text="Save as..." />
             <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem id="prj_curr_to_book" mnemonicParsing="false" onAction="#action_prj" text="Insert current project to book" />
+            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem id="prj_test" mnemonicParsing="false" onAction="#action_prj" text="TestProject" />
             <MenuItem id="prj_ill" mnemonicParsing="false" onAction="#action_prj" text="Ill" />
         <MenuItem id="kuku" mnemonicParsing="false" onAction="#action_prj" text="Close" />

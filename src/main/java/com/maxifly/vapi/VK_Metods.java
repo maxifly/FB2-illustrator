@@ -51,7 +51,7 @@ public class VK_Metods {
         }
 
         log.debug("Create album {}", rest_result_createAlbum.response.id);
-        return rest_result_createAlbum.response.id;
+        return (long) rest_result_createAlbum.response.id;
 
     }
 

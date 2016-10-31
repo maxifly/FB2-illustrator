@@ -8,4 +8,5 @@ import java.util.List;
 public class Album {
     public Integer fb_ill;
     public List<String> prjs;
+
 }

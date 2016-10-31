@@ -126,6 +126,15 @@ public class UrlCreator {
 
     }
 
+    public static String getAlbums(String accessToken, int ownerId) {
+        return "https://api.vk.com/method/photos.getAlbums?" +
+                "&access_token=" + accessToken +
+                "&v=" + version +
+                "&owner_id=" + String.valueOf(ownerId);
+    }
+
+
+
     public static String getUploadServer(String accessToken, long albumId) {
         return "https://api.vk.com/method/photos.getUploadServer?" +
                 "album_id=" + String.valueOf(albumId) +
@@ -184,6 +193,22 @@ public class UrlCreator {
         return new REST_POST_Data(sb_url.toString(), sb_param.toString());
 
 
+    }
+    public static int getOwnerId(String albumPath) throws MyException {
+        Pattern dg_pattern = Pattern.compile("^\\d+$");
+        if (dg_pattern.matcher(albumPath).matches()) {
+            return Integer.valueOf(albumPath);
+        }
+
+        Pattern url_pattern = Pattern.compile("\\d+$");
+        Matcher matcher = url_pattern.matcher(albumPath);
+        if (matcher.find()) {
+            return
+                    Integer.valueOf(
+                            matcher.group(0));
+        }
+
+        throw new MyException("Can not parse album addr " + albumPath);
     }
 
     public static long getAlbumId(String albumPath) throws MyException {

@@ -72,7 +72,7 @@ public class Ctrl_MainMenu implements Initializable {
                 break;
             case "vk_test":
 
-                GUI_Obj gui_obj = this.factory_gui.createBookFromCurProj();
+                GUI_Obj gui_obj = this.factory_gui.createBookFromVKProj();
                 Scene scene = this.factory_gui.getMainScene();
                 ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
 
@@ -91,7 +91,7 @@ public class Ctrl_MainMenu implements Initializable {
 
 
     @FXML
-    private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException, MyException {
+    private void action_prj(ActionEvent actionEvent) throws IOException, InterruptedException, MyException, JAXBException {
 
         switch (((MenuItem) actionEvent.getSource()).getId()) {
             case "prj_open":
@@ -109,6 +109,12 @@ public class Ctrl_MainMenu implements Initializable {
             case "prj_test":
                 dm_mainMenu.project_test();
                 projectItemsDisable();
+                break;
+
+            case "prj_curr_to_book":
+                GUI_Obj gui_obj = this.factory_gui.createBookFromCurProj();
+                Scene scene = this.factory_gui.getMainScene();
+                ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
                 break;
             case "prj_ill":
                 dm_mainMenu.ill();
