@@ -28,4 +28,31 @@ public class Ctrl_Book_from_CurrProj
     public Ctrl_Book_from_CurrProj(DM_Book_from_Proj dm_book_from_proj) {
         super(dm_book_from_proj);
     }
+
+    private boolean disableLoad() {
+        return (book_src_file.getText() == null ||
+                "".equals(book_src_file.getText().trim()) ||
+                projectObjectProperty.getValue() == null);
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        Ctrl_Book_from_Proj s = this;
+        BooleanBinding disableLoad =
+                new BooleanBinding() {
+
+                    {
+                        super.bind(
+                                s.book_src_file.textProperty(),
+                                s.book_dst_file.textProperty(),
+                                s.projectObjectProperty);
+                    }
+
+                    @Override
+                    protected boolean computeValue() {
+                        return disableLoad();
+                    }
+                };
+        super.setDisableLoad(disableLoad);
+    }
 }

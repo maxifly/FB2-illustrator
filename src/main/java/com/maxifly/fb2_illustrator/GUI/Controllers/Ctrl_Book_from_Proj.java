@@ -31,9 +31,9 @@ public abstract class Ctrl_Book_from_Proj
     @FXML
     private TextField book_name;
     @FXML
-    private TextField book_src_file;
+    protected TextField book_src_file;
     @FXML
-    private TextField book_dst_file;
+    protected TextField book_dst_file;
 
     @FXML
     private Button btnLoad;
@@ -43,16 +43,19 @@ public abstract class Ctrl_Book_from_Proj
 
 
     private StringProperty book_dst = new SimpleStringProperty();
-    private ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
+    protected ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
 
-    private BooleanBinding enableLoad;
+    private BooleanBinding disableLoad;
 
 
-    private boolean enableLoad() {
-        return (book_src_file.getText() == null ||
-                "".equals(book_src_file.getText().trim()) ||
-                projectObjectProperty.getValue() == null);
+    public void setDisableLoad(BooleanBinding disableLoad) {
+        if (this.disableLoad != null) btnLoad.disableProperty().unbind();
+        this.disableLoad = disableLoad;
+        btnLoad.disableProperty().bind(disableLoad);
     }
+
+
+
 
 
     @FXML
@@ -132,6 +135,7 @@ public abstract class Ctrl_Book_from_Proj
     }
 
 
+
     private void srcFileChange(String newValue) {
         if (newValue == null) {
             book_dst_file.setPromptText(null);
@@ -171,22 +175,6 @@ public abstract class Ctrl_Book_from_Proj
         book_src_file.textProperty().addListener((observable, oldValue, newValue) -> srcFileChange(newValue));
         warnings.textProperty().addListener((observable, oldValue, newValue) -> change_warnings(newValue));
 
-        enableLoad =
-                new BooleanBinding() {
-
-                    {
-                        super.bind(
-                                book_src_file.textProperty(),
-                                book_dst_file.textProperty(),
-                                projectObjectProperty);
-                    }
-
-                    @Override
-                    protected boolean computeValue() {
-                        return enableLoad();
-                    }
-                };
-        btnLoad.disableProperty().bind(enableLoad);
     }
 
     private static void configureFileChooser(

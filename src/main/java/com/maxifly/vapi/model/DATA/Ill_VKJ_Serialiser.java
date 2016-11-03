@@ -27,10 +27,19 @@ public class Ill_VKJ_Serialiser implements JsonSerializer<Illustration>, JsonDes
 
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            Integer fb_ill = jsonObject.get("fb_ill").getAsInt();
-            Integer prj_info = jsonObject.get("ill_info").getAsInt();
+            Integer fb_ill = 0;
+            JsonElement je = jsonObject.get("fb_ill");
+            if (je != null && !je.isJsonNull()) {
+                fb_ill = je.getAsInt();
+            }
 
-            if (fb_ill != 1 && prj_info != 1) {
+            Integer prj_info = 0;
+            je = jsonObject.get("ill_info");
+            if (je != null && !je.isJsonNull()) {
+                prj_info = je.getAsInt();
+            }
+
+            if (fb_ill != 1 || prj_info != 1) {
                 return null;
             }
 
@@ -44,7 +53,7 @@ public class Ill_VKJ_Serialiser implements JsonSerializer<Illustration>, JsonDes
             Integer ill_num = jsonObject.get("num").getAsInt();
 
             String description = null;
-            JsonElement je = jsonObject.get("dsc");
+            je = jsonObject.get("dsc");
             if (je != null && !je.isJsonNull()) {
                 description = je.getAsString();
             }

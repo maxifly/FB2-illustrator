@@ -124,7 +124,10 @@ public class AlbumProjects implements
         while(photoProcessor.hasNext()) {
             DATA_photo data_photo = photoProcessor.next();
             try {
+
+                log.debug("*** data_photo.text {}", data_photo.text);
                 Project_VK project_vk = gson.fromJson(data_photo.text, Project_VK.class);
+                log.debug("project_vk {}",project_vk);
                 if (project_vk != null) {
                     projects.add(project_vk);
                 }

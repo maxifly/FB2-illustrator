@@ -6,6 +6,8 @@ import com.maxifly.vapi.OwnerProjects;
 import com.maxifly.vapi.UrlCreator;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import com.maxifly.vapi.model.Project_VK;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.xml.bind.JAXBException;
 import java.security.acl.Owner;
@@ -17,8 +19,12 @@ import java.util.HashMap;
 public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
     private HashMap<Integer,OwnerProjects> owners = new HashMap<>();
+    private ObservableList<String> suitableProjects = FXCollections.observableArrayList();
 
 
+    public ObservableList<String> getSuitableProjects() {
+        return suitableProjects;
+    }
 
     public void refresh(String addrType, String srcAddr) throws MyException {
         int ownerId = 0;
@@ -50,8 +56,10 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         // Надо проверить подходит ли проект под маску
 
         for (OwnerAlbumProject ownerAlbumProject : ownerProjects) {
-            if (checkBookname(ownerAlbumProject.project_vk)) {
+            if (checkBookname(ownerAlbumProject.project_vk) || true) {
                log.debug("Project {} suitable for book mask.");
+
+               suitableProjects.add(ownerAlbumProject.toString()) ;
             }
 
         }

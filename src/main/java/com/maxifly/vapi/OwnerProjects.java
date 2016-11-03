@@ -52,6 +52,7 @@ Iterable<OwnerAlbumProject>{
     public OwnerProjects(String accessToken, int ownerId) {
         this.accessToken = accessToken;
         this.ownerId = ownerId;
+        reset();
     }
 
 
@@ -68,20 +69,23 @@ Iterable<OwnerAlbumProject>{
 
     @Override
     public boolean hasNext() {
-        if (currentProjIdx <= projects.size()) return true;
+        if (currentProjIdx < projects.size()) return true;
 
-        if (getAll && currentProjIdx > projects.size()) return false;
+        if (getAll && currentProjIdx >= projects.size()) return false;
 
         while (albumIterator.hasNext() && currentProjIdx >= projects.size() ) {
             AlbumProjects albumProjects = albums.get(albumIterator.next());
             addAlbumProjects(albumProjects);
         }
 
-        return !(getAll && currentProjIdx > projects.size());
+        if (!albumIterator.hasNext()) getAll = true;
+
+        return !(getAll && currentProjIdx >= projects.size());
     }
 
     @Override
     public OwnerAlbumProject next() {
+System.out.println("currentProjIdx " + currentProjIdx + " projects: " + projects.size());
         return projects.get(currentProjIdx++);
     }
 
@@ -110,6 +114,7 @@ Iterable<OwnerAlbumProject>{
         int albumId = albumProjects.getAlbumId();
 
         for (Project_VK project_vk : albumProjects) {
+            log.debug("project_vk " + project_vk);
             projects.add(new OwnerAlbumProject(ownerId,albumId,project_vk));
         }
     }

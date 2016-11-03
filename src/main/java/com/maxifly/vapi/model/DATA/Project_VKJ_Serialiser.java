@@ -26,23 +26,33 @@ public class Project_VKJ_Serialiser implements JsonSerializer<Project>, JsonDese
         try {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            Integer fb_ill = jsonObject.get("fb_ill").getAsInt();
-            Integer prj_info = jsonObject.get("prj_info").getAsInt();
+            Integer fb_ill = 0;
+            JsonElement je = jsonObject.get("fb_ill");
+            if (je != null && !je.isJsonNull()) {
+                fb_ill = je.getAsInt();
+            }
 
-            if (fb_ill != 1 && prj_info != 1) {
+            Integer prj_info = 0;
+            je = jsonObject.get("prj_info");
+            if (je != null && !je.isJsonNull()) {
+                prj_info = je.getAsInt();
+            }
+
+            if (fb_ill != 1 || prj_info != 1) {
                 return null;
             }
 
             String id = jsonObject.get("prj").getAsString();
 
-            if (!(filter_project_id != null && filter_project_id.equals(id))) {
+
+            if ((filter_project_id != null && !filter_project_id.equals(id))) {
                 return null;
             }
 
             Project_VK project = new Project_VK();
             project.setId(id);
 
-            JsonElement je = jsonObject.get("prj_desc");
+            je = jsonObject.get("prj_desc");
             if (je != null && !je.isJsonNull()) {
                 project.setProjectParagraf(je.getAsString());
             }

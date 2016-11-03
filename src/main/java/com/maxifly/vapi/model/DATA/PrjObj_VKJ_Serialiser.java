@@ -23,7 +23,14 @@ public class PrjObj_VKJ_Serialiser implements JsonDeserializer<SimplePrjOpj> {
 
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            Integer fb_ill = jsonObject.get("fb_ill").getAsInt();
+
+            Integer fb_ill = 0;
+            JsonElement je = jsonObject.get("fb_ill");
+            if (je != null && !je.isJsonNull()) {
+                fb_ill = je.getAsInt();
+            }
+
+            if (fb_ill != 1) return null;
 
             String project_id = jsonObject.get("prj").getAsString();
 
