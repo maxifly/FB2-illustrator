@@ -2,6 +2,9 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Book_from_Proj;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Book_from_VKProj;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Task_FindSuitableVKProj;
+import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import javafx.beans.binding.BooleanBinding;
@@ -12,14 +15,22 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -36,18 +47,38 @@ public class Ctrl_Book_from_VKProj
     private BooleanProperty isPrjSelected = new SimpleBooleanProperty();
     private ObjectProperty<OwnerAlbumProject>  selectedProject = new SimpleObjectProperty();
 
+    private Factory_GUI factory_gui;
+
+
     @FXML
     private ChoiceBox<String> vk_src_type;
     @FXML
     private TextField src_addr;
     @FXML
     private ListView<OwnerAlbumProject> projects;
+    @FXML
+    private ProgressIndicator loading;
 
     @FXML
     protected void refresh(ActionEvent actionEvent) throws MyException {
         clearProjects();
-        dm_book_from_vkProj.refresh(vk_src_type.getValue(), src_addr.getText());
+        loading.setVisible(true);
 
+        Task<List<OwnerAlbumProject>> refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj,vk_src_type.getValue(), src_addr.getText());
+        refreshTask.setOnSucceeded(event -> refresh_complite(event));
+        refreshTask.setOnFailed(event -> refresh_filed(event));
+        new Thread(refreshTask).start();
+
+
+    }
+
+    private void  refresh_filed(WorkerStateEvent event) {
+        TODO Доделать
+        loading.setVisible(false);
+    }
+    private void  refresh_complite(WorkerStateEvent event) {
+        dm_book_from_vkProj.setSuitableProjects( (List<OwnerAlbumProject>) event.getSource().getValue());
+        loading.setVisible(false);
     }
 
     private void changeSelectedPrj(OwnerAlbumProject newValue) {
@@ -66,9 +97,10 @@ public class Ctrl_Book_from_VKProj
                 !isPrjSelected.getValue());
     }
 
-    public Ctrl_Book_from_VKProj(DM_Book_from_VKProj dm_book_from_proj) {
+    public Ctrl_Book_from_VKProj(DM_Book_from_VKProj dm_book_from_proj, Factory_GUI factory_gui) {
         super(dm_book_from_proj);
         this.dm_book_from_vkProj= dm_book_from_proj;
+        this.factory_gui = factory_gui;
     }
 
     @Override
@@ -86,6 +118,7 @@ public class Ctrl_Book_from_VKProj
         this.book_name.textProperty().addListener(
                 (observable, oldValue, newValue) -> clearProjects()
         );
+
 
         Ctrl_Book_from_VKProj s = this;
 

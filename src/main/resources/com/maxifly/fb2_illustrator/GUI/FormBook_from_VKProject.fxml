@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -43,7 +44,16 @@
             <Button mnemonicParsing="false" onAction="#btnFromFile_action" prefHeight="31.0" prefWidth="152.0" text="Из файла" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="vk_src_type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="src_addr" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" onAction="#refresh" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <VBox alignment="TOP_CENTER" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <HBox alignment="TOP_RIGHT">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#refresh" text="Обновить" />
+                     </children>
+                  </HBox>
+                  <ProgressIndicator fx:id="loading" visible="false" />
+               </children>
+            </VBox>
             <ListView fx:id="projects" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>

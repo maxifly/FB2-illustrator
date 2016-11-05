@@ -115,10 +115,12 @@ public class Illustration implements Comparable<Illustration> {
     public String toString() {
         if (this.illustrated_description == null) {
             return "Illustration{" +
-                    "def_description='" + def_description + '\'' +
+                    " id: " + this.id +
+                    ", def_description='" + def_description + '\'' +
                     '}';
         } else {
             return "Illustration{" +
+                    " id: " + this.id +
                     "def_description='" + def_description
                     + "' illustrated_description='" +
                     illustrated_description +

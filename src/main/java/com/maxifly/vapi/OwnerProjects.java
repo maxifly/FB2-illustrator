@@ -5,6 +5,8 @@ import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_I_Progress;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.EmptyProgress;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.vapi.model.DATA.*;
 import com.maxifly.vapi.model.OwnerAlbumProject;
@@ -38,6 +40,8 @@ Iterable<OwnerAlbumProject>{
     private List<OwnerAlbumProject> projects;
     private Iterator<Album> albumIterator;
 
+    private DM_I_Progress dm_i_progress = new EmptyProgress();
+
 //    private int currentAlbumIdx;
     private int currentProjIdx;
     private boolean getAll = false;
@@ -67,6 +71,10 @@ Iterable<OwnerAlbumProject>{
 
     }
 
+    public void setDm_i_progress(DM_I_Progress dm_i_progress) {
+        this.dm_i_progress = dm_i_progress;
+    }
+
     @Override
     public boolean hasNext() {
         if (currentProjIdx < projects.size()) return true;
@@ -74,6 +82,7 @@ Iterable<OwnerAlbumProject>{
         if (getAll && currentProjIdx >= projects.size()) return false;
 
         while (albumIterator.hasNext() && currentProjIdx >= projects.size() ) {
+            dm_i_progress.incrementDone(1,"Всего найдено " + projects.size() +" проектов");
             AlbumProjects albumProjects = albums.get(albumIterator.next());
             addAlbumProjects(albumProjects);
         }
@@ -85,7 +94,7 @@ Iterable<OwnerAlbumProject>{
 
     @Override
     public OwnerAlbumProject next() {
-System.out.println("currentProjIdx " + currentProjIdx + " projects: " + projects.size());
+        System.out.println("currentProjIdx " + currentProjIdx + " projects: " + projects.size());
         return projects.get(currentProjIdx++);
     }
 
@@ -104,7 +113,7 @@ System.out.println("currentProjIdx " + currentProjIdx + " projects: " + projects
         }
         albumIterator = albums.keySet().iterator();
         currentProjIdx = 0;
-
+        dm_i_progress.setMaxValue(albums.keySet().size());
         return this;
     }
 

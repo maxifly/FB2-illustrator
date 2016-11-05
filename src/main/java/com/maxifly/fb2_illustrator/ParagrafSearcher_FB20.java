@@ -24,7 +24,7 @@ public class ParagrafSearcher_FB20
     private static IMessageConveyor mc = new MessageConveyor(
             Constants.getLocaleApp());
     private static LocLogger log = (new LocLoggerFactory(mc))
-            .getLocLogger(BookProcessor_FB20.class.getName());
+            .getLocLogger(ParagrafSearcher_FB20.class.getName());
     private Illustrations illustrations;
 
     private int currentParagrafNumber;
@@ -118,20 +118,12 @@ public class ParagrafSearcher_FB20
         for (JAXBElement<?> element : section.getImageOrAnnotationOrSection()) {
             switch (element.getDeclaredType().getSimpleName()) {
                 case "PType":
-                    log.debug("Paragraf");
                     List<JAXBElement<?>> newElementsList = paragrafProcessor((JAXBElement<PType>) element);
-
-
                     for (JAXBElement<?> newElement : newElementsList) {
                         newSectionObjectsList.add(newElement);
                     }
-
-
-
-
                     break;
                 case "SectionType":
-                    log.debug("Section");
                     int i = 1;
                     SectionType newSectionType = sectionProcessor(((JAXBElement<SectionType>) element).getValue());
                     JAXBElement<SectionType> new_stjxb = objectFactory.createSectionTypeSection(newSectionType);
@@ -220,11 +212,9 @@ public class ParagrafSearcher_FB20
             this.lastParagrafNumber ++;
             switch (element.getDeclaredType().getSimpleName()) {
                 case "PType":
-                    log.debug("Paragraf");
                     paragrafParser((JAXBElement<PType>) element);
                     break;
                 case "SectionType":
-                    log.debug("Section");
                     int i = 1;
                     sectionParser(((JAXBElement<SectionType>) element).getValue());
                     break;

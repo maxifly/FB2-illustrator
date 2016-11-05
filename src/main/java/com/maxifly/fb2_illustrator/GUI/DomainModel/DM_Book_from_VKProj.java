@@ -11,11 +11,14 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 
 import javax.xml.bind.JAXBException;
 import java.nio.file.Files;
 import java.security.acl.Owner;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Maximus on 23.10.2016.
@@ -25,14 +28,16 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     private HashMap<Integer,OwnerProjects> owners = new HashMap<>();
     private ObservableList<OwnerAlbumProject> suitableProjects = FXCollections.observableArrayList();
     private ObjectProperty<OwnerAlbumProject> selectedProject = new SimpleObjectProperty();
+    private DM_Task_FindSuitableVKProj task;
 
     public ObservableList<OwnerAlbumProject> getSuitableProjects() {
         return suitableProjects;
     }
 
-    public void refresh(String addrType, String srcAddr) throws MyException {
+    public List<OwnerAlbumProject> refresh(String addrType, String srcAddr, DM_Task_FindSuitableVKProj task) throws MyException {
         int ownerId = 0;
         Long albumId = null;
+        this.task = task;
 
         switch (addrType) {
             case "група":
@@ -46,29 +51,41 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         }
 
         if (albumId == null) {
-            refreshOwner(ownerId);
+            return refreshOwner(ownerId);
         }
+
+        return new ArrayList<OwnerAlbumProject>();
 
     }
 
-    private void refreshOwner(int ownerId){
+    private List<OwnerAlbumProject> refreshOwner(int ownerId){
+        List<OwnerAlbumProject> result = new ArrayList<>();
+
      OwnerProjects ownerProjects = owners.get(ownerId);
         if (ownerProjects == null) {
             ownerProjects = new OwnerProjects(this.factory_gui.getDm_statusBar().getToken(),ownerId);
+            owners.put(ownerId,ownerProjects);
         }
+
+        ownerProjects.setDm_i_progress(task);
 
         // Надо проверить подходит ли проект под маску
 
         for (OwnerAlbumProject ownerAlbumProject : ownerProjects) {
-            if (checkBookname(ownerAlbumProject.project_vk) || true) {
+            if (checkBookname(ownerAlbumProject.project_vk)) {
                log.debug("Project {} suitable for book mask.");
 
-               suitableProjects.add(ownerAlbumProject) ;
+                result.add(ownerAlbumProject) ;
             }
 
         }
 
+        return result;
 
+    }
+
+    public void setSuitableProjects(List<OwnerAlbumProject> list) {
+        suitableProjects.addAll(list);
     }
 
     public OwnerAlbumProject getSelectedProject() {
