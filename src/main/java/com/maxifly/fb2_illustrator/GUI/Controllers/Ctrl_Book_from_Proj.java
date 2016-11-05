@@ -29,7 +29,7 @@ public abstract class Ctrl_Book_from_Proj
     final private DM_Book_from_Proj dm_book_from_proj;
 
     @FXML
-    private TextField book_name;
+    protected TextField book_name;
     @FXML
     protected TextField book_src_file;
     @FXML
@@ -56,15 +56,17 @@ public abstract class Ctrl_Book_from_Proj
 
 
 
-
-
-    @FXML
-    protected void clear_form(ActionEvent actionEvent) {
+    protected  void clear_form() {
         System.out.println("clear");
         book_name.setText(null);
         book_src_file.setText(null);
         book_dst_file.setText(null);
+    }
 
+
+    @FXML
+    protected void clear_form(ActionEvent actionEvent) {
+        clear_form();
     }
 
     @FXML

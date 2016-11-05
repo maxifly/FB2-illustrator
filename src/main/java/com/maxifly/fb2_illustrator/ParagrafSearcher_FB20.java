@@ -89,6 +89,7 @@ public class ParagrafSearcher_FB20
 
     private FictionBook.Binary genBinary(Illustration ill) {
         Path path = ill.getFile();
+        log.debug("*** ill path {}",path);
         try {
             byte[] data = Files.readAllBytes(path);
 

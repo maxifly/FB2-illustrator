@@ -13,4 +13,9 @@ public class OwnerAlbumProject {
         this.albumId = albumId;
         this.project_vk = project_vk;
     }
+
+    @Override
+    public String toString() {
+        return "(" + project_vk.getIllCount() +") " + project_vk.getBookName();
+    }
 }

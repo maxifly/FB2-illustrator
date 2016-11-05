@@ -131,8 +131,6 @@ public abstract class DM_Book_from_Proj
         book_dst_file = new SimpleStringProperty();
         this.factory_gui = factory_gui;
         projectObjectProperty = new SimpleObjectProperty<>();
-        //TODO В абстрактном не должно быть
-//        dm_projectObjectProperty.bindBidirectional(factory_gui.getDm_statusBar().dmProject_Property());
         dm_projectObjectProperty.addListener((observable, oldValue, newValue) -> change_dmProject(newValue));
         book_name.addListener((observable, oldValue, newValue) -> change_BookName(newValue));
         book_src_file.addListener((observable, oldValue, newValue) -> change_srcFile(newValue));
@@ -162,9 +160,6 @@ public abstract class DM_Book_from_Proj
         return warnings;
     }
 
-//    public DM_Project getDm_projectObjectProperty() {
-//        return dm_projectObjectProperty.get();
-//    }
 
     public ObjectProperty<DM_Project> dm_projectObjectPropertyProperty() {
         return dm_projectObjectProperty;
