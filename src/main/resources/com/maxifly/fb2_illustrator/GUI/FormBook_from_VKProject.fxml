@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -52,6 +53,8 @@
                      </children>
                   </HBox>
                   <ProgressIndicator fx:id="loading" visible="false" />
+                  <ProgressBar fx:id="load_progress" prefHeight="23.0" prefWidth="155.0" progress="0.0" />
+                  <TextField fx:id="load_message" />
                </children>
             </VBox>
             <ListView fx:id="projects" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />

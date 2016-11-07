@@ -49,7 +49,7 @@ implements DM_I_Progress
 
     @Override
     public void updateProgress(long workDone, long max) {
-        this.updateProgress(workDone,max);
+        super.updateProgress(workDone,max);
     }
 
     @Override

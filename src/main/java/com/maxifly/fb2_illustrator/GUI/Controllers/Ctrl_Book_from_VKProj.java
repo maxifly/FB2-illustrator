@@ -1,5 +1,8 @@
 package com.maxifly.fb2_illustrator.GUI.Controllers;
 
+import ch.qos.cal10n.IMessageConveyor;
+import ch.qos.cal10n.MessageConveyor;
+import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Book_from_Proj;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Book_from_VKProj;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Task_FindSuitableVKProj;
@@ -20,12 +23,11 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import org.slf4j.cal10n.LocLogger;
+import org.slf4j.cal10n.LocLoggerFactory;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -39,6 +41,11 @@ import java.util.ResourceBundle;
 public class Ctrl_Book_from_VKProj
         extends Ctrl_Book_from_Proj
         implements Initializable {
+
+    protected static IMessageConveyor mc = new MessageConveyor(
+            Constants.getLocaleApp());
+    protected static LocLogger log = (new LocLoggerFactory(mc))
+            .getLocLogger(Ctrl_Book_from_VKProj.class.getName());
 
 //    private ObservableList srcTypes = FXCollections.observableArrayList("группа","пользователь","альбом");
 
@@ -58,6 +65,10 @@ public class Ctrl_Book_from_VKProj
     private ListView<OwnerAlbumProject> projects;
     @FXML
     private ProgressIndicator loading;
+    @FXML
+    private ProgressBar load_progress;
+    @FXML
+    private TextField load_message;
 
     @FXML
     protected void refresh(ActionEvent actionEvent) throws MyException {
@@ -65,6 +76,10 @@ public class Ctrl_Book_from_VKProj
         loading.setVisible(true);
 
         Task<List<OwnerAlbumProject>> refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj,vk_src_type.getValue(), src_addr.getText());
+
+        load_progress.progressProperty().bind(refreshTask.progressProperty());
+        load_message.textProperty().bind(refreshTask.messageProperty());
+
         refreshTask.setOnSucceeded(event -> refresh_complite(event));
         refreshTask.setOnFailed(event -> refresh_filed(event));
         new Thread(refreshTask).start();
@@ -73,7 +88,7 @@ public class Ctrl_Book_from_VKProj
     }
 
     private void  refresh_filed(WorkerStateEvent event) {
-        TODO Доделать
+        log.error("Error {}",event.getSource().getException());
         loading.setVisible(false);
     }
     private void  refresh_complite(WorkerStateEvent event) {
