@@ -53,7 +53,7 @@ public class Ctrl_Book_from_VKProj
     private DM_Book_from_VKProj dm_book_from_vkProj;
 
     private BooleanProperty isPrjSelected = new SimpleBooleanProperty();
-    private ObjectProperty<OwnerAlbumProject>  selectedProject = new SimpleObjectProperty();
+    private ObjectProperty<OwnerAlbumProject> selectedProject = new SimpleObjectProperty();
 
     private Factory_GUI factory_gui;
 
@@ -64,21 +64,12 @@ public class Ctrl_Book_from_VKProj
     private TextField src_addr;
     @FXML
     private ListView<OwnerAlbumProject> projects;
-    @FXML
-    private ProgressIndicator loading;
-    @FXML
-    private ProgressBar load_progress;
-    @FXML
-    private TextField load_message;
-
 
 
     @FXML
     protected void refresh(ActionEvent actionEvent) throws MyException, IOException {
         clearProjects();
-        loading.setVisible(true);
-
-        DM_Task_FindSuitableVKProj refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj,vk_src_type.getValue(), src_addr.getText());
+        DM_Task_FindSuitableVKProj refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj, vk_src_type.getValue(), src_addr.getText());
 
         GUI_Obj gui_obj = factory_gui.createProgressWindow();
 
@@ -98,24 +89,23 @@ public class Ctrl_Book_from_VKProj
 
 
     }
-    private void  refresh_cancelled(WorkerStateEvent event, Stage monitorWindow) {
+
+    private void refresh_cancelled(WorkerStateEvent event, Stage monitorWindow) {
         log.error("Task cancelled");
         monitorWindow.close();
-        loading.setVisible(false);
     }
-    private void  refresh_filed(WorkerStateEvent event, Stage monitorWindow) {
-        log.error("Error {}",event.getSource().getException());
-        monitorWindow.close();
-        loading.setVisible(false);
 
+    private void refresh_filed(WorkerStateEvent event, Stage monitorWindow) {
+        log.error("Error {}", event.getSource().getException());
+        monitorWindow.close();
         ExceptionHandler exceptionHandler = new ExceptionHandler();
         exceptionHandler.uncaughtException(Thread.currentThread(), event.getSource().getException());
 
     }
-    private void  refresh_complite(WorkerStateEvent event, Stage monitorWindow) {
+
+    private void refresh_complite(WorkerStateEvent event, Stage monitorWindow) {
         monitorWindow.close();
-        dm_book_from_vkProj.setSuitableProjects( (List<OwnerAlbumProject>) event.getSource().getValue());
-        loading.setVisible(false);
+        dm_book_from_vkProj.setSuitableProjects((List<OwnerAlbumProject>) event.getSource().getValue());
     }
 
     private void changeSelectedPrj(OwnerAlbumProject newValue) {
@@ -124,7 +114,7 @@ public class Ctrl_Book_from_VKProj
     }
 
     private void clearProjects() {
-        projects.getItems().remove(0,projects.getItems().size());
+        projects.getItems().remove(0, projects.getItems().size());
         isPrjSelected.setValue(false);
     }
 
@@ -136,7 +126,7 @@ public class Ctrl_Book_from_VKProj
 
     public Ctrl_Book_from_VKProj(DM_Book_from_VKProj dm_book_from_proj, Factory_GUI factory_gui) {
         super(dm_book_from_proj);
-        this.dm_book_from_vkProj= dm_book_from_proj;
+        this.dm_book_from_vkProj = dm_book_from_proj;
         this.factory_gui = factory_gui;
     }
 
@@ -145,7 +135,7 @@ public class Ctrl_Book_from_VKProj
         super.initialize(location, resources);
 
         selectedProject.bindBidirectional(dm_book_from_vkProj.selectedProjectProperty());
-        vk_src_type.getItems().addAll("группа","пользователь","альбом");
+        vk_src_type.getItems().addAll("группа", "пользователь", "альбом");
         vk_src_type.setValue("группа");
 
         projects.setItems(dm_book_from_vkProj.getSuitableProjects());

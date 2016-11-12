@@ -26,12 +26,9 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static final LocLogger log = llFactory_uk.getLocLogger(ExceptionHandler.class.getName());
 
 
-
-
-
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        log.error("{}",e);
+        log.error("{}", e);
 
         MyException gui_exception = getGuiException(e);
         Throwable throwable = (gui_exception == null) ? e : gui_exception;
@@ -77,11 +74,25 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
 
+    /**
+     * Пробирается по причинам исключения и если встречает MyException, то возвращает его
+     * иначе null.
+     * Обрабатывает до 100 уровней вложенности
+     *
+     * @param t исключение
+     * @return MyException или null
+     */
     private MyException getGuiException(Throwable t) {
         try {
-            Throwable cause = t.getCause().getCause();
-            if (MyException.class.isAssignableFrom(cause.getClass())) {
-                return (MyException) cause;
+            Throwable cause = t;
+
+            for (int i = 1; i <= 100; i++) {
+
+                if (cause == null) return null;
+                if (MyException.class.isAssignableFrom(cause.getClass())) {
+                    return (MyException) cause;
+                }
+                cause = cause.getCause();
             }
             return null;
         } catch

@@ -29,13 +29,16 @@ public class RestSender {
     private static final LocLogger log = llFactory_uk.getLocLogger(RestSender.class.getName());
 
     public static void respDelay() throws InterruptedException {
+
         Thread.sleep(500);
+
     }
     public RestResponse sendGet(String url){
         try {
             respDelay();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            if (Thread.interrupted()) Thread.currentThread().interrupt();
         }
         return sendGet_withoutDely(url);
     }
@@ -44,6 +47,7 @@ public class RestSender {
             respDelay();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            if (Thread.interrupted()) Thread.currentThread().interrupt();
         }
         return sendPost_withoutDely(rest_post_data);
     }
