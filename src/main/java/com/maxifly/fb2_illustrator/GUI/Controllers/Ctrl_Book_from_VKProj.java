@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import javax.swing.*;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.net.URL;
@@ -69,6 +70,8 @@ public class Ctrl_Book_from_VKProj
     private ProgressBar load_progress;
     @FXML
     private TextField load_message;
+
+
 
     @FXML
     protected void refresh(ActionEvent actionEvent) throws MyException {

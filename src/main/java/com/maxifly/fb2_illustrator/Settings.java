@@ -12,8 +12,8 @@ import java.io.IOException;
  * Created by Maximus on 25.10.2016.
  */
 public class Settings {
-    private Integer winSize_W = 800;
-    private Integer winSize_H = 600;
+    private Double winSize_W = 800D;
+    private Double winSize_H = 600D;
     private String  projectsDir;
 
     /**
@@ -56,19 +56,19 @@ public class Settings {
         FileOperations.writeAll(settingFile, settings_string);
     }
 
-    public Integer getWinSize_W() {
+    public Double getWinSize_W() {
         return winSize_W;
     }
 
-    public void setWinSize_W(Integer winSize_W) {
+    public void setWinSize_W(Double winSize_W) {
         this.winSize_W = winSize_W;
     }
 
-    public Integer getWinSize_H() {
+    public Double getWinSize_H() {
         return winSize_H;
     }
 
-    public void setWinSize_H(Integer winSize_H) {
+    public void setWinSize_H(Double winSize_H) {
         this.winSize_H = winSize_H;
     }
 

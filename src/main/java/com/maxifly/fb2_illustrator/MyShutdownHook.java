@@ -17,6 +17,12 @@ public class MyShutdownHook extends Thread {
     public void run() {
         Settings settings = this.factory_gui.getDm_statusBar().getSettings();
 
+        double H = factory_gui.getMainScene().getWindow().getHeight();
+        double W = factory_gui.getMainScene().getWindow().getWidth();
+
+        settings.setWinSize_H(H);
+        settings.setWinSize_W(W);
+
         System.out.println("shutdown");
         try {
             settings.writeSettings(Constants.ensureAppDataDir());
