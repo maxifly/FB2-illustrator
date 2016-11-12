@@ -353,6 +353,27 @@ public class Factory_GUI {
         Ctrl_Book_from_CurrProj ctrl_book_from_Curr_proj = loader.getController();
         return new GUI_Obj(node, ctrl_book_from_Curr_proj, dm_book_from_proj);
     }
+
+
+   public GUI_Obj createProgressWindow()
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        DM_ProgressWindow dm_progressWindow = new DM_ProgressWindow();
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormBook_ProgressWindow.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_ProgressWindow(factory_gui,dm_progressWindow);
+            }
+        });
+        Node node = loader.load();
+
+        return new GUI_Obj(node, loader.getController(), dm_progressWindow);
+    }
+
+
     public GUI_Obj createLoading()
             throws IOException, JAXBException {
         Factory_GUI factory_gui = this;
