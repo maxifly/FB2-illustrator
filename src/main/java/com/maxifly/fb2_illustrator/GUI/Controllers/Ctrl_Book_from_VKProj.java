@@ -3,9 +3,8 @@ package com.maxifly.fb2_illustrator.GUI.Controllers;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Book_from_Proj;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Book_from_VKProj;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_Task_FindSuitableVKProj;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.*;
+import com.maxifly.fb2_illustrator.GUI.ExceptionHandler;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
@@ -26,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
@@ -74,27 +74,46 @@ public class Ctrl_Book_from_VKProj
 
 
     @FXML
-    protected void refresh(ActionEvent actionEvent) throws MyException {
+    protected void refresh(ActionEvent actionEvent) throws MyException, IOException {
         clearProjects();
         loading.setVisible(true);
 
-        Task<List<OwnerAlbumProject>> refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj,vk_src_type.getValue(), src_addr.getText());
+        DM_Task_FindSuitableVKProj refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj,vk_src_type.getValue(), src_addr.getText());
 
-        load_progress.progressProperty().bind(refreshTask.progressProperty());
-        load_message.textProperty().bind(refreshTask.messageProperty());
+        GUI_Obj gui_obj = factory_gui.createProgressWindow();
 
-        refreshTask.setOnSucceeded(event -> refresh_complite(event));
-        refreshTask.setOnFailed(event -> refresh_filed(event));
+        refreshTask.setProgress_monitor((DM_I_Progress) gui_obj.dm_model);
+        ((DM_ProgressWindow) gui_obj.dm_model).setTask(refreshTask);
+
+        Stage monitorWindow = factory_gui.createModalWindow(gui_obj.node);
+        monitorWindow.show();
+
+//        load_progress.progressProperty().bind(refreshTask.progressProperty());
+//        load_message.textProperty().bind(refreshTask.messageProperty());
+
+        refreshTask.setOnSucceeded(event -> refresh_complite(event, monitorWindow));
+        refreshTask.setOnFailed(event -> refresh_filed(event, monitorWindow));
+        refreshTask.setOnCancelled(event -> refresh_cancelled(event, monitorWindow));
         new Thread(refreshTask).start();
 
 
     }
-
-    private void  refresh_filed(WorkerStateEvent event) {
-        log.error("Error {}",event.getSource().getException());
+    private void  refresh_cancelled(WorkerStateEvent event, Stage monitorWindow) {
+        log.error("Task cancelled");
+        monitorWindow.close();
         loading.setVisible(false);
     }
-    private void  refresh_complite(WorkerStateEvent event) {
+    private void  refresh_filed(WorkerStateEvent event, Stage monitorWindow) {
+        log.error("Error {}",event.getSource().getException());
+        monitorWindow.close();
+        loading.setVisible(false);
+
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        exceptionHandler.uncaughtException(Thread.currentThread(), event.getSource().getException());
+
+    }
+    private void  refresh_complite(WorkerStateEvent event, Stage monitorWindow) {
+        monitorWindow.close();
         dm_book_from_vkProj.setSuitableProjects( (List<OwnerAlbumProject>) event.getSource().getValue());
         loading.setVisible(false);
     }

@@ -4,6 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.concurrent.Task;
 
 /**
  * Created by Maximus on 12.11.2016.
@@ -18,6 +19,8 @@ implements DM_I_Progress
 
     private DoubleProperty progress = new SimpleDoubleProperty(0);
     private StringProperty progress_message = new SimpleStringProperty();
+
+    private Task task;
 
     public double getProgress() {
         return progress.get();
@@ -43,16 +46,24 @@ implements DM_I_Progress
         this.progress_message.set(progress_message);
     }
 
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public void cancel() {
+        task.cancel();
+    }
+
     @Override
     public void setMaxValue(long max) {
        this.max = max;
-       setProgress(done/max);
+       setProgress(((double) done)/ ( (double) max));
     }
 
     @Override
     public void incrementDone(long increment) {
         done = done + increment;
-        setProgress(done/max);
+        setProgress(((double) done)/ ( (double) max));
     }
 
     @Override

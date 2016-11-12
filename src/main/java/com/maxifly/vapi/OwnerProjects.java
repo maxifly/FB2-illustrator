@@ -42,6 +42,8 @@ Iterable<OwnerAlbumProject>{
 
     private DM_I_Progress dm_i_progress = new EmptyProgress();
 
+    private MyException exception = null;
+
 //    private int currentAlbumIdx;
     private int currentProjIdx;
     private boolean getAll = false;
@@ -59,6 +61,14 @@ Iterable<OwnerAlbumProject>{
         reset();
     }
 
+
+    public boolean isException() {
+        return this.exception != null;
+    }
+
+    public MyException getException() {
+        return exception;
+    }
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
@@ -102,12 +112,14 @@ Iterable<OwnerAlbumProject>{
 
     @Override
     public Iterator<OwnerAlbumProject> iterator() {
+        exception = null;
 
         if (albums.size() == 0) {
             try {
                 fillAlbums();
             } catch (MyException e) {
-                log.error("Error when get all albums. {}", e);
+                log.error("Error when get all albums.", e);
+                exception = e;
             }
             getAll = false;
         }
@@ -132,7 +144,7 @@ Iterable<OwnerAlbumProject>{
         String url = UrlCreator.getAlbums(accessToken,ownerId);
         RestResponse restResponse = restSender.sendGet(url);
         if (restResponse.getResponseCode() != 200) {
-            throw new MyException("Error when create album. restCode: "+ restResponse.getResponseCode());
+            throw new MyException("Error when get album. restCode: "+ restResponse.getResponseCode());
         }
 
         REST_Result_albums rest_result_albums =
@@ -140,7 +152,7 @@ Iterable<OwnerAlbumProject>{
 
         if (rest_result_albums.error != null) {
             log.error("Error when get photo album. {}", rest_result_albums.error);
-            throw new MyException("Error when create photo album. " + rest_result_albums.error);
+            throw new MyException("Error when get photo album. " + rest_result_albums.error);
         }
 
         // Подберем подходящие альбомы

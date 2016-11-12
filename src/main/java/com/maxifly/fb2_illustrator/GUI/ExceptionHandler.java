@@ -25,6 +25,10 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
     private static final LocLogger log = llFactory_uk.getLocLogger(ExceptionHandler.class.getName());
 
+
+
+
+
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         log.error("{}",e);

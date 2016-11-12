@@ -361,7 +361,7 @@ public class Factory_GUI {
         DM_ProgressWindow dm_progressWindow = new DM_ProgressWindow();
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Factory_GUI.class.getResource("FormBook_ProgressWindow.fxml"));
+        loader.setLocation(Factory_GUI.class.getResource("Form_ProgressWindow.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {

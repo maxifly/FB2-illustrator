@@ -18,15 +18,24 @@ implements DM_I_Progress
     private long max = 0;
     private long doneCnt = 0;
 
+    private DM_I_Progress progress_monitor;
+
+
     public DM_Task_FindSuitableVKProj(DM_Book_from_VKProj dm_book_from_vkProj, String addrType, String srcAddr) {
         this.dm_book_from_vkProj = dm_book_from_vkProj;
         this.addrType = addrType;
         this.srcAddr = srcAddr;
+        this.progress_monitor = new EmptyProgress();
+
+    }
+
+    public void setProgress_monitor(DM_I_Progress progress_monitor) {
+        this.progress_monitor = progress_monitor;
     }
 
     @Override
     protected List<OwnerAlbumProject> call() throws Exception {
-        return dm_book_from_vkProj.refresh(addrType,srcAddr, this);
+        return dm_book_from_vkProj.refresh(addrType,srcAddr,progress_monitor, this);
     }
 
 

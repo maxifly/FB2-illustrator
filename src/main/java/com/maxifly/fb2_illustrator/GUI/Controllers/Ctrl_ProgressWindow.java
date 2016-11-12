@@ -30,6 +30,11 @@ public class Ctrl_ProgressWindow extends Ctrl_Abstract
     @FXML
     TextField progress_mess;
 
+    @FXML
+    private void action_cancel(ActionEvent actionEvent) {
+        dm_progressWindow.cancel();
+    }
+
     public Ctrl_ProgressWindow(Factory_GUI factory_gui, DM_ProgressWindow dm_progressWindow) {
         this.factory_gui = factory_gui;
         this.dm_progressWindow = dm_progressWindow;
