@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.vapi.model.DATA.DATA_photo;
 import com.maxifly.vapi.model.DATA.Project_VKJ_Serialiser;
@@ -95,6 +96,10 @@ public class AlbumProjects implements
             filterAlbumItems();
         } catch (MyException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            log.error("InterruptedException:",e);
+            if (Thread.interrupted()) Thread.currentThread().interrupt();
+            throw new TaskInterruptedRuntime(e);
         }
 
         getAll = true;
@@ -120,7 +125,7 @@ public class AlbumProjects implements
 
 
 
-    private void filterAlbumItems() throws MyException {
+    private void filterAlbumItems() throws MyException, InterruptedException {
         while(photoProcessor.hasNext()) {
             DATA_photo data_photo = photoProcessor.next();
             try {

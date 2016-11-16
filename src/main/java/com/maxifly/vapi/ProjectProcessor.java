@@ -5,6 +5,7 @@ import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.vapi.model.DATA.DATA_photo;
@@ -36,7 +37,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
     private String accessToken;
     private long albumId;
-    private String book  = "book.jpg";
+    private String book = "book.jpg";
 
     private RestSender restSender = new RestSender();
     private PhotoUploader photoUploader;
@@ -47,7 +48,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
         this.accessToken = accessToken;
         this.albumId = albumId;
 
-        photoUploader = new PhotoUploader(accessToken,albumId);
+        photoUploader = new PhotoUploader(accessToken, albumId);
 
     }
 
@@ -58,7 +59,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
         List<Illustration_VK> ills_VK = new ArrayList<>();
         for (Illustration ill : project_vk.getIllustrations()) {
-          photoLoader.addIllustration((Illustration_VK) ill);
+            photoLoader.addIllustration((Illustration_VK) ill);
         }
 
         try {
@@ -70,11 +71,11 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
     }
 
-    public Project_VK importProject(String project_id) throws MyException {
+    public Project_VK importProject(String project_id) throws MyException, InterruptedException {
         PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_2560x2048);
         IllFilter illFilter = new IllFilter(project_id);
 
-        while(photoProcessor.hasNext()) {
+        while (photoProcessor.hasNext()) {
             DATA_photo data_photo = photoProcessor.next();
             illFilter.add(data_photo);
         }
@@ -85,7 +86,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
             throw new MyException("Не найдена информация о проекте");
         }
 
-        List<Illustration_VK> illustrations =  illFilter.getIllustrations();
+        List<Illustration_VK> illustrations = illFilter.getIllustrations();
 
         // Отсортируем иллюстрации по их номероу
         Collections.sort(illustrations);
@@ -98,61 +99,74 @@ public class ProjectProcessor { // TODO Переименовать класс?
         }
 
 
-
-       return project_vk;
+        return project_vk;
     }
 
 
     /**
      * Удаляет проект
+     *
      * @param project_id
      */
     public void deleteProject(String project_id) throws MyException {
 
-        // Загрузим объекты
-        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,albumId, PhotoSize.photo_2560x2048);
-        PrjObjFilter prjObjFilter = new PrjObjFilter(project_id);
+        try {
 
-        while(photoProcessor.hasNext()) {
-            DATA_photo data_photo = photoProcessor.next();
-            prjObjFilter.add(data_photo);
+
+            // Загрузим объекты
+            PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_2560x2048);
+            PrjObjFilter prjObjFilter = new PrjObjFilter(project_id);
+
+            while (photoProcessor.hasNext()) {
+                DATA_photo data_photo = photoProcessor.next();
+                prjObjFilter.add(data_photo);
+            }
+
+            log.debug("Found {} objects.", prjObjFilter.getObjCount());
+
+            for (PrjObj prjObj : prjObjFilter.getProject_objects()) {
+                System.out.println(prjObj);
+                delPhoto(prjObj.getPhoto_id(), prjObj.getOwnerId());
+                log.debug("Delete photo {}", prjObj.getPhoto_id());
+            }
+            log.info("Delete project {} from album {}", project_id, albumId);
+        } catch (InterruptedException e) {
+            log.error("Task interrupted", e);
+            throw new TaskInterrupted("Task interrupted", e);
         }
-
-        log.debug("Found {} objects.", prjObjFilter.getObjCount());
-
-        for (PrjObj prjObj : prjObjFilter.getProject_objects()) {
-            System.out.println(prjObj);
-           delPhoto(prjObj.getPhoto_id(),prjObj.getOwnerId());
-           log.debug("Delete photo {}", prjObj.getPhoto_id());
-        }
-        log.info("Delete project {} from album {}", project_id, albumId);
     }
 
 
     private boolean delPhoto(long photoId, int ownerId) throws MyException {
-       RestResponse restResponse = restSender.sendGet(UrlCreator.delPhoto(accessToken,albumId,ownerId,photoId));
-        if (restResponse.getResponseCode() != 200 ) {
-            String message = "Can not delete photo: " +
-                    restResponse.getResponseCode() +
-                    " " +
-                    restResponse.getResponseBody().toString();
-            log.error(message);
-            throw new MyException(message);
+        try {
+
+
+            RestResponse restResponse = restSender.sendGet(UrlCreator.delPhoto(accessToken, albumId, ownerId, photoId));
+            if (restResponse.getResponseCode() != 200) {
+                String message = "Can not delete photo: " +
+                        restResponse.getResponseCode() +
+                        " " +
+                        restResponse.getResponseBody().toString();
+                log.error(message);
+                throw new MyException(message);
+            }
+
+
+            REST_Result_deletePhoto rest_result =
+                    g.fromJson(restResponse.getResponseBody().toString(), REST_Result_deletePhoto.class);
+
+            if (rest_result.error != null || rest_result.response != 1) {
+                String message = "Error when delete photo: " + rest_result.error.toString() + " response: " + rest_result.response;
+                log.error(message);
+                throw new MyException(message);
+            }
+
+            return true;
+
+        } catch (InterruptedException e) {
+            log.error("Task interrupted", e);
+            throw new TaskInterrupted("Task interrupted", e);
         }
-
-
-        REST_Result_deletePhoto rest_result =
-                g.fromJson(restResponse.getResponseBody().toString(),REST_Result_deletePhoto.class);
-
-        if (rest_result.error!= null || rest_result.response != 1) {
-            String message = "Error when delete photo: " + rest_result.error.toString() + " response: " + rest_result.response;
-            log.error(message);
-            throw new MyException(message);
-        }
-
-        return true;
-
-
     }
 
     public void uploadProject(Project project) throws MyException, IOException {
@@ -163,21 +177,15 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
         photoUploader.prepare();
         // Загрузим информацию о проекте
-       String description =  ExportProject_Utl.getProjectInfo(project);
-       photoUploader.uploadPhoto(this.book,description);
+        String description = ExportProject_Utl.getProjectInfo(project);
+        photoUploader.uploadPhoto(this.book, description);
 
         // Переберем иллюстрации и тоже их загрузим
 
         for (Illustration ill : project.getIllustrations()) {
             description = ExportProject_Utl.getIllInfo(ill);
-            photoUploader.uploadPhoto(ill.getFile().toFile(),description);
+            photoUploader.uploadPhoto(ill.getFile().toFile(), description);
         }
-
-
-
-
-
-
 
 
     }

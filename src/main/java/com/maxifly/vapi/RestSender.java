@@ -33,16 +33,20 @@ public class RestSender {
         Thread.sleep(500);
 
     }
-    public RestResponse sendGet(String url){
+
+    public RestResponse sendGet(String url) throws InterruptedException {
         try {
             respDelay();
         } catch (InterruptedException e) {
             e.printStackTrace();
+
             if (Thread.interrupted()) Thread.currentThread().interrupt();
+            throw e;
         }
         return sendGet_withoutDely(url);
     }
-    public RestResponse sendPost(REST_POST_Data rest_post_data){
+
+    public RestResponse sendPost(REST_POST_Data rest_post_data) {
         try {
             respDelay();
         } catch (InterruptedException e) {
@@ -72,7 +76,7 @@ public class RestSender {
             result.setResponseCode(500);
         } finally {
             if (con != null) {
-                    con.disconnect();
+                con.disconnect();
             }
         }
 
@@ -107,7 +111,7 @@ public class RestSender {
 
             result.setResponseCode(con.getResponseCode());
 
-            log.debug("Sending 'POST' request to URL : {} \n body {} ",rest_post_data.url, rest_post_data.body);
+            log.debug("Sending 'POST' request to URL : {} \n body {} ", rest_post_data.url, rest_post_data.body);
             log.debug("Response Code : {}", result.getResponseCode());
             readRestResponse(result, con);
         } catch (Exception e) {
@@ -122,6 +126,7 @@ public class RestSender {
         return result;
 
     }
+
     private void readRestResponse(RestResponse result, HttpURLConnection con) {
         BufferedReader in = null;
         try {
@@ -147,14 +152,14 @@ public class RestSender {
 
 
     public RestResponse sendPOST_uploadFiles(String url, List<REST_FileUpload> files) {
-        log.debug("Upload file to upload server {}", url );
+        log.debug("Upload file to upload server {}", url);
 
 
         RestResponse result = new RestResponse();
         HttpURLConnection con = null;
         String crlf = "\r\n";
         String twoHyphens = "--";
-        String boundary =  "*****";
+        String boundary = "*****";
         try {
             URL obj = new URL(url);
 
@@ -173,23 +178,23 @@ public class RestSender {
 
             // Перебираем файлы и записываем их в запрос
 
-            for (REST_FileUpload fileUploadInfo :files) {
-                log.debug("Upload file: "+ fileUploadInfo.toString());
+            for (REST_FileUpload fileUploadInfo : files) {
+                log.debug("Upload file: " + fileUploadInfo.toString());
 
 
                 request.writeBytes(twoHyphens + boundary + crlf);
                 request.writeBytes("Content-Disposition: form-data; name=\"" +
                         fileUploadInfo.field_name
                         + "\";filename=\""
-                        + ((fileUploadInfo.resourcePath != null)?fileUploadInfo.resourcePath:fileUploadInfo.file.getCanonicalPath())
-                        +"\"" + crlf);
+                        + ((fileUploadInfo.resourcePath != null) ? fileUploadInfo.resourcePath : fileUploadInfo.file.getCanonicalPath())
+                        + "\"" + crlf);
                 request.writeBytes(crlf);
                 // TODO Обеспечить передачу ресурса по имени и его чтение
 
                 if (fileUploadInfo.resourcePath == null) {
                     exportFile(fileUploadInfo.file, request);
                 } else {
-                    exportResourceFile(fileUploadInfo.resourcePath,request);
+                    exportResourceFile(fileUploadInfo.resourcePath, request);
                 }
 
 
@@ -226,24 +231,24 @@ public class RestSender {
         int readBytes;
         byte[] buffer = new byte[4096];
 
-        try (InputStream inputStream = Factory_GUI.class.getResourceAsStream(resourceName)){
+        try (InputStream inputStream = Factory_GUI.class.getResourceAsStream(resourceName)) {
             while ((readBytes = inputStream.read(buffer)) > 0) {
-                log.debug("read {} bytes",readBytes);
+                log.debug("read {} bytes", readBytes);
                 dataOutputStream.write(buffer, 0, readBytes);
             }
         }
     }
+
     private void exportFile(File file, DataOutputStream dataOutputStream) throws IOException {
         int readBytes;
         byte[] buffer = new byte[4096];
 
-        try (InputStream inputStream = new FileInputStream(file)){
+        try (InputStream inputStream = new FileInputStream(file)) {
             while ((readBytes = inputStream.read(buffer)) > 0) {
                 dataOutputStream.write(buffer, 0, readBytes);
             }
         }
     }
-
 
 
 //    /**

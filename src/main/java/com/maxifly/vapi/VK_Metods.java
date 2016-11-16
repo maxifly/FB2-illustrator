@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.vapi.model.REST.REST_Result_createAlbum;
 import com.maxifly.vapi.model.REST.REST_Result_photo;
 import com.maxifly.vapi.model.RestResponse;
@@ -36,7 +37,13 @@ public class VK_Metods {
 
     public Long createAlbum() throws UnsupportedEncodingException, MyException {
         String url = UrlCreator.createPhotoAlbum(accessToken, "Иллюстрации к книгам", null, "{\"fb_ill\":1}");
-        RestResponse restResponse = restSender.sendGet(url);
+        RestResponse restResponse = null;
+        try {
+            restResponse = restSender.sendGet(url);
+        } catch (InterruptedException e) {
+            log.error("Task interrupted.", e);
+            throw new TaskInterrupted("Task interrupted", e);
+        }
 
         if (restResponse.getResponseCode() != 200) {
             throw new MyException("Error when create album. restCode: "+ restResponse.getResponseCode());

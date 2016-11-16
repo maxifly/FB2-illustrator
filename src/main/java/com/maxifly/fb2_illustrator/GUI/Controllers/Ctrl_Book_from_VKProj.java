@@ -104,6 +104,7 @@ public class Ctrl_Book_from_VKProj
     }
 
     private void refresh_complite(WorkerStateEvent event, Stage monitorWindow) {
+        log.debug("task successed complite");
         monitorWindow.close();
         dm_book_from_vkProj.setSuitableProjects((List<OwnerAlbumProject>) event.getSource().getValue());
     }

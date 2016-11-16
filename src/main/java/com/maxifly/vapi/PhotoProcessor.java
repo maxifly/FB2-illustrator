@@ -43,7 +43,7 @@ public class PhotoProcessor {
     }
 
 
-    public boolean hasNext() throws MyException {
+    public boolean hasNext() throws MyException, InterruptedException {
         if (!iterator.hasNext()) {
             // Надо получить новую порцию
             return getNewPortion() != 0;
@@ -57,7 +57,7 @@ public class PhotoProcessor {
     }
 
 
-    private int getNewPortion() throws MyException { //throws Exception {
+    private int getNewPortion() throws MyException, InterruptedException { //throws Exception {
         iterator = null;
         container.clear();
 

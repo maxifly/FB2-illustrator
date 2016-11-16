@@ -8,6 +8,7 @@ import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_I_Progress;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.EmptyProgress;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.vapi.model.DATA.*;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import com.maxifly.vapi.model.Project_VK;
@@ -86,7 +87,7 @@ Iterable<OwnerAlbumProject>{
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext() throws TaskInterruptedRuntime{
         if (currentProjIdx < projects.size()) return true;
 
         if (getAll && currentProjIdx >= projects.size()) return false;
@@ -120,6 +121,10 @@ Iterable<OwnerAlbumProject>{
             } catch (MyException e) {
                 log.error("Error when get all albums.", e);
                 exception = e;
+            } catch (InterruptedException e) {
+                log.error("Task interrupted.", e);
+                if (Thread.interrupted()) Thread.currentThread().interrupt();
+                throw  new TaskInterruptedRuntime(e);
             }
             getAll = false;
         }
@@ -140,7 +145,7 @@ Iterable<OwnerAlbumProject>{
         }
     }
 
-    private void fillAlbums() throws MyException {
+    private void fillAlbums() throws MyException, InterruptedException {
         String url = UrlCreator.getAlbums(accessToken,ownerId);
         RestResponse restResponse = restSender.sendGet(url);
         if (restResponse.getResponseCode() != 200) {

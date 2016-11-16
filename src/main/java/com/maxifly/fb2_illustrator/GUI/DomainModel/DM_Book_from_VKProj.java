@@ -2,6 +2,8 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.TaskInterrupted;
+import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.vapi.OwnerProjects;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
@@ -73,22 +75,29 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
         // Надо проверить подходит ли проект под маску
 
-        for (OwnerAlbumProject ownerAlbumProject : ownerProjects) {
-            if (task.isCancelled()) {
-                log.debug("Task canceled");
-                result = new ArrayList<>();
-                break;
+        try {
+            for (OwnerAlbumProject ownerAlbumProject : ownerProjects) {
+                if (task.isCancelled()) {
+                    log.debug("Task canceled");
+                    result = new ArrayList<>();
+                    break;
+                }
+
+                if (ownerProjects.isException()) throw ownerProjects.getException();
+
+                if (checkBookname(ownerAlbumProject.project_vk)) {
+                    log.debug("Project {} suitable for book mask.");
+
+                    result.add(ownerAlbumProject);
+                }
+
             }
-
-            if (ownerProjects.isException()) throw ownerProjects.getException();
-
-            if (checkBookname(ownerAlbumProject.project_vk)) {
-                log.debug("Project {} suitable for book mask.");
-
-                result.add(ownerAlbumProject);
-            }
-
+        } catch(TaskInterruptedRuntime e) {
+            log.error("Exception TaskInterruptedRuntime ", e);
+            task.cancel();
+            result = new ArrayList<>();
         }
+
         if (ownerProjects.isException()) throw ownerProjects.getException();
         return result;
 
