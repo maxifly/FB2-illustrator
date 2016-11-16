@@ -11,11 +11,11 @@ import javafx.beans.property.StringProperty;
  * Created by Maximus on 28.07.2016.
  */
 public class DM_StatusBar {
-   private StringProperty login;
-   private String token;
-   private ObjectProperty<DM_Project> dmProjectProperty = new SimpleObjectProperty<>();
+    private StringProperty login;
+    private String token;
+    private ObjectProperty<DM_Project> dmProjectProperty = new SimpleObjectProperty<>();
 
-   private Settings settings;
+    private Settings settings;
 
 
     public DM_StatusBar() {
@@ -36,10 +36,10 @@ public class DM_StatusBar {
     }
 
     public ObjectProperty<DM_Project> dmProject_Property() {
-       return this.dmProjectProperty;
+        return this.dmProjectProperty;
     }
 
-    public void setCurrentProject(DM_Project dm_project){
+    public void setCurrentProject(DM_Project dm_project) {
         this.dmProjectProperty.set(dm_project);
     }
 

@@ -71,7 +71,7 @@ public class Connect {
             } catch (ConnectException e) {
                 log.warn("Get access token exception: " + e);
                 sleep = tryCount++ * 1000;
-                log.debug("Sleep ? millisec",sleep);
+                log.debug("Sleep ? millisec", sleep);
                 Thread.sleep(sleep);
             }
         } while (cutOfTime > System.currentTimeMillis());

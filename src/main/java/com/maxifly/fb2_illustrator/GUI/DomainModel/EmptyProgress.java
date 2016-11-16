@@ -3,7 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 /**
  * Created by Maximus on 06.11.2016.
  */
-public class EmptyProgress implements DM_I_Progress {
+public class EmptyProgress implements I_Progress {
 
 
     @Override

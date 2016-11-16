@@ -20,11 +20,9 @@ import java.util.ResourceBundle;
  * Created by Maximus on 08.10.2016.
  */
 public class Ctrl_ExportProject extends Ctrl_Abstract
-   implements Initializable
-{
+        implements Initializable {
     private Factory_GUI factory_gui;
     private DM_ExportProject dm_exportProject;
-
 
 
     @FXML
@@ -40,7 +38,7 @@ public class Ctrl_ExportProject extends Ctrl_Abstract
     protected void action_export(ActionEvent actionEvent) throws MyException {
 
         long album_id;
-        if(rb_exists.isSelected()) {
+        if (rb_exists.isSelected()) {
             album_id = dm_exportProject.export(album_addr.getText());
         } else {
             album_id = dm_exportProject.export(null);

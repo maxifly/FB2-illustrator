@@ -49,7 +49,6 @@ public class Ctrl_SearchTemplate_Edit
     ObjectProperty<TemplateType> templateTypeObjectProperty = new SimpleObjectProperty<>();
 
 
-
     public Ctrl_SearchTemplate_Edit(DM_SearchTemplate dm_searchTemplate) {
         this.dm_searchTemplate = dm_searchTemplate;
     }
@@ -99,8 +98,6 @@ public class Ctrl_SearchTemplate_Edit
         }
 
     }
-
-
 
 
     @Override

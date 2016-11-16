@@ -17,28 +17,29 @@ import java.util.List;
 public class ExportProject_Utl {
     /**
      * Получает описание проекта
+     *
      * @param project - проект
      * @return описание проекта
      */
 
     public static String getProjectInfo(Project project) {
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
-                    .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
-                    .create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
+                .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
+                .create();
 
-            return gson.toJson(project);
+        return gson.toJson(project);
 
-        }
+    }
 
     public static Project getProjectFromInfo(String projectInfo) {
 
-    Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
-            .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
-            .create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(SearchTemplate_POJO.class, new SearchTemplate_VKJ_Serialiser())
+                .registerTypeAdapter(Project.class, new Project_VKJ_Serialiser())
+                .create();
         return gson.fromJson(projectInfo, Project.class);
     }
 

@@ -52,7 +52,7 @@ public class App {
 //                "трансформирует"));
 
         bookParse.loadBook(inputFile);
-        bookParse.processBook(illustrations," ", outputFile);
+        bookParse.processBook(illustrations, " ", outputFile);
     }
 
     private void shutdown() {

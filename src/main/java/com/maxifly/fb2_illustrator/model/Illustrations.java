@@ -28,7 +28,6 @@ public class Illustrations {
     private int lastChainIllustration = -1;
 
 
-
     public List<Illustration> getAllIllustrations() {
         return this.allIllustrations;
     }
@@ -54,9 +53,9 @@ public class Illustrations {
         }
 
         if (illSet.add(illustration)) {
-            log.info("Chine illustration {} with paragraf (index: {}).",illustration, paragraf.getIndexInParagrafs());
+            log.info("Chine illustration {} with paragraf (index: {}).", illustration, paragraf.getIndexInParagrafs());
         } else {
-            log.warn("Illustration {} already chined with paragraf (index: {}).",illustration,paragraf);
+            log.warn("Illustration {} already chined with paragraf (index: {}).", illustration, paragraf);
         }
 
         chineIllustrations.put(illustration, paragraf);
@@ -151,15 +150,15 @@ public class Illustrations {
 
         boolean isUnchinedEndIll = false;
 
-        if ( (endIndex+1) == allIllustrations.size()) {
+        if ((endIndex + 1) == allIllustrations.size()) {
             if (
-            paragrafs.getParagrafNumber(
-                    chineIllustrations.get(allIllustrations.get(endIndex))) == null ) {
+                    paragrafs.getParagrafNumber(
+                            chineIllustrations.get(allIllustrations.get(endIndex))) == null) {
                 isUnchinedEndIll = true;
             }
         }
 
-        if (endIndex > startIndex + 1 || (startIndex == 0 && endIndex == 1) || isUnchinedEndIll ) {
+        if (endIndex > startIndex + 1 || (startIndex == 0 && endIndex == 1) || isUnchinedEndIll) {
             // Есть промежуток из непривязанных иллюстраций или непривязана первая иллюстрация
             // Определим стартовый и конечный номера параграфов
 

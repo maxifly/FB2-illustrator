@@ -51,6 +51,4 @@ public class PrjObj_VKJ_Serialiser implements JsonDeserializer<SimplePrjOpj> {
     }
 
 
-
-
 }

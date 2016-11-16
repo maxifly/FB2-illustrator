@@ -23,19 +23,18 @@ public class vk_tst {
 
     public static void main(String[] params) throws Exception {
         ScopeElement[] scopes = {ScopeElement.photos, ScopeElement.groups, ScopeElement.e_mail};
-        Connect connect = new Connect("5509552",scopes,"maxpant@mail.ru", "kukuku");
+        Connect connect = new Connect("5509552", scopes, "maxpant@mail.ru", "kukuku");
 
         String accessToken = connect.getAccessToken(60000);
 
-        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken,233176977, PhotoSize.photo_2560x2048);
+        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, 233176977, PhotoSize.photo_2560x2048);
         IllFilter illFilter = new IllFilter("123456"); //TODO Это по сути просто тест
         PhotoLoader photoLoader = new PhotoLoader(Files.createTempDirectory("fbill_"));
 
 
-
-        while(photoProcessor.hasNext()) {
+        while (photoProcessor.hasNext()) {
             DATA_photo data_photo = photoProcessor.next();
-            System.out.println(data_photo.text +"\n"+data_photo.url);
+            System.out.println(data_photo.text + "\n" + data_photo.url);
             illFilter.add(data_photo);
         }
 
@@ -48,7 +47,7 @@ public class vk_tst {
 
         List<Illustration_VK> illustrationList = illFilter.getIllustrations();
 
-        Collections.sort(illustrationList,new InternetIllComparator());
+        Collections.sort(illustrationList, new InternetIllComparator());
 
         Illustrations illustrations = new Illustrations();
 
@@ -57,13 +56,11 @@ public class vk_tst {
         }
 
 
-
         Path inputFile = (FileSystems.getDefault().getPath("priv_fales", "test2.fb2"));
         Path outputFile = (FileSystems.getDefault().getPath("priv_fales", "test_out2.fb2"));
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.loadBook(inputFile);
-        bookParse.processBook(illustrations," ",outputFile);
-
+        bookParse.processBook(illustrations, " ", outputFile);
 
 
     }

@@ -5,8 +5,11 @@ package com.maxifly.vapi.model.DATA;
  */
 public interface PrjObj {
     Long getPhoto_id();
+
     void setPhoto_id(Long photo_id);
+
     void setOwnerId(int ownerId);
-    int  getOwnerId();
+
+    int getOwnerId();
 
 }

@@ -11,12 +11,14 @@ public interface BookProcessor {
 
     /**
      * Загружает файл
+     *
      * @param inputFile - ссылка на исходный файл
      */
-    public void loadBook(Path inputFile)throws Exception;
+    public void loadBook(Path inputFile) throws Exception;
 
     /**
      * Получить название книги
+     *
      * @return Название книги
      */
     public String getTitle();
@@ -25,14 +27,14 @@ public interface BookProcessor {
      * Обрабатывает файл, вставляя в него иллюстрации
      *
      * @param illustrations - список иллюстраций
-     * @param projectInfo - информация о проекте, добавляемя в конец книги
-     * @param outputFile - ссылка на итоговый файл
+     * @param projectInfo   - информация о проекте, добавляемя в конец книги
+     * @param outputFile    - ссылка на итоговый файл
      * @throws Exception
      */
     public void processBook(
             Illustrations illustrations,
             String projectInfo,
             Path outputFile
-                            ) throws Exception;
+    ) throws Exception;
 
 }

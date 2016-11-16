@@ -29,24 +29,24 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
 
         result.add("id", new JsonPrimitive(project.getId()));
 
-        if(project.getProjectParagraf()!= null) {
+        if (project.getProjectParagraf() != null) {
             result.add("project_paragraf", new JsonPrimitive(project.getProjectParagraf()));
         }
 
 
-        if(project.getBookNameTemplates() != null) {
+        if (project.getBookNameTemplates() != null) {
             JsonElement searchTemplates = jsonSerializationContext.serialize(project.getBookNameTemplates());
             result.add("book_name_templates", searchTemplates);
         }
 
-        if(project.getIllustrations() != null) {
+        if (project.getIllustrations() != null) {
             JsonElement searchTemplates = jsonSerializationContext.serialize(project.getIllustrations());
             result.add("illustrations", searchTemplates);
         }
 
         if (project.getBookName() != null) {
             JsonElement bookName = jsonSerializationContext.serialize(project.getBookName());
-            result.add("book_name",bookName);
+            result.add("book_name", bookName);
         }
 
         return result;
@@ -57,23 +57,23 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
 
-        String id =  jsonObject.get("id").getAsString();
+        String id = jsonObject.get("id").getAsString();
 
         Project project = new Project();
 
         project.setId(id);
 
         JsonElement je = jsonObject.get("project_paragraf");
-        if(je != null && !je.isJsonNull()) {
-          project.setProjectParagraf(je.getAsString());
+        if (je != null && !je.isJsonNull()) {
+            project.setProjectParagraf(je.getAsString());
         }
 
 
-            je = jsonObject.get("book_name_templates");
-        if(je != null && !je.isJsonNull()) {
+        je = jsonObject.get("book_name_templates");
+        if (je != null && !je.isJsonNull()) {
             JsonArray templates = je.getAsJsonArray();
 
-            for(JsonElement jel:templates){
+            for (JsonElement jel : templates) {
                 SearchTemplate_POJO stp = jsonDeserializationContext.deserialize(jel, SearchTemplate_POJO.class);
                 project.addBookNameTempale(stp);
             }
@@ -87,10 +87,10 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
         List<Illustration> illList = new ArrayList<>();
 
         je = jsonObject.get("illustrations");
-        if(je != null && !je.isJsonNull()) {
+        if (je != null && !je.isJsonNull()) {
             JsonArray templates = je.getAsJsonArray();
 
-            for(JsonElement jel:templates){
+            for (JsonElement jel : templates) {
                 Illustration ill = jsonDeserializationContext.deserialize(jel, Illustration.class);
                 illList.add(ill);
             }
@@ -98,7 +98,7 @@ public class Project_J_Serializer implements JsonSerializer<Project>, JsonDeseri
 
         Collections.sort(illList);
 
-        for (Illustration ill:illList) {
+        for (Illustration ill : illList) {
             project.addIll(ill);
         }
 

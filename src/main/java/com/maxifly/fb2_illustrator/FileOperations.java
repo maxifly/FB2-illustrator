@@ -35,7 +35,7 @@ public class FileOperations {
 
     }
 
-    public static String stripExtension (String str) {
+    public static String stripExtension(String str) {
         // Handle null case specially.
 
         if (str == null) return null;

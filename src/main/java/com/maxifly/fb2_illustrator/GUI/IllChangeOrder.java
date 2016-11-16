@@ -15,6 +15,7 @@ public class IllChangeOrder {
     public Integer getMoveIllNum() {
         return moveIllNum;
     }
+
     public Integer getBeforeIllNum() {
         return beforeIllNum;
     }

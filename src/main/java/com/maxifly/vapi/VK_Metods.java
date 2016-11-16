@@ -24,7 +24,6 @@ public class VK_Metods {
     private static final LocLogger log = llFactory_uk.getLocLogger(VK_Metods.class.getName());
 
 
-
     private String accessToken;
     private RestSender restSender = new RestSender();
     Gson g = new GsonBuilder()
@@ -46,7 +45,7 @@ public class VK_Metods {
         }
 
         if (restResponse.getResponseCode() != 200) {
-            throw new MyException("Error when create album. restCode: "+ restResponse.getResponseCode());
+            throw new MyException("Error when create album. restCode: " + restResponse.getResponseCode());
         }
 
         REST_Result_createAlbum rest_result_createAlbum =

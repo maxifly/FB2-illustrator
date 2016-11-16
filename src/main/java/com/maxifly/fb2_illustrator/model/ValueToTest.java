@@ -5,5 +5,6 @@ package com.maxifly.fb2_illustrator.model;
  */
 public interface ValueToTest {
     String getNormalize();
+
     String getOriginal();
 }

@@ -57,7 +57,6 @@ public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
     Label ill_number;
 
 
-
     @FXML
     protected void kuku(ActionEvent actionEvent) {
         System.out.println("W " + gridpane.widthProperty().getValue());
@@ -69,7 +68,6 @@ public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
     private Map<SearchTemplate_POJO, GUI_Obj> searchTemplates_GUIs = new HashMap<>();
 
     private String defaultPicture = Factory_GUI.class.getResource("no_image.png").toString();
-
 
 
     private DM_Ill dm_ill;
@@ -87,7 +85,7 @@ public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
     @FXML
     private void btn_add(ActionEvent actionEvent) throws IOException {
         SearchTemplate_POJO stp = super.addTemplate();
-         if (stp.getTemplate() != null) {
+        if (stp.getTemplate() != null) {
             dm_ill.addSearchTemplate(stp);
         }
     }
@@ -140,7 +138,7 @@ public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
 //        }
 //    }
 
-    private void picture_string_change(ObservableValue<? extends String> observable, String oldValue, String newValue){
+    private void picture_string_change(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         Path newPath = FileSystems.getDefault().getPath(newValue);
         dm_ill.setFile(newPath);
         showImage(newPath);
@@ -168,7 +166,7 @@ public class Ctrl_Ill extends Ctrl_WithTemplates implements Initializable {
 
     private void showImage(Path file_path) {
         Image image = null;
-         if ( file_path!= null && (file_path.toFile().exists())) {
+        if (file_path != null && (file_path.toFile().exists())) {
             image = new Image(file_path.toFile().toURI().toString());
         } else {
             image = new Image(defaultPicture);

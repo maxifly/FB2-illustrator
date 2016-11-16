@@ -74,14 +74,14 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     }
 
     @FXML
-    protected void drag_detected(MouseEvent mouseEvent){
+    protected void drag_detected(MouseEvent mouseEvent) {
         log.debug("Start drag and drop " + ill_number.getText());
-        Dragboard db = ((Node)mouseEvent.getSource()).startDragAndDrop(TransferMode.MOVE);
+        Dragboard db = ((Node) mouseEvent.getSource()).startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
-        
+
         Image drop_image = createImage(picture_path.getValue(), 70, 70);
 
-        content.putString(Constants.drag_string+ ill_number.getText());
+        content.putString(Constants.drag_string + ill_number.getText());
         db.setContent(content);
         db.setDragView(drop_image);
 
@@ -90,32 +90,33 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     @FXML
     protected void drag_over(DragEvent dragEvent) {
-        if ( dragSuitable(dragEvent)
+        if (dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource()
                 ) {
 
-            if (Integer.valueOf(ill_number.getText()) != (Integer.valueOf(getDraggedIllId(dragEvent)+1) )) {
+            if (Integer.valueOf(ill_number.getText()) != (Integer.valueOf(getDraggedIllId(dragEvent) + 1))) {
 
                 // Определим, в верхней или нижней части находимся
                 double mouseY = dragEvent.getY();
                 double nodeHeight = 90;//((VBox)dragEvent.getSource()).getHeight();
 
 //                log.debug("mouseY: " + mouseY + " nodeHeight: " + nodeHeight);
-                if(mouseY < ((nodeHeight)/2)) {
+                if (mouseY < ((nodeHeight) / 2)) {
                     if (!line_before.isVisible()) line_before.setVisible(true);
-                    if(line_after.isVisible()) line_after.setVisible(false);
+                    if (line_after.isVisible()) line_after.setVisible(false);
                 } else {
                     if (line_before.isVisible()) line_before.setVisible(false);
-                    if(!line_after.isVisible()) line_after.setVisible(true);
+                    if (!line_after.isVisible()) line_after.setVisible(true);
                 }
 
-                dragEvent.acceptTransferModes(TransferMode.MOVE);}
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
         }
         dragEvent.consume();
     }
 
     @FXML
-    protected void drag_entered(DragEvent dragEvent ) {
+    protected void drag_entered(DragEvent dragEvent) {
         if (dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource()) {
             // Обозначим иконку над которой находится мышка
@@ -128,25 +129,25 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
     }
 
     @FXML
-    protected void drag_exited(DragEvent dragEvent ) {
+    protected void drag_exited(DragEvent dragEvent) {
         if (dragSuitable(dragEvent)
                 && dragEvent.getGestureSource() != dragEvent.getSource()) {
 //            ((Node)dragEvent.getSource()).setEffect(null);
             picture.setEffect(null);
             if (line_before.isVisible()) line_before.setVisible(false);
-            if(line_after.isVisible()) line_after.setVisible(false);
+            if (line_after.isVisible()) line_after.setVisible(false);
         }
         dragEvent.consume();
     }
 
     @FXML
-    protected void drag_dropped(DragEvent dragEvent)  {
+    protected void drag_dropped(DragEvent dragEvent) {
         boolean success = false;
-        if(dragSuitable(dragEvent)
-                && dragEvent.getGestureSource() != dragEvent.getSource() ) {
-          // В клипбоард вставим информацию о том, какой объект и куда переместился
-            Integer before = (line_before.isVisible())? Integer.valueOf(ill_number.getText()):
-                    ((Integer)(Integer.valueOf(ill_number.getText())+1));
+        if (dragSuitable(dragEvent)
+                && dragEvent.getGestureSource() != dragEvent.getSource()) {
+            // В клипбоард вставим информацию о том, какой объект и куда переместился
+            Integer before = (line_before.isVisible()) ? Integer.valueOf(ill_number.getText()) :
+                    ((Integer) (Integer.valueOf(ill_number.getText()) + 1));
 
             IllChangeOrder illChangeOrder = new IllChangeOrder(getDraggedIllId(dragEvent), before);
             ClipboardContent content = new ClipboardContent();
@@ -154,12 +155,12 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
                     .setPrettyPrinting()
                     .create();
             String json = gson.toJson(illChangeOrder);
-            content.putString(Constants.drag_string+json);
+            content.putString(Constants.drag_string + json);
             dragEvent.getDragboard().setContent(content);
             success = true;
         }
         if (line_before.isVisible()) line_before.setVisible(false);
-        if(line_after.isVisible()) line_after.setVisible(false);
+        if (line_after.isVisible()) line_after.setVisible(false);
         dragEvent.setDropCompleted(success);
 
         // Теперь будет вызвано такое же событие у родительского объекта, который отвечает за проект.
@@ -169,6 +170,7 @@ public class Ctrl_IllIco extends Ctrl_Abstract implements Initializable {
 
     /**
      * Определяет подходит ли объект для драг анд дропа или нет
+     *
      * @param dragEvent
      * @return
      */

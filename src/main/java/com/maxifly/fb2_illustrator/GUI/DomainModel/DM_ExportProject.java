@@ -11,13 +11,13 @@ import java.io.IOException;
  * Created by Maximus on 08.10.2016.
  */
 public class DM_ExportProject extends DM_Abstract {
-    private  DM_StatusBar statusBar;
+    private DM_StatusBar statusBar;
 
     public DM_ExportProject(DM_StatusBar statusBar) {
         this.statusBar = statusBar;
     }
 
-    public long  export(String albumAddr) throws MyException {
+    public long export(String albumAddr) throws MyException {
         if (statusBar.dmProject_Property().getValue() == null) {
             throw new MyException("Нет открытого проекта");
         }
@@ -32,11 +32,11 @@ public class DM_ExportProject extends DM_Abstract {
                 albumId = UrlCreator.getAlbumId(albumAddr);
             }
 
-        ProjectProcessor projectProcessor = new ProjectProcessor(statusBar.getToken(), albumId);
-        projectProcessor.uploadProject(statusBar.dmProject_Property().getValue().getProject());
+            ProjectProcessor projectProcessor = new ProjectProcessor(statusBar.getToken(), albumId);
+            projectProcessor.uploadProject(statusBar.dmProject_Property().getValue().getProject());
             return albumId;
-    } catch (IOException e) {
-            throw new MyException("Неожиданная ошибка при экспорте проекта",e);
+        } catch (IOException e) {
+            throw new MyException("Неожиданная ошибка при экспорте проекта", e);
         }
     }
 

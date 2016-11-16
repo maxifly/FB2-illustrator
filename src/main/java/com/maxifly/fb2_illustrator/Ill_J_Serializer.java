@@ -40,7 +40,7 @@ public class Ill_J_Serializer implements JsonSerializer<Illustration>, JsonDeser
             result.add("file", file);
         }
 
-        if(illustration.getSearchTemplates() != null) {
+        if (illustration.getSearchTemplates() != null) {
             JsonElement searchTemplates = jsonSerializationContext.serialize(illustration.getSearchTemplates());
             result.add("templates", searchTemplates);
         }
@@ -53,7 +53,7 @@ public class Ill_J_Serializer implements JsonSerializer<Illustration>, JsonDeser
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String desc = null;
-        Integer id =  jsonObject.get("id").getAsInt();
+        Integer id = jsonObject.get("id").getAsInt();
 
         JsonElement je = jsonObject.get("description");
         if (je != null && !je.isJsonNull()) {
@@ -67,10 +67,10 @@ public class Ill_J_Serializer implements JsonSerializer<Illustration>, JsonDeser
         }
 
         je = jsonObject.get("templates");
-        if(je != null && !je.isJsonNull()) {
+        if (je != null && !je.isJsonNull()) {
             JsonArray templates = je.getAsJsonArray();
 
-            for(JsonElement jel:templates){
+            for (JsonElement jel : templates) {
                 SearchTemplate_POJO stp = jsonDeserializationContext.deserialize(jel, SearchTemplate_POJO.class);
                 ill.addSearchTempale(stp);
             }

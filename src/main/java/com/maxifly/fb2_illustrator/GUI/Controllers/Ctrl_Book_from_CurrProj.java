@@ -34,6 +34,7 @@ public class Ctrl_Book_from_CurrProj
                 "".equals(book_src_file.getText().trim()) ||
                 projectObjectProperty.getValue() == null);
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);

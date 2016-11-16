@@ -38,6 +38,7 @@ public class DM_Project extends DM_Abstract {
     public void addIll(Illustration ill) {
         project.addIll(ill);
     }
+
     public DM_Project(Project project) {
         this.project = project;
         this.illustrations.setValue(FXCollections.observableList(project.getIllustrations()));
@@ -55,11 +56,13 @@ public class DM_Project extends DM_Abstract {
     }
 
     public ListProperty<Illustration> illustrations_Property() {
-       return illustrations;
+        return illustrations;
     }
+
     public BooleanProperty getChangeProject_Property() {
         return this.changeProjectProperty;
     }
+
     public StringProperty projectParagraf_Property() {
         return projectParagrafProperty;
     }
@@ -71,7 +74,7 @@ public class DM_Project extends DM_Abstract {
 
     public void moveIll(Integer movedIllId, Integer beforeIllId) throws MyException {
         log.debug("Move ill " + movedIllId + " set it before ill " + beforeIllId);
-        project.moveIll(movedIllId,beforeIllId);
+        project.moveIll(movedIllId, beforeIllId);
         changeProjectProperty.setValue(true);
     }
 
@@ -81,7 +84,7 @@ public class DM_Project extends DM_Abstract {
         changeProjectProperty.setValue(true);
     }
 
-    public ObjectProperty<File> projectFile_Property(){
+    public ObjectProperty<File> projectFile_Property() {
         return project.projectFile_Property();
     }
 

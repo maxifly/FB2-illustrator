@@ -50,7 +50,7 @@ public class DM_Login {
                     String eMail = UrlCreator.getEmail(newValue);
 
                     log.debug("TOKEN: {} Email: {}", token, eMail);
-                    factory_gui.getDm_statusBar().setLogin(eMail,token);
+                    factory_gui.getDm_statusBar().setLogin(eMail, token);
                 }
 
             }
@@ -59,6 +59,7 @@ public class DM_Login {
 
     /**
      * Осущетвляет коннект к ВК
+     *
      * @return токен
      */
     public String connect() throws InterruptedException {
@@ -69,7 +70,6 @@ public class DM_Login {
         log.debug("sUrl: {}", sUrl);
 
         webEngine.load(sUrl);
-
 
 
         return null;

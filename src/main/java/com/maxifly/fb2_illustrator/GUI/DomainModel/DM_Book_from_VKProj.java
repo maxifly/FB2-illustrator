@@ -2,7 +2,6 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
-import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.vapi.OwnerProjects;
 import com.maxifly.vapi.ProjectProcessor;
@@ -17,7 +16,6 @@ import javafx.concurrent.Task;
 
 import javax.xml.bind.JAXBException;
 import java.nio.file.Files;
-import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,14 +28,14 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     private HashMap<Integer, OwnerProjects> owners = new HashMap<>();
     private ObservableList<OwnerAlbumProject> suitableProjects = FXCollections.observableArrayList();
     private ObjectProperty<OwnerAlbumProject> selectedProject = new SimpleObjectProperty();
-    private DM_I_Progress progress;
+    private I_Progress progress;
     private Task task;
 
     public ObservableList<OwnerAlbumProject> getSuitableProjects() {
         return suitableProjects;
     }
 
-    public List<OwnerAlbumProject> refresh(String addrType, String srcAddr, DM_I_Progress progress, Task task) throws MyException {
+    public List<OwnerAlbumProject> refresh(String addrType, String srcAddr, I_Progress progress, Task task) throws MyException {
         int ownerId = 0;
         Long albumId = null;
         this.progress = progress;
@@ -92,7 +90,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
                 }
 
             }
-        } catch(TaskInterruptedRuntime e) {
+        } catch (TaskInterruptedRuntime e) {
             log.error("Exception TaskInterruptedRuntime ", e);
             task.cancel();
             result = new ArrayList<>();

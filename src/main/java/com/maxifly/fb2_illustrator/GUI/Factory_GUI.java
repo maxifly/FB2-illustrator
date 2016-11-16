@@ -48,8 +48,8 @@ public class Factory_GUI {
     private Ctrl_StatusBar ctrl_statusBar;
 
 
-    public Scene getMainScene(){
-      return this.mainScene;
+    public Scene getMainScene() {
+        return this.mainScene;
     }
 
     public Scene createMainScene() throws IOException, MyException {
@@ -115,7 +115,7 @@ public class Factory_GUI {
 
     public GUI_Obj createSearchTemplate()
             throws IOException {
-        SearchTemplate_POJO searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr,null,null);
+        SearchTemplate_POJO searchTemplate_pojo = new SearchTemplate_POJO(TemplateType.substr, null, null);
         return createSearchTemplate(searchTemplate_pojo);
 
     }
@@ -135,7 +135,7 @@ public class Factory_GUI {
             }
         });
         Pane pane = loader.load();
-        return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
+        return new GUI_Obj(pane, loader.getController(), dm_searchTemplate);
     }
 
     public GUI_Obj createSearchTemplate(SearchTemplate_POJO searchTemplate_pojo)
@@ -166,7 +166,7 @@ public class Factory_GUI {
             }
         });
         Pane pane = loader.load();
-        return new GUI_Obj(pane,loader.getController(),dm_searchTemplate);
+        return new GUI_Obj(pane, loader.getController(), dm_searchTemplate);
     }
 
 
@@ -174,6 +174,7 @@ public class Factory_GUI {
             throws IOException {
         return innerCreateSearchTemplate_Edit("FormSearchTemplate_Edit.fxml", searchTemplate_pojo);
     }
+
     public GUI_Obj createSearchTemplate_Edit_Sht(SearchTemplate_POJO searchTemplate_pojo)
             throws IOException {
         return innerCreateSearchTemplate_Edit("FormSearchTemplate_Edit_Sht.fxml", searchTemplate_pojo);
@@ -192,7 +193,7 @@ public class Factory_GUI {
             }
         });
         Node node = loader.load();
-        return new GUI_Obj(node,loader.getController(),dm_project);
+        return new GUI_Obj(node, loader.getController(), dm_project);
 
     }
 
@@ -211,7 +212,7 @@ public class Factory_GUI {
             }
         });
         Node node = loader.load();
-        return new GUI_Obj(node,loader.getController(),dm_ill);
+        return new GUI_Obj(node, loader.getController(), dm_ill);
 
     }
 
@@ -273,13 +274,14 @@ public class Factory_GUI {
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                return new Ctrl_ImportVKProject(factory_gui,dm_importVKProject);
+                return new Ctrl_ImportVKProject(factory_gui, dm_importVKProject);
             }
         });
         Node node = loader.load();
 
         return new GUI_Obj(node, loader.getController(), dm_importVKProject);
     }
+
     public GUI_Obj createProject(Project project)
             throws IOException {
         Factory_GUI factory_gui = this;
@@ -310,7 +312,6 @@ public class Factory_GUI {
         DM_Book_from_VKProj dm_book_from_proj = new DM_Book_from_VKProj(this);
 
 
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("FormBook_from_VKProject.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -329,11 +330,10 @@ public class Factory_GUI {
         return new GUI_Obj(node, ctrl_book_from_VK_proj, dm_book_from_proj);
     }
 
-   public GUI_Obj createBookFromCurProj()
+    public GUI_Obj createBookFromCurProj()
             throws IOException, JAXBException {
         Factory_GUI factory_gui = this;
         DM_Book_from_CurrProj dm_book_from_proj = new DM_Book_from_CurrProj(this);
-
 
 
         FXMLLoader loader = new FXMLLoader();
@@ -355,7 +355,7 @@ public class Factory_GUI {
     }
 
 
-   public GUI_Obj createProgressWindow()
+    public GUI_Obj createProgressWindow()
             throws IOException {
         Factory_GUI factory_gui = this;
         DM_ProgressWindow dm_progressWindow = new DM_ProgressWindow();
@@ -365,7 +365,7 @@ public class Factory_GUI {
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-                return new Ctrl_ProgressWindow(factory_gui,dm_progressWindow);
+                return new Ctrl_ProgressWindow(factory_gui, dm_progressWindow);
             }
         });
         Node node = loader.load();
@@ -424,7 +424,7 @@ public class Factory_GUI {
         stage.setTitle("My modal window");
         stage.initModality(Modality.WINDOW_MODAL);
 
-        stage.initOwner(this.getMainScene().getWindow() );
+        stage.initOwner(this.getMainScene().getWindow());
 
         return stage;
 
@@ -443,12 +443,12 @@ public class Factory_GUI {
 //            }
 //        });
         Parent root = new BorderPane();
-        ((BorderPane)root).setCenter(node);
+        ((BorderPane) root).setCenter(node);
         stage.setScene(new Scene(root));
         stage.setTitle("My modal window");
         stage.initModality(Modality.WINDOW_MODAL);
 
-        stage.initOwner(this.getMainScene().getWindow() );
+        stage.initOwner(this.getMainScene().getWindow());
 
         return stage;
 
@@ -461,13 +461,13 @@ public class Factory_GUI {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("MainMenu.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
-                                        @Override
-                                        public Object call(Class<?> aClass) {
-                                            return new Ctrl_MainMenu(dm_mainMenu, factory_gui);
-                                        }
-                                    });
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_MainMenu(dm_mainMenu, factory_gui);
+            }
+        });
         MenuBar menu = loader.load();
-        return  menu;
+        return menu;
 
 
     }

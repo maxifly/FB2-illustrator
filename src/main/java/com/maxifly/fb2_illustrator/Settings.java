@@ -14,10 +14,11 @@ import java.io.IOException;
 public class Settings {
     private Double winSize_W = 800D;
     private Double winSize_H = 600D;
-    private String  projectsDir;
+    private String projectsDir;
 
     /**
      * Создает новый объект с установками
+     *
      * @return
      * @throws MyException
      * @throws IOException
@@ -30,15 +31,15 @@ public class Settings {
     }
 
     public static Settings readSettings(File appDataDir) throws IOException {
-        File settingFile = new File(appDataDir,"fb2_ill.cfg");
+        File settingFile = new File(appDataDir, "fb2_ill.cfg");
 
-            if (settingFile.exists()) {
-                String string_settings =  FileOperations.readAll(settingFile);
+        if (settingFile.exists()) {
+            String string_settings = FileOperations.readAll(settingFile);
 
-                Gson gson = new GsonBuilder()
-                        .setPrettyPrinting()
-                        .create();
-                return gson.fromJson(string_settings, Settings.class);
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
+            return gson.fromJson(string_settings, Settings.class);
 
         } else {
             return null;
@@ -47,7 +48,7 @@ public class Settings {
     }
 
     public void writeSettings(File appDataDir) throws IOException {
-        File settingFile = new File(appDataDir,"fb2_ill.cfg");
+        File settingFile = new File(appDataDir, "fb2_ill.cfg");
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()

@@ -1,12 +1,11 @@
 package com.maxifly.fb2_illustrator;
 
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-public class GetProperties{
+public class GetProperties {
     String login;
     String pass;
     String url;
@@ -15,7 +14,7 @@ public class GetProperties{
     private static String sDirSeparator = System.getProperty("file.separator");
     public static final String sDefaultPath = sDirSeparator + "src" + sDirSeparator + "main" + sDirSeparator + "resources";
 
-    public void ReadConfig(){
+    public void ReadConfig() {
        /*
         String user;
         String pass;
@@ -27,7 +26,7 @@ public class GetProperties{
         // определяем текущий каталог
         File currentDir = new File(".");
 
-        try{
+        try {
             // определяем полный путь к файлу
             String sFilePath = currentDir.getCanonicalPath() + sDirSeparator + sDefaultPath + sDirSeparator + sFileName;
 
@@ -44,7 +43,7 @@ public class GetProperties{
             System.out.println("dbname = " + dbname);
 */
             //file.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

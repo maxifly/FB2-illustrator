@@ -51,13 +51,14 @@ public class PrjObjFilter {
     /**
      * Проверяет, что фотография является объектом проекта, неважно какого типа
      * и добавляет ее к общему списку
+     *
      * @param photo
      */
 
     public void add(DATA_photo photo) {
         SimplePrjOpj prjObj = null;
         try {
-            prjObj = gson_prjobj.fromJson(photo.text,SimplePrjOpj.class);
+            prjObj = gson_prjobj.fromJson(photo.text, SimplePrjOpj.class);
         } catch (JsonSyntaxException e) {
             log.warn("Can not parse photo description {}", e);
             return;
@@ -72,10 +73,9 @@ public class PrjObjFilter {
     }
 
 
-
-
     /**
      * Получить список накопленных объектов
+     *
      * @return список иллюстраций
      */
     public List<PrjObj> getProject_objects() {

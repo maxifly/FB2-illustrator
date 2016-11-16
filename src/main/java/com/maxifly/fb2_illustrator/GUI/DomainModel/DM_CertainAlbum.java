@@ -48,12 +48,15 @@ public class DM_CertainAlbum {
     public StringProperty book_name_Propery() {
         return book_name;
     }
+
     public StringProperty album_addr_Propery() {
         return album_addr;
     }
+
     public StringProperty book_src_file_Propery() {
         return book_src_file;
     }
+
     public StringProperty book_dst_file_Propery() {
         return book_dst_file;
     }
@@ -74,7 +77,7 @@ public class DM_CertainAlbum {
 
         File src_file = inputFile.toFile();
         if (!(src_file.exists() && src_file.isFile())) {
-           throw new GUI_Exception("Исходный файл \n" + src_file.toString() + "\n не найден.");
+            throw new GUI_Exception("Исходный файл \n" + src_file.toString() + "\n не найден.");
         }
 
 
@@ -82,7 +85,7 @@ public class DM_CertainAlbum {
         long albumId = UrlCreator.getAlbumId(album_addr.getValue());
 
         // Загрузим проект
-        ProjectProcessor projectProcessor = new ProjectProcessor(accessToken,albumId);
+        ProjectProcessor projectProcessor = new ProjectProcessor(accessToken, albumId);
         Project_VK project_vk = projectProcessor.importProject("123456789"); //TODO надо как-то пойти от проверки идентификатора проекта
         projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk);
 
@@ -97,7 +100,7 @@ public class DM_CertainAlbum {
         // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.loadBook(inputFile);
-        bookParse.processBook(illustrations,project_vk.getProjectParagraf(), outputFile);
+        bookParse.processBook(illustrations, project_vk.getProjectParagraf(), outputFile);
 
         System.out.println("getProjectParagraf: " + project_vk.getProjectParagraf());
 

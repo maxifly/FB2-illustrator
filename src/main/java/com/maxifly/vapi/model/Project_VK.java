@@ -7,7 +7,7 @@ import com.maxifly.vapi.model.DATA.PrjObj;
  * Created by Maximus on 01.10.2016.
  */
 public class Project_VK extends Project
-implements PrjObj{
+        implements PrjObj {
     private long photo_id;
     private int ownerId;
     private int illCount;

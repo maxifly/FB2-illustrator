@@ -20,30 +20,30 @@ public class SearchTemplate_VKJ_Serialiser implements JsonSerializer<SearchTempl
         String desc = null;
 
         JsonElement je = jsonObject.get("re");
-        if(je != null && !je.isJsonNull()) {
+        if (je != null && !je.isJsonNull()) {
             templateType = TemplateType.regexp;
             template = je.getAsString();
         }
 
         je = jsonObject.get("s");
-        if(je != null && !je.isJsonNull()) {
+        if (je != null && !je.isJsonNull()) {
             templateType = TemplateType.substr;
             template = je.getAsString();
         }
 
         je = jsonObject.get("d");
-        if(je != null && !je.isJsonNull()) {
+        if (je != null && !je.isJsonNull()) {
             desc = je.getAsString();
         }
 
-       return new SearchTemplate_POJO(templateType,template,desc);
+        return new SearchTemplate_POJO(templateType, template, desc);
     }
 
     @Override
     public JsonElement serialize(SearchTemplate_POJO searchTemplate_pojo, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject result = new JsonObject();
 
-        switch (searchTemplate_pojo.getTemplateType()){
+        switch (searchTemplate_pojo.getTemplateType()) {
             case regexp:
                 result.add("re", new JsonPrimitive(searchTemplate_pojo.getTemplate()));
                 break;

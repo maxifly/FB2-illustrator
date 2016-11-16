@@ -5,7 +5,7 @@ package com.maxifly.vapi.model.DATA;
  */
 public class DATA_photo {
     public long id;
-//        public int album_id;
+    //        public int album_id;
     public int owner_id;
     public String url;
     public String text;

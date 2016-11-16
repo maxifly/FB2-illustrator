@@ -61,7 +61,7 @@ public class PhotoUploader {
             uploadServer = rest_result_uploadServer.response;
         } catch (InterruptedException e) {
             log.error("Task interrupted", e);
-            throw  new TaskInterrupted("Task interrupted", e);
+            throw new TaskInterrupted("Task interrupted", e);
         }
     }
 

@@ -8,21 +8,21 @@ import java.util.Map;
  */
 public class Paragrafs {
     private Map<Paragraf, Integer> paragrafByNum = new HashMap<>();
-    private Map<Integer,Paragraf> numByParagraf = new HashMap<>();
-    private Map<Object,Paragraf> paragrafByBookElement = new HashMap<>();
+    private Map<Integer, Paragraf> numByParagraf = new HashMap<>();
+    private Map<Object, Paragraf> paragrafByBookElement = new HashMap<>();
 
     private Integer index = 0;
 
     public void addParagraf(Paragraf paragraf) {
-       paragrafByNum.put(paragraf,index);
-       numByParagraf.put(index,paragraf);
-       paragrafByBookElement.put(paragraf.getBookElement(),paragraf);
-       paragraf.setIndexInParagrafs(index);
-       this.index ++;
+        paragrafByNum.put(paragraf, index);
+        numByParagraf.put(index, paragraf);
+        paragrafByBookElement.put(paragraf.getBookElement(), paragraf);
+        paragraf.setIndexInParagrafs(index);
+        this.index++;
     }
 
     public Integer getParagrafNumber(Paragraf paragraf) {
-       return paragrafByNum.get(paragraf);
+        return paragrafByNum.get(paragraf);
     }
 
     public Integer getSize() {

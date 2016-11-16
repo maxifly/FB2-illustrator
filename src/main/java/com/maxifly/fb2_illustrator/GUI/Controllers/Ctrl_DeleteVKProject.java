@@ -52,10 +52,10 @@ public class Ctrl_DeleteVKProject extends Ctrl_Abstract
     protected void btn_del_action(ActionEvent actionEvent) throws Exception {
         long albumId = 0;
 
-            albumId = UrlCreator.getAlbumId(album_addr.getText());
+        albumId = UrlCreator.getAlbumId(album_addr.getText());
 
-            ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), albumId);
-            projectProcessor.deleteProject(prj_code.getText().trim());
+        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), albumId);
+        projectProcessor.deleteProject(prj_code.getText().trim());
 
         Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
         info.setHeaderText(null);

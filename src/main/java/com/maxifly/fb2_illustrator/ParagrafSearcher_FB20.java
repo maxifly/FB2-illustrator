@@ -89,11 +89,11 @@ public class ParagrafSearcher_FB20
 
     private FictionBook.Binary genBinary(Illustration ill) {
         Path path = ill.getFile();
-        log.debug("*** ill path {}",path);
+        log.debug("*** ill path {}", path);
         try {
             byte[] data = Files.readAllBytes(path);
 
-            log.debug("Read file {}. Size: {}",path,data.length);
+            log.debug("Read file {}. Size: {}", path, data.length);
 
             FictionBook.Binary fictionBookBinary = objectFactory.createFictionBookBinary();
             fictionBookBinary.setValue(data);
@@ -209,7 +209,7 @@ public class ParagrafSearcher_FB20
     private void sectionParser(SectionType section) {
 
         for (JAXBElement<?> element : section.getImageOrAnnotationOrSection()) {
-            this.lastParagrafNumber ++;
+            this.lastParagrafNumber++;
             switch (element.getDeclaredType().getSimpleName()) {
                 case "PType":
                     paragrafParser((JAXBElement<PType>) element);
@@ -246,7 +246,7 @@ public class ParagrafSearcher_FB20
         while (illIter.hasNext()) {
             Illustration ill = illIter.next();
 
-            for (ComparedText comparedText:comparedTexts) {
+            for (ComparedText comparedText : comparedTexts) {
                 if (ill.isSuitable(comparedText)) {
                     // Этот параграф подходит
                     illustrations.illustratedParagraf(paragraf, ill);

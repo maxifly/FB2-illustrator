@@ -6,7 +6,7 @@ import com.maxifly.fb2_illustrator.Utils;
  * Created by Maximus on 22.10.2016.
  */
 public class ComparedText
-implements ValueToTest{
+        implements ValueToTest {
     private String original;
     private String normilize;
 

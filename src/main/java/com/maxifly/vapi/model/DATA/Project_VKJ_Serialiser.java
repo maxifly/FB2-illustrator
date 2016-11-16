@@ -69,12 +69,12 @@ public class Project_VKJ_Serialiser implements JsonSerializer<Project>, JsonDese
             }
 
             je = jsonObject.get("prj_book_name");
-            if (je!=null && !je.isJsonNull()) {
+            if (je != null && !je.isJsonNull()) {
                 project.setBookName(je.getAsString());
             }
 
             je = jsonObject.get("ill_cnt");
-            if(je!=null && !je.isJsonNull()) {
+            if (je != null && !je.isJsonNull()) {
                 project.setIllCount(je.getAsInt());
             } else {
                 project.setIllCount(0);

@@ -22,10 +22,9 @@ import java.util.Iterator;
 
 /**
  * Created by Maximus on 02.11.2016.
- *
+ * <p>
  * Позволяет вытащить все описания проектов из альбома
  * и получить итератор.
- *
  */
 public class AlbumProjects implements
         Iterator<Project_VK>, Iterable<Project_VK> {
@@ -66,13 +65,16 @@ public class AlbumProjects implements
 
 
     public void reset() {
-        photoProcessor = new PhotoProcessor(accessToken,albumId, PhotoSize.photo_75x75);
+        photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_75x75);
         getAll = false;
-    };
+    }
+
+    ;
 
     /**
      * Позволяет получить итератор
      * Ограничение реализации - в один момент времени может существовать только один итератор
+     *
      * @return
      */
     @Override
@@ -97,7 +99,7 @@ public class AlbumProjects implements
         } catch (MyException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
-            log.error("InterruptedException:",e);
+            log.error("InterruptedException:", e);
             if (Thread.interrupted()) Thread.currentThread().interrupt();
             throw new TaskInterruptedRuntime(e);
         }
@@ -117,22 +119,20 @@ public class AlbumProjects implements
     }
 
 
-
     @Override
     public Project_VK next() {
         return projects.get(currentIdx++);
     }
 
 
-
     private void filterAlbumItems() throws MyException, InterruptedException {
-        while(photoProcessor.hasNext()) {
+        while (photoProcessor.hasNext()) {
             DATA_photo data_photo = photoProcessor.next();
             try {
 
                 log.debug("*** data_photo.text {}", data_photo.text);
                 Project_VK project_vk = gson.fromJson(data_photo.text, Project_VK.class);
-                log.debug("project_vk {}",project_vk);
+                log.debug("project_vk {}", project_vk);
                 if (project_vk != null) {
                     projects.add(project_vk);
                 }

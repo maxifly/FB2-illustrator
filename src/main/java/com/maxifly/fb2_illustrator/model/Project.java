@@ -83,6 +83,7 @@ public class Project {
 
     /**
      * Убеждается, что есть каталог для файлов проекта
+     *
      * @return
      * @throws IOException
      */
@@ -104,6 +105,7 @@ public class Project {
 
     /**
      * Переносит все иллюстрации в определенный каталог
+     *
      * @param ill_dir Каталог, в который надо перенести иллюстрации
      */
     public void copyIllToDir(File ill_dir) throws MyException {
@@ -111,7 +113,7 @@ public class Project {
 
         for (Illustration ill : this.illustrations) {
             Path ill_path = ill.getFile();
-            if (ill_path != null && !ill_dir_path.equals(ill_path.getParent()) ) {
+            if (ill_path != null && !ill_dir_path.equals(ill_path.getParent())) {
                 Path dest = ill_dir_path.resolve(ill_path.getFileName());
 
                 log.debug("Copy ill from {} to {}", ill_path, dest);

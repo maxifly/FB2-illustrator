@@ -5,7 +5,7 @@ import ch.qos.cal10n.MessageConveyor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.Constants;
-import com.maxifly.fb2_illustrator.GUI.DomainModel.DM_I_Progress;
+import com.maxifly.fb2_illustrator.GUI.DomainModel.I_Progress;
 import com.maxifly.fb2_illustrator.GUI.DomainModel.EmptyProgress;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
@@ -28,24 +28,24 @@ import java.util.List;
  */
 public class OwnerProjects implements
         Iterator<OwnerAlbumProject>,
-Iterable<OwnerAlbumProject>{
+        Iterable<OwnerAlbumProject> {
     private static final IMessageConveyor mc = new MessageConveyor(Constants.getLocaleApp());
     private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
     private static final LocLogger log = llFactory_uk.getLocLogger(OwnerProjects.class.getName());
 
     private String accessToken;
-    private int   ownerId;
+    private int ownerId;
     private RestSender restSender = new RestSender();
 
     private HashMap<Album, AlbumProjects> albums;
     private List<OwnerAlbumProject> projects;
     private Iterator<Album> albumIterator;
 
-    private DM_I_Progress dm_i_progress = new EmptyProgress();
+    private I_Progress dm_i_progress = new EmptyProgress();
 
     private MyException exception = null;
 
-//    private int currentAlbumIdx;
+    //    private int currentAlbumIdx;
     private int currentProjIdx;
     private boolean getAll = false;
 
@@ -53,7 +53,6 @@ Iterable<OwnerAlbumProject>{
     private Gson g = new GsonBuilder()
             .setPrettyPrinting()
             .create();
-
 
 
     public OwnerProjects(String accessToken, int ownerId) {
@@ -82,18 +81,18 @@ Iterable<OwnerAlbumProject>{
 
     }
 
-    public void setDm_i_progress(DM_I_Progress dm_i_progress) {
+    public void setDm_i_progress(I_Progress dm_i_progress) {
         this.dm_i_progress = dm_i_progress;
     }
 
     @Override
-    public boolean hasNext() throws TaskInterruptedRuntime{
+    public boolean hasNext() throws TaskInterruptedRuntime {
         if (currentProjIdx < projects.size()) return true;
 
         if (getAll && currentProjIdx >= projects.size()) return false;
 
-        while (albumIterator.hasNext() && currentProjIdx >= projects.size() ) {
-            dm_i_progress.incrementDone(1,"Всего найдено " + projects.size() +" проектов");
+        while (albumIterator.hasNext() && currentProjIdx >= projects.size()) {
+            dm_i_progress.incrementDone(1, "Всего найдено " + projects.size() + " проектов");
             AlbumProjects albumProjects = albums.get(albumIterator.next());
             addAlbumProjects(albumProjects);
         }
@@ -110,7 +109,6 @@ Iterable<OwnerAlbumProject>{
     }
 
 
-
     @Override
     public Iterator<OwnerAlbumProject> iterator() {
         exception = null;
@@ -124,7 +122,7 @@ Iterable<OwnerAlbumProject>{
             } catch (InterruptedException e) {
                 log.error("Task interrupted.", e);
                 if (Thread.interrupted()) Thread.currentThread().interrupt();
-                throw  new TaskInterruptedRuntime(e);
+                throw new TaskInterruptedRuntime(e);
             }
             getAll = false;
         }
@@ -141,15 +139,15 @@ Iterable<OwnerAlbumProject>{
 
         for (Project_VK project_vk : albumProjects) {
             log.debug("project_vk " + project_vk);
-            projects.add(new OwnerAlbumProject(ownerId,albumId,project_vk));
+            projects.add(new OwnerAlbumProject(ownerId, albumId, project_vk));
         }
     }
 
     private void fillAlbums() throws MyException, InterruptedException {
-        String url = UrlCreator.getAlbums(accessToken,ownerId);
+        String url = UrlCreator.getAlbums(accessToken, ownerId);
         RestResponse restResponse = restSender.sendGet(url);
         if (restResponse.getResponseCode() != 200) {
-            throw new MyException("Error when get album. restCode: "+ restResponse.getResponseCode());
+            throw new MyException("Error when get album. restCode: " + restResponse.getResponseCode());
         }
 
         REST_Result_albums rest_result_albums =
@@ -163,12 +161,14 @@ Iterable<OwnerAlbumProject>{
         // Подберем подходящие альбомы
         for (REST_photoAlbum rest_album : rest_result_albums.response.items) {
             try {
-                Album album = g.fromJson(rest_album.description,Album.class);
-                if (album.fb_ill == 1) albums.put(album, new AlbumProjects(accessToken,rest_album.owner_id,rest_album.id));
+                Album album = g.fromJson(rest_album.description, Album.class);
+                if (album.fb_ill == 1)
+                    albums.put(album, new AlbumProjects(accessToken, rest_album.owner_id, rest_album.id));
             } catch (Exception e) {
-                log.debug("Can not decode album description {}, {}",rest_album.description,e);
+                log.debug("Can not decode album description {}, {}", rest_album.description, e);
             }
-        };
+        }
+        ;
 
     }
 }

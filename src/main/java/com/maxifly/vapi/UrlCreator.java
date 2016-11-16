@@ -134,7 +134,6 @@ public class UrlCreator {
     }
 
 
-
     public static String getUploadServer(String accessToken, long albumId) {
         return "https://api.vk.com/method/photos.getUploadServer?" +
                 "album_id=" + String.valueOf(albumId) +
@@ -153,8 +152,8 @@ public class UrlCreator {
         StringBuilder sb_url = new StringBuilder("https://api.vk.com/method/photos.createAlbum?"
                 + "&access_token=" + accessToken
                 + "&v=" + version
-        + "&title="  + URLEncoder.encode(title, "UTF-8")
-        + "&description=" + URLEncoder.encode(description, "UTF-8")
+                + "&title=" + URLEncoder.encode(title, "UTF-8")
+                + "&description=" + URLEncoder.encode(description, "UTF-8")
         );
 
         if (group_id != null) {
@@ -194,6 +193,7 @@ public class UrlCreator {
 
 
     }
+
     public static int getOwnerId(String albumPath) throws MyException {
         Pattern dg_pattern = Pattern.compile("^\\d+$");
         if (dg_pattern.matcher(albumPath).matches()) {

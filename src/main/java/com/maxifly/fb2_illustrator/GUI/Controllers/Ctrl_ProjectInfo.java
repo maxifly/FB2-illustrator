@@ -51,15 +51,12 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
     TextArea default_book_name;
 
 
-
-
     private ObjectProperty<Path> picture_path = new SimpleObjectProperty<>();
 
 
     private Map<SearchTemplate_POJO, GUI_Obj> searchTemplates_GUIs = new HashMap<>();
 
     private String defaultPicture = Factory_GUI.class.getResource("no_image.png").toString();
-
 
 
     private DM_Project dm_project;
@@ -77,12 +74,10 @@ public class Ctrl_ProjectInfo extends Ctrl_WithTemplates implements Initializabl
     @FXML
     private void btn_add(ActionEvent actionEvent) throws IOException {
         SearchTemplate_POJO stp = super.addTemplate();
-         if (stp.getTemplate() != null) {
-             dm_project.addBookNameTempale(stp);
+        if (stp.getTemplate() != null) {
+            dm_project.addBookNameTempale(stp);
         }
     }
-
-
 
 
 //    private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change){

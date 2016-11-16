@@ -9,7 +9,7 @@ import java.util.List;
 public class ILL_data {
     //TODO Удалить
     public Integer fb_ill;
-    public String  prj;
+    public String prj;
     public Integer num;
     public String dsc;
     public List<ILL_search> srch = new ArrayList();

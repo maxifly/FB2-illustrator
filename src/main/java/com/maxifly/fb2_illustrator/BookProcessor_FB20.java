@@ -21,7 +21,7 @@ public class BookProcessor_FB20 implements BookProcessor {
     private static LocLogger log = (new LocLoggerFactory(mc))
             .getLocLogger(BookProcessor_FB20.class.getName());
 
-    private  FictionBook fictionBook;
+    private FictionBook fictionBook;
     private JAXBContext jc;
 
     public BookProcessor_FB20() throws JAXBException {
@@ -29,7 +29,7 @@ public class BookProcessor_FB20 implements BookProcessor {
     }
 
     @Override
-    public void loadBook(Path inputFile)  throws Exception {
+    public void loadBook(Path inputFile) throws Exception {
         log.debug("Book XML " + inputFile);
 
         // Разберем XML

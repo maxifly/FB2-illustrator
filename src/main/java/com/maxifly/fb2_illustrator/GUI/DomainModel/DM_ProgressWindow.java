@@ -9,8 +9,8 @@ import javafx.concurrent.Task;
 /**
  * Created by Maximus on 12.11.2016.
  */
-public class DM_ProgressWindow extends  DM_Abstract
-implements DM_I_Progress
+public class DM_ProgressWindow extends DM_Abstract
+        implements I_Progress
 
 {
 
@@ -56,14 +56,14 @@ implements DM_I_Progress
 
     @Override
     public void setMaxValue(long max) {
-       this.max = max;
-       setProgress(((double) done)/ ( (double) max));
+        this.max = max;
+        setProgress(((double) done) / ((double) max));
     }
 
     @Override
     public void incrementDone(long increment) {
         done = done + increment;
-        setProgress(((double) done)/ ( (double) max));
+        setProgress(((double) done) / ((double) max));
     }
 
     @Override

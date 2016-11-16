@@ -7,7 +7,7 @@ import com.maxifly.vapi.model.DATA.PrjObj;
  * Created by Maximus on 13.07.2016.
  */
 public class Illustration_VK extends Illustration
-implements PrjObj{
+        implements PrjObj {
     private String url_picture;
     private long photo_id;
     private String project_id;
@@ -17,7 +17,7 @@ implements PrjObj{
                            String url_picture,
                            long photo_id
 
-                                ) {
+    ) {
 
         super(id, def_description);
         this.url_picture = url_picture;
@@ -40,7 +40,7 @@ implements PrjObj{
 
     @Override
     public void setPhoto_id(Long photo_id) {
-       this.photo_id = photo_id;
+        this.photo_id = photo_id;
     }
 
     @Override

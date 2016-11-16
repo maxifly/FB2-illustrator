@@ -9,4 +9,5 @@ public enum PhotoSize {
     photo_604x604,
     photo_807x807,
     photo_1280x1024,
-    photo_2560x2048}
+    photo_2560x2048
+}

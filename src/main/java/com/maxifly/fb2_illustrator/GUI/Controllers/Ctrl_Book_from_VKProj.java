@@ -14,23 +14,15 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
-import javax.swing.*;
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -73,7 +65,7 @@ public class Ctrl_Book_from_VKProj
 
         GUI_Obj gui_obj = factory_gui.createProgressWindow();
 
-        refreshTask.setProgress_monitor((DM_I_Progress) gui_obj.dm_model);
+        refreshTask.setProgress_monitor((I_Progress) gui_obj.dm_model);
         ((DM_ProgressWindow) gui_obj.dm_model).setTask(refreshTask);
 
         Stage monitorWindow = factory_gui.createModalWindow(gui_obj.node);

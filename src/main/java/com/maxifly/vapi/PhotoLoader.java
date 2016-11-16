@@ -30,8 +30,6 @@ public class PhotoLoader {
     Downloader downloader;
 
 
-
-
     public PhotoLoader(Path destDir) {
         this.destDir = destDir;
         downloader = new Downloader();
@@ -50,9 +48,9 @@ public class PhotoLoader {
         for (Illustration_VK illustration : illustrationList) {
             String pictureURL = illustration.getUrl_picture();
             String fileType = UrlCreator.getFileType(pictureURL);
-            File temp = File.createTempFile("ill", "." + fileType,destDir.toFile());
+            File temp = File.createTempFile("ill", "." + fileType, destDir.toFile());
             illustration.setFile(temp.toPath());
-            Download download = new Download(new URL(pictureURL),temp);
+            Download download = new Download(new URL(pictureURL), temp);
             this.downloader.startTask(download);
         }
 
@@ -66,7 +64,7 @@ public class PhotoLoader {
         try {
             downloader.close();
         } catch (Exception e) {
-            log.error("Error when try close downloader {}",e);
+            log.error("Error when try close downloader {}", e);
         }
     }
 

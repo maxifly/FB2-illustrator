@@ -67,6 +67,7 @@ public class IllFilter {
     /**
      * Проверяет, что фотография является иллюстрацией или описанием проекта
      * что она является подходящей иллюстрацией и добавляет ее к общему списку иллюстраций
+     *
      * @param photo
      */
 
@@ -76,7 +77,7 @@ public class IllFilter {
 
         Illustration_VK illustration = null;
         try {
-            illustration = gson_ill.fromJson(photo.text,Illustration_VK.class);
+            illustration = gson_ill.fromJson(photo.text, Illustration_VK.class);
         } catch (JsonSyntaxException e) {
             log.warn("Can not parse photo description {}", e);
             return;
@@ -110,17 +111,16 @@ public class IllFilter {
             try {
 
 
-            project_vk = gson_project.fromJson(photo.text, Project_VK.class);
-            if (project_vk != null) {
-                project_vk.setPhoto_id(photo.id);
+                project_vk = gson_project.fromJson(photo.text, Project_VK.class);
+                if (project_vk != null) {
+                    project_vk.setPhoto_id(photo.id);
 
-                for (Illustration_VK ill : illustrations) {
-                    ill.setProject(project_vk);
+                    for (Illustration_VK ill : illustrations) {
+                        ill.setProject(project_vk);
+                    }
+                    return true;
                 }
-                return true;
-            }
-            }
-            catch (JsonSyntaxException e) {
+            } catch (JsonSyntaxException e) {
                 log.warn("Can not parse photo description {}", e);
             }
         }
@@ -132,6 +132,7 @@ public class IllFilter {
 
     /**
      * Получить список накопленных иллюстраций
+     *
      * @return список иллюстраций
      */
     public List<Illustration_VK> getIllustrations() {
@@ -140,6 +141,7 @@ public class IllFilter {
 
     /**
      * Получить данные о проекте
+     *
      * @return
      */
     public Project_VK getProject_vk() {

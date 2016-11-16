@@ -12,8 +12,8 @@ import java.util.ResourceBundle;
 /**
  * Created by Maximus on 29.08.2016.
  */
-public class Ctrl_Root implements Initializable{
- @FXML
+public class Ctrl_Root implements Initializable {
+    @FXML
     BorderPane root;
 
 //    public void setListeners() {
@@ -27,9 +27,6 @@ public class Ctrl_Root implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
-
 
 
     }

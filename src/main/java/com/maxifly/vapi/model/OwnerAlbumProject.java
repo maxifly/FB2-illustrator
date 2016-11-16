@@ -16,6 +16,6 @@ public class OwnerAlbumProject {
 
     @Override
     public String toString() {
-        return "(" + project_vk.getIllCount() +") " + project_vk.getBookName();
+        return "(" + project_vk.getIllCount() + ") " + project_vk.getBookName();
     }
 }

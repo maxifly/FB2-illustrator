@@ -33,21 +33,19 @@ public class Fb2App extends Application {
         try {
 
 
-        Factory_GUI factory_gui = new Factory_GUI();
-        MyShutdownHook myShutdownHook = new MyShutdownHook(factory_gui);
-        Runtime.getRuntime().addShutdownHook(myShutdownHook);
-        Scene mainScene = factory_gui.createMainScene();
+            Factory_GUI factory_gui = new Factory_GUI();
+            MyShutdownHook myShutdownHook = new MyShutdownHook(factory_gui);
+            Runtime.getRuntime().addShutdownHook(myShutdownHook);
+            Scene mainScene = factory_gui.createMainScene();
 
-        primaryStage.setTitle("FB2 Illustrator");
-        primaryStage.setScene(mainScene);
-
-
-        primaryStage.show();
+            primaryStage.setTitle("FB2 Illustrator");
+            primaryStage.setScene(mainScene);
 
 
+            primaryStage.show();
 
-        }
-        catch (Exception e) {
+
+        } catch (Exception e) {
             System.out.println("Exception " + e.getMessage());
         }
     }

@@ -100,7 +100,7 @@ public class SearchTemplate_POJO {
 
     private boolean checkSimpleAsSubstr(String str) {
         genNormaliseTemplate();
-        return str!=null&& !"".equals(normaliseTemplate) && (normaliseTemplate.contains(str));
+        return str != null && !"".equals(normaliseTemplate) && (normaliseTemplate.contains(str));
     }
 
     private boolean checkSimple(String str) {

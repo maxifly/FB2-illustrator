@@ -65,7 +65,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
 
 
     protected SearchTemplate_POJO addTemplate() throws IOException {
-        SearchTemplate_POJO stp = new SearchTemplate_POJO(TemplateType.substr,null,null);
+        SearchTemplate_POJO stp = new SearchTemplate_POJO(TemplateType.substr, null, null);
         GUI_Obj gui_obj = createSearchTemplate_Edit(stp);
         Stage stage = factory_gui.createModalWindow(gui_obj.node);
         stage.showAndWait();
@@ -77,21 +77,19 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
     }
 
 
-
-
-    private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change){
+    private void needDeleted(ListChangeListener.Change<? extends SearchTemplate_POJO> change) {
         while (change.next()) {
             if (change.wasAdded()) {
                 // Надо удалить запись с шаблоном
-               for (SearchTemplate_POJO stp : change.getAddedSubList()) {
-                   System.out.println("delete stp " + stp);
-                   Node node = searchTemplates_GUIs.get(stp).node;
-                   System.out.println("node " + node);
-                   templates.getChildren().remove(node);
-                   searchTemplates.getValue().remove(stp);
-                   searchTemplates_GUIs.remove(stp);
-                   needDeleteList.remove(stp);
-               }
+                for (SearchTemplate_POJO stp : change.getAddedSubList()) {
+                    System.out.println("delete stp " + stp);
+                    Node node = searchTemplates_GUIs.get(stp).node;
+                    System.out.println("node " + node);
+                    templates.getChildren().remove(node);
+                    searchTemplates.getValue().remove(stp);
+                    searchTemplates_GUIs.remove(stp);
+                    needDeleteList.remove(stp);
+                }
             }
         }
     }
@@ -113,7 +111,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
     }
 
 
-    public void addNeedDelete(SearchTemplate_POJO needDelete_Template){
+    public void addNeedDelete(SearchTemplate_POJO needDelete_Template) {
         needDeleteList.add(needDelete_Template);
     }
 
@@ -123,6 +121,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
 
 
     protected abstract GUI_Obj createSearchTemplate(SearchTemplate_POJO stp) throws IOException;
+
     protected abstract GUI_Obj createSearchTemplate_Edit(SearchTemplate_POJO stp) throws IOException;
 
 
@@ -132,7 +131,7 @@ public abstract class Ctrl_WithTemplates extends Ctrl_Abstract implements Initia
         // Отобразим эту ноду
         templates.getChildren().add(gui_obj.node);
         // Запомним связку этой ноды с шаблоном
-        searchTemplates_GUIs.put(stp,gui_obj);
+        searchTemplates_GUIs.put(stp, gui_obj);
     }
 
     protected void showSearchTemplates() {

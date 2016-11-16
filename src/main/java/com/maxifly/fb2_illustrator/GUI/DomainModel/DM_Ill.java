@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Maxim.Pantuhin on 29.08.2016.
  */
-public class DM_Ill extends DM_Abstract{
+public class DM_Ill extends DM_Abstract {
     private SetProperty<SearchTemplate_POJO> searchTemplates =
             new SimpleSetProperty<>();
 
@@ -27,13 +27,14 @@ public class DM_Ill extends DM_Abstract{
     StringProperty ill_default_desc = new SimpleStringProperty();
 
 
-
     public SetProperty<SearchTemplate_POJO> searchTemplates_Property() {
         return this.searchTemplates;
     }
+
     public StringProperty ill_id_Property() {
         return this.ill_id;
     }
+
     public StringProperty ill_default_desc_Property() {
         return this.ill_default_desc;
     }
@@ -67,10 +68,10 @@ public class DM_Ill extends DM_Abstract{
         picture_path.setValue(file);
     }
 
-//    public void moveIll(String movedIllId) throws MyException {
+    //    public void moveIll(String movedIllId) throws MyException {
 //        ill.getProject().moveIll(movedIllId,ill_id.getValue());
 //    }
-    public void refreshId(){
+    public void refreshId() {
         ill_id.setValue(ill.getId().toString());
     }
 

@@ -5,7 +5,7 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 @BaseName("LogMessagesSearcher")
-@LocaleData( { @Locale("en") })
+@LocaleData({@Locale("en")})
 public enum LogMessagesSearcher {
     UNEXPECTED_VALUE, //=Неожиданное значение {0}
     DONE_WORK, //=Работа закончена.

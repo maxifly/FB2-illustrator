@@ -55,8 +55,7 @@ public abstract class Ctrl_Book_from_Proj
     }
 
 
-
-    protected  void clear_form() {
+    protected void clear_form() {
         System.out.println("clear");
         book_name.setText(null);
         book_src_file.setText(null);
@@ -135,7 +134,6 @@ public abstract class Ctrl_Book_from_Proj
         }
 
     }
-
 
 
     private void srcFileChange(String newValue) {

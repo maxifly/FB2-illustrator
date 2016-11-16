@@ -59,7 +59,7 @@ public class Constants {
 
         File dir = new File(workDirName);
 
-        System.out.println( "App data dir " + dir);
+        System.out.println("App data dir " + dir);
 
         if (dir.isDirectory()) {
             return dir;
@@ -78,6 +78,7 @@ public class Constants {
 
     /**
      * Убеждается, что есть папка для хранения пректов
+     *
      * @return
      * @throws MyException
      */
@@ -108,13 +109,11 @@ public class Constants {
                     }
                 } catch (IOException e) {
                     throw new MyException("Can not create directory (5)" + workDirName, e);
+                }
             }
+
+
         }
-
-
-    }
-
-
 
 
     }

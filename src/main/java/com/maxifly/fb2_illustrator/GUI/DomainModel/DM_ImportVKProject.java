@@ -21,7 +21,7 @@ import java.nio.file.Files;
 /**
  * Created by Maximus on 09.10.2016.
  */
-public class DM_ImportVKProject extends DM_Abstract{
+public class DM_ImportVKProject extends DM_Abstract {
 
     private static final IMessageConveyor mc = new MessageConveyor(Constants.getLocaleApp());
     private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
@@ -47,7 +47,6 @@ public class DM_ImportVKProject extends DM_Abstract{
         }
         projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk);
     }
-
 
 
     public StringProperty projectIdProperty() {

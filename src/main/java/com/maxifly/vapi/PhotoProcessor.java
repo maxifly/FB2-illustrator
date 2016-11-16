@@ -58,7 +58,7 @@ public class PhotoProcessor {
 
 
     private int getNewPortion() throws MyException, InterruptedException { //throws Exception {
-        iterator = null;
+        iterator = null; //TODO Если в этот момент прервать задачу, то итератор так и останется пустым. Видимо в этом случае в hasNext надо заново вызвать getNewPortion
         container.clear();
 
         String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.offset, this.WINDOWS_SIZE);

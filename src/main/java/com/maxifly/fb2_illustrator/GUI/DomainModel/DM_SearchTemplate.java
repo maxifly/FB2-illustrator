@@ -26,9 +26,11 @@ public class DM_SearchTemplate extends DM_Abstract {
     public StringProperty template_Propery() {
         return this.template;
     }
+
     public StringProperty description_Propery() {
         return this.description;
     }
+
     public ObjectProperty<TemplateType> templateType_Propery() {
         return this.templateTypeObjectProperty;
     }
@@ -44,14 +46,13 @@ public class DM_SearchTemplate extends DM_Abstract {
 
     public CheckResult check() {
         if (template.getValue() == null || template.getValue().equals("")) {
-            return new CheckResult(false,"Шаблон пустой");
+            return new CheckResult(false, "Шаблон пустой");
         } else {
 
             if (TemplateType.regexp == templateTypeObjectProperty.get()) {
                 try {
                     Pattern.compile(template.getValue());
-                }
-                catch (PatternSyntaxException pse) {
+                } catch (PatternSyntaxException pse) {
                     return new CheckResult(false, "Ошибка регулярного выражения: " + pse.getMessage());
                 }
 
@@ -59,7 +60,7 @@ public class DM_SearchTemplate extends DM_Abstract {
             }
         }
 
-            return new CheckResult(true);
+        return new CheckResult(true);
 
     }
 

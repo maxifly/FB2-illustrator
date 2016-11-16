@@ -11,7 +11,7 @@ import java.util.Set;
 public class Utils {
 
     public static String normalize(String str) {
-       return str.replaceAll("[-,!:;\\(\\)'\"\\.\\?\\s\\n\\r\\t]+"," ").trim().toLowerCase();
+        return str.replaceAll("[-,!:;\\(\\)'\"\\.\\?\\s\\n\\r\\t]+", " ").trim().toLowerCase();
 
     }
 

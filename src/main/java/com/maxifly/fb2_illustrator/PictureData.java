@@ -6,5 +6,4 @@ package com.maxifly.fb2_illustrator;
 public class PictureData {
 
 
-
 }
