@@ -8,6 +8,7 @@ import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
+import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.model.DATA.DATA_photo;
 import com.maxifly.vapi.model.DATA.PrjObj;
 import com.maxifly.vapi.model.Illustration_VK;
@@ -52,10 +53,14 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
     }
 
-
     public void downloadPhotos(Path dest_dir, Project_VK project_vk) throws MyException {
-        PhotoLoader photoLoader = new PhotoLoader(dest_dir);
+        downloadPhotos(dest_dir, project_vk, null);
+    }
 
+    public void downloadPhotos(Path dest_dir, Project_VK project_vk, I_Progress progress_monitor)
+            throws MyException {
+        PhotoLoader photoLoader = new PhotoLoader(dest_dir);
+        photoLoader.setProgress_monitor(progress_monitor);
 
         List<Illustration_VK> ills_VK = new ArrayList<>();
         for (Illustration ill : project_vk.getIllustrations()) {
@@ -64,9 +69,13 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
         try {
             photoLoader.download();
-        } catch (IOException | ExecutionException | InterruptedException e) {
+        } catch (IOException | ExecutionException e) {
             log.error("Ошибка загрузки файлов: {}", e);
             throw new MyException("Ошибка загрузки файлов", e);
+        } catch (InterruptedException e) {
+            log.error("Загрузка файлов прервана: ", e);
+            Thread.currentThread().interrupt();
+            throw new TaskInterrupted(e);
         }
 
     }

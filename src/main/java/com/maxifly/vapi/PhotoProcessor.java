@@ -39,11 +39,16 @@ public class PhotoProcessor {
         this.accessToken = accessToken;
         this.albumId = albumId;
         this.photoSize = max_photoSize;
-        iterator = container.iterator();
+        resetContainer();
     }
 
 
     public boolean hasNext() throws MyException, InterruptedException {
+        if (iterator == null) {
+           resetContainer();
+        }
+
+
         if (!iterator.hasNext()) {
             // Надо получить новую порцию
             return getNewPortion() != 0;
@@ -57,8 +62,14 @@ public class PhotoProcessor {
     }
 
 
+    private void resetContainer() {
+        container.clear();
+        iterator = container.iterator();
+        offset = 0;
+    }
+
     private int getNewPortion() throws MyException, InterruptedException { //throws Exception {
-        iterator = null; //TODO Если в этот момент прервать задачу, то итератор так и останется пустым. Видимо в этом случае в hasNext надо заново вызвать getNewPortion
+        iterator = null;
         container.clear();
 
         String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.offset, this.WINDOWS_SIZE);

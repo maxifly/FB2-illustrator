@@ -7,6 +7,7 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.model.Project;
+import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
 import com.maxifly.vapi.model.Project_VK;
@@ -31,21 +32,27 @@ public class DM_ImportVKProject extends DM_Abstract {
     private DM_StatusBar dm_statusBar;
     private StringProperty projectId = new SimpleStringProperty();
     private StringProperty albumAddr = new SimpleStringProperty();
+    private I_Progress progress_monitor;
 
     public DM_ImportVKProject(DM_StatusBar dm_statusBar) {
         this.dm_statusBar = dm_statusBar;
     }
 
+    public void setProgress_monitor(I_Progress progress_monitor) {
+        this.progress_monitor = progress_monitor;
+    }
+
     public void importProject() throws MyException, IOException {
         long albumId = UrlCreator.getAlbumId(albumAddr.getValue());
         ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), albumId);
+        progress_monitor.updateProgress(1,100, "download project");
         try {
             this.project_vk = projectProcessor.importProject(projectId.getValue());
         } catch (InterruptedException e) {
             log.error("Task interrupted", e);
             throw new TaskInterrupted("Task interrupted", e);
         }
-        projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk);
+        projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk, progress_monitor);
     }
 
 
@@ -60,4 +67,5 @@ public class DM_ImportVKProject extends DM_Abstract {
     public Project_VK getProject_vk() {
         return project_vk;
     }
+
 }

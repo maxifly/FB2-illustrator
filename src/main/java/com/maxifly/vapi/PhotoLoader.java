@@ -3,6 +3,7 @@ package com.maxifly.vapi;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.model.Illustration_VK;
 import com.maxifly.jutils.downloader.*;
 import org.slf4j.cal10n.LocLogger;
@@ -24,6 +25,7 @@ public class PhotoLoader {
     private static final LocLoggerFactory llFactory_uk = new LocLoggerFactory(mc);
     private static final LocLogger log = llFactory_uk.getLocLogger(PhotoLoader.class.getName());
 
+    private I_Progress progress_monitor;
 
     Path destDir;
     List<Illustration_VK> illustrationList = new ArrayList<>();
@@ -35,6 +37,10 @@ public class PhotoLoader {
         downloader = new Downloader();
     }
 
+    public void setProgress_monitor(I_Progress progress_monitor) {
+        this.progress_monitor = progress_monitor;
+        downloader.setProgress(progress_monitor);
+    }
 
     public void setIllustrationList(List<Illustration_VK> illustrationList) {
         this.illustrationList = illustrationList;
@@ -44,13 +50,14 @@ public class PhotoLoader {
         this.illustrationList.add(ill);
     }
 
+
     public void download() throws IOException, ExecutionException, InterruptedException {
         for (Illustration_VK illustration : illustrationList) {
             String pictureURL = illustration.getUrl_picture();
             String fileType = UrlCreator.getFileType(pictureURL);
             File temp = File.createTempFile("ill", "." + fileType, destDir.toFile());
             illustration.setFile(temp.toPath());
-            Download download = new Download(new URL(pictureURL), temp);
+            Download download = new Download(new URL(pictureURL), temp.toString(), 10);
             this.downloader.startTask(download);
         }
 
