@@ -8,6 +8,7 @@ import com.maxifly.fb2_illustrator.GUI.ExceptionHandler;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;

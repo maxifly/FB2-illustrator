@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
+import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.OwnerProjects;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;

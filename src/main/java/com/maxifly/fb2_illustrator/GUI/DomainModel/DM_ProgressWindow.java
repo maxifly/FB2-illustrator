@@ -1,5 +1,6 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.jutils.I_Progress;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;

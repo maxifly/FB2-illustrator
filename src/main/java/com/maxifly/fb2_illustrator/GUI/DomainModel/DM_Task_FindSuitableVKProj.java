@@ -1,5 +1,7 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.jutils.EmptyProgress;
+import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import javafx.concurrent.Task;
 
