@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.jutils.I_Progress;
@@ -30,7 +31,15 @@ public class DM_Task_DownloadProject extends Task<Boolean> {
 
     @Override
     protected Boolean call() throws Exception {
-        dm_importVKProject.importProject();
-        return null;
+        try
+        {
+            dm_importVKProject.importProject();
+        }
+        catch (Exception e) {
+            log.error("Exception Exception", e);
+            throw e;
+        }
+
+        return true;
     }
 }

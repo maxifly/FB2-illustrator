@@ -34,12 +34,12 @@ public class PhotoLoader {
 
     public PhotoLoader(Path destDir) {
         this.destDir = destDir;
-        downloader = new Downloader();
+        downloader = new Downloader(2);
     }
 
     public void setProgress_monitor(I_Progress progress_monitor) {
         this.progress_monitor = progress_monitor;
-        downloader.setProgress(progress_monitor);
+        downloader.setProgressMonitor(progress_monitor);
     }
 
     public void setIllustrationList(List<Illustration_VK> illustrationList) {

@@ -52,6 +52,7 @@ public class DM_ImportVKProject extends DM_Abstract {
             log.error("Task interrupted", e);
             throw new TaskInterrupted("Task interrupted", e);
         }
+
         projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk, progress_monitor);
     }
 

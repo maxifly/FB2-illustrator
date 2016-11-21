@@ -73,8 +73,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
             log.error("Ошибка загрузки файлов: {}", e);
             throw new MyException("Ошибка загрузки файлов", e);
         } catch (InterruptedException e) {
-            log.error("Загрузка файлов прервана: ", e);
-            Thread.currentThread().interrupt();
+            log.error("Загрузка файлов прервана 1: ", e);
             throw new TaskInterrupted(e);
         }
 
