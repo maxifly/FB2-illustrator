@@ -52,27 +52,36 @@ public class PhotoLoader {
 
 
     public void download() throws IOException, ExecutionException, InterruptedException {
-        for (Illustration_VK illustration : illustrationList) {
-            String pictureURL = illustration.getUrl_picture();
-            String fileType = UrlCreator.getFileType(pictureURL);
-            File temp = File.createTempFile("ill", "." + fileType, destDir.toFile());
-            illustration.setFile(temp.toPath());
-            Download download = new Download(new URL(pictureURL), temp.toString(), 10);
-            this.downloader.startTask(download);
-        }
-
-        // Теперь проверим, что все файлы загрузились
-        while (!downloader.checkTasks()) {
-            log.debug("Illustration not load");
-            Thread.sleep(10000);
-        }
-        log.debug("Illustration load");
 
         try {
-            downloader.close();
-        } catch (Exception e) {
-            log.error("Error when try close downloader {}", e);
+
+
+            for (Illustration_VK illustration : illustrationList) {
+                String pictureURL = illustration.getUrl_picture();
+                String fileType = UrlCreator.getFileType(pictureURL);
+                File temp = File.createTempFile("ill", "." + fileType, destDir.toFile());
+                illustration.setFile(temp.toPath());
+                Download download = new Download(new URL(pictureURL), temp.toString(), 10);
+                this.downloader.startTask(download);
+            }
+
+            // Теперь проверим, что все файлы загрузились
+            while (!downloader.checkTasks()) {
+                log.debug("Illustration not load");
+                Thread.sleep(10000);
+            }
+            log.debug("Illustration load");
+
         }
+        finally {
+            try {
+                downloader.close();
+            } catch (Exception e) {
+                log.error("Error when try close downloader {}", e);
+            }
+        }
+
+
     }
 
 

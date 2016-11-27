@@ -2,13 +2,11 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
-import com.maxifly.fb2_illustrator.BookProcessor;
-import com.maxifly.fb2_illustrator.BookProcessor_FB20;
-import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.*;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Exception;
-import com.maxifly.fb2_illustrator.Utils;
 import com.maxifly.fb2_illustrator.model.*;
+import com.maxifly.jutils.I_Progress;
 import javafx.beans.property.*;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
@@ -168,7 +166,7 @@ public abstract class DM_Book_from_Proj
     /**
      * Загрузка иллюстраций
      */
-    public void load_ill() throws Exception {
+    public void load_ill(I_Progress progress) throws Exception {
 
         // Проверки
         Path inputFile = (FileSystems.getDefault().getPath(book_src_file.getValue()));

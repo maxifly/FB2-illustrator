@@ -2,6 +2,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.OwnerProjects;
@@ -121,13 +122,21 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
 
     @Override
-    public void load_ill() throws Exception {
-        ProjectProcessor projectProcessor = new ProjectProcessor(this.factory_gui.getDm_statusBar().getToken(), selectedProject.getValue().albumId);
+    public void load_ill(I_Progress progress) throws Exception {
+        ProjectProcessor projectProcessor = new ProjectProcessor(this.factory_gui.getDm_statusBar().getToken(),
+                selectedProject.getValue().albumId);
 
-        Project_VK project_vk = projectProcessor.importProject(selectedProject.getValue().project_vk.getId());
-        projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk);
+        progress.updateProgress(1,100, "download project");
+        Project_VK project_vk = null;
+        try {
+            project_vk = projectProcessor.importProject(selectedProject.getValue().project_vk.getId());
+        } catch (InterruptedException e) {
+            log.error("Task interrupted", e);
+            throw new TaskInterrupted("Task interrupted", e);
+        }
+        projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk, progress);
 
         super.projectObjectPropertyProperty().setValue(project_vk);
-        super.load_ill();
+        super.load_ill(progress);
     }
 }

@@ -56,4 +56,12 @@ public class Ctrl_Book_from_CurrProj
                 };
         super.setDisableLoad(disableLoad);
     }
+
+    @Override
+    protected void load_ill() throws Exception {
+            dm_book_from_proj.load_ill();
+            Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
+            info.setHeaderText(null);
+            info.showAndWait();
+    }
 }

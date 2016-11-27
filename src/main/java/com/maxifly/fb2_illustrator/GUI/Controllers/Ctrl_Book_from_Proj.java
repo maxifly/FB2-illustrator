@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public abstract class Ctrl_Book_from_Proj
         extends Ctrl_Abstract
         implements Initializable {
-    final private DM_Book_from_Proj dm_book_from_proj;
+    final protected DM_Book_from_Proj dm_book_from_proj;
 
     @FXML
     protected TextField book_name;
@@ -92,10 +92,11 @@ public abstract class Ctrl_Book_from_Proj
         }
 
         if (isContinue) {
-            dm_book_from_proj.load_ill();
-            Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
-            info.setHeaderText(null);
-            info.showAndWait();
+            load_ill();
+//            dm_book_from_proj.load_ill();
+//            Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
+//            info.setHeaderText(null);
+//            info.showAndWait();
         }
 
     }
@@ -176,6 +177,10 @@ public abstract class Ctrl_Book_from_Proj
         warnings.textProperty().addListener((observable, oldValue, newValue) -> change_warnings(newValue));
 
     }
+
+
+    protected abstract void load_ill() throws Exception;
+
 
     private static void configureFileChooser(
             final FileChooser fileChooser,
