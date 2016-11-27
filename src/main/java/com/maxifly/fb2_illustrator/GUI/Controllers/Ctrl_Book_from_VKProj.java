@@ -83,16 +83,26 @@ public class Ctrl_Book_from_VKProj
 
     }
 
-    private void refresh_cancelled(WorkerStateEvent event, Stage monitorWindow) {
+
+    private void taskCancelled(Stage monitorWindow) {
         log.error("Task cancelled");
         monitorWindow.close();
     }
 
-    private void refresh_filed(WorkerStateEvent event, Stage monitorWindow) {
+    private void taskFailed(WorkerStateEvent event, Stage monitorWindow) {
         log.error("Error {}", event.getSource().getException());
         monitorWindow.close();
         ExceptionHandler exceptionHandler = new ExceptionHandler();
         exceptionHandler.uncaughtException(Thread.currentThread(), event.getSource().getException());
+
+    }
+
+    private void refresh_cancelled(WorkerStateEvent event, Stage monitorWindow) {
+        taskCancelled(monitorWindow);
+    }
+
+    private void refresh_filed(WorkerStateEvent event, Stage monitorWindow) {
+        taskFailed(event, monitorWindow);
 
     }
 
@@ -101,6 +111,24 @@ public class Ctrl_Book_from_VKProj
         monitorWindow.close();
         dm_book_from_vkProj.setSuitableProjects((List<OwnerAlbumProject>) event.getSource().getValue());
     }
+
+    private void load_ill_cancelled(WorkerStateEvent event, Stage monitorWindow) {
+        taskCancelled(monitorWindow);
+    }
+
+    private void load_ill_failed(WorkerStateEvent event, Stage monitorWindow) {
+        taskFailed(event,monitorWindow);
+    }
+
+    private void load_ill_complite(WorkerStateEvent event, Stage monitorWindow) {
+        log.debug("task successed complite");
+        monitorWindow.close();
+        Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
+        info.setHeaderText(null);
+        info.showAndWait();
+    }
+
+
 
     private void changeSelectedPrj(OwnerAlbumProject newValue) {
         isPrjSelected.setValue((newValue != null));
@@ -165,10 +193,20 @@ public class Ctrl_Book_from_VKProj
 
     @Override
     protected void load_ill() throws Exception {
-        dm_book_from_proj.load_ill();
-        Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");
-        info.setHeaderText(null);
-        info.showAndWait();
+        DM_Task_LoadIllVkProj load_task = new DM_Task_LoadIllVkProj(dm_book_from_vkProj);
+
+        GUI_Obj gui_obj = factory_gui.createProgressWindow();
+
+        load_task.setProgress_monitor((I_Progress) gui_obj.dm_model);
+        ((DM_ProgressWindow) gui_obj.dm_model).setTask(load_task);
+
+        Stage monitorWindow = factory_gui.createModalWindow(gui_obj.node);
+        monitorWindow.show();
+
+        load_task.setOnSucceeded(event -> load_ill_complite(event, monitorWindow));
+        load_task.setOnFailed(event -> load_ill_failed(event, monitorWindow));
+        load_task.setOnCancelled(event -> load_ill_cancelled(event, monitorWindow));
+        new Thread(load_task).start();
     }
 
 
