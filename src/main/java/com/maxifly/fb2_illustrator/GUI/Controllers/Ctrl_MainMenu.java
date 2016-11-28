@@ -70,20 +70,7 @@ public class Ctrl_MainMenu implements Initializable {
             case "import_project":
                 import_project();
                 break;
-            case "vk_test":
 
-                GUI_Obj gui_obj = this.factory_gui.createBookFromVKProj();
-                Scene scene = this.factory_gui.getMainScene();
-                ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
-
-
-//                for (Illustration ill : projectVk.getIllustrations()) {
-//                  System.out.println(   ((Illustration_VK) ill ).getUrl_picture());
-//                }
-
-//                PhotoUploader photoUploader = new PhotoUploader(factory_gui.getDm_statusBar().getToken(),233176977);
-//                photoUploader.prepare();
-//                photoUploader.uploadPhoto(new File("c:\\kuku.jpg"), "de\nsc");
 
         }
 
@@ -116,8 +103,16 @@ public class Ctrl_MainMenu implements Initializable {
                 Scene scene = this.factory_gui.getMainScene();
                 ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
                 break;
+            case "prj_vk_to_book":
+
+                GUI_Obj gui_obj_vk = this.factory_gui.createBookFromVKProj();
+                Scene scene_vk = this.factory_gui.getMainScene();
+                ((BorderPane) scene_vk.getRoot()).setCenter(gui_obj_vk.node);
+                break;
+
             case "prj_ill":
                 dm_mainMenu.ill();
+                break;
         }
 
     }
