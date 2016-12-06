@@ -44,7 +44,8 @@ public class DM_ImportVKProject extends DM_Abstract {
 
     public void importProject() throws MyException, IOException {
         long albumId = UrlCreator.getAlbumId(albumAddr.getValue());
-        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), albumId);
+
+        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), null, albumId);
         progress_monitor.updateProgress(1,100, "download project");
         try {
             this.project_vk = projectProcessor.importProject(projectId.getValue());

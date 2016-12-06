@@ -38,6 +38,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
     private String accessToken;
     private long albumId;
+    private Long ownerId;
     private String book = "book.jpg";
 
     private RestSender restSender = new RestSender();
@@ -45,9 +46,10 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
     private Gson g = new Gson();
 
-    public ProjectProcessor(String accessToken, long albumId) {
+    public ProjectProcessor(String accessToken, Long ownerId, long albumId) {
         this.accessToken = accessToken;
         this.albumId = albumId;
+        this.ownerId = ownerId;
 
         photoUploader = new PhotoUploader(accessToken, albumId);
 
@@ -80,7 +82,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
     }
 
     public Project_VK importProject(String project_id) throws MyException, InterruptedException {
-        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_2560x2048);
+        PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, ownerId, albumId, PhotoSize.photo_2560x2048);
         IllFilter illFilter = new IllFilter(project_id);
 
         while (photoProcessor.hasNext()) {
@@ -122,7 +124,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
 
             // Загрузим объекты
-            PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_2560x2048);
+            PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, ownerId, PhotoSize.photo_2560x2048);
             PrjObjFilter prjObjFilter = new PrjObjFilter(project_id);
 
             while (photoProcessor.hasNext()) {

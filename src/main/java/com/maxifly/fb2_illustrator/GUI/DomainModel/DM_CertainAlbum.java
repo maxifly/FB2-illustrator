@@ -85,7 +85,7 @@ public class DM_CertainAlbum {
         long albumId = UrlCreator.getAlbumId(album_addr.getValue());
 
         // Загрузим проект
-        ProjectProcessor projectProcessor = new ProjectProcessor(accessToken, albumId);
+        ProjectProcessor projectProcessor = new ProjectProcessor(accessToken, null, albumId);
         Project_VK project_vk = projectProcessor.importProject("123456789"); //TODO надо как-то пойти от проверки идентификатора проекта
         projectProcessor.downloadPhotos(Files.createTempDirectory("fbill_"), project_vk);
 

@@ -45,10 +45,10 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
         switch (addrType) {
             case "група":
-                ownerId = -1 * UrlCreator.getOwnerId(srcAddr);
+                ownerId = -1 * UrlCreator.getOwnerIdByOwnerURL(srcAddr);
                 break;
             case "пользователь":
-                ownerId = UrlCreator.getOwnerId(srcAddr);
+                ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
                 break;
             case "альбом":
                 albumId = UrlCreator.getAlbumId(srcAddr);
@@ -124,6 +124,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     @Override
     public void load_ill(I_Progress progress) throws Exception {
         ProjectProcessor projectProcessor = new ProjectProcessor(this.factory_gui.getDm_statusBar().getToken(),
+                selectedProject.getValue().ownerId,
                 selectedProject.getValue().albumId);
 
         progress.updateProgress(1,100, "download project");

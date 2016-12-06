@@ -17,6 +17,17 @@ public class TestUrlCreator {
     }
 
     @Test
+    public void parseAlbumAddr1() throws Exception {
+        String addr = "https://vk.com/album320470599_237876710";
+        long albumid =  UrlCreator.getAlbumId(addr);
+        long ownerId = UrlCreator.getOwnerIdByAlbumURL(addr);
+        assertEquals(320470599, ownerId);
+        assertEquals(237876710, albumid);
+
+    }
+
+
+    @Test
     public void getToken() {
         String token =
                 UrlCreator.getToken("http://oauth.vk.com/blank.html#access_token=abcd&expires_in=86400&user_id=320470599&email=kuku@mail.ru");

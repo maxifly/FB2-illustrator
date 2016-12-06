@@ -104,9 +104,10 @@ public class UrlCreator {
                 "&pass=" + password;
     }
 
-    public static String getPhotos(String accessToken, long albumId, int offset, int pageSize) {
+    public static String getPhotos(String accessToken, long albumId, Long ownerId, int offset, int pageSize) {
         return "https://api.vk.com/method/photos.get?" +
                 "album_id=" + String.valueOf(albumId) +
+                "&owner_id=" + String.valueOf(ownerId) +
                 "&access_token=" + accessToken +
                 "&v=" + version +
                 "&offset=" + String.valueOf(offset) +
@@ -134,14 +135,35 @@ public class UrlCreator {
     }
 
 
+    /**
+     * Загрузка фотографий в собственный альбом
+     * @param accessToken
+     * @param albumId
+     * @return
+     */
     public static String getUploadServer(String accessToken, long albumId) {
         return "https://api.vk.com/method/photos.getUploadServer?" +
                 "album_id=" + String.valueOf(albumId) +
                 "&access_token=" + accessToken +
                 "&v=" + version;
-
-
     }
+
+    /**
+     * Загрузка фотографий в группу
+     * @param accessToken
+     * @param albumId
+     * @param groupId
+     * @return
+     */
+    public static String getUploadServer(String accessToken, long albumId, long groupId) {
+        return "https://api.vk.com/method/photos.getUploadServer?" +
+                "album_id=" + String.valueOf(albumId) +
+                "group_id=" + String.valueOf(groupId) +
+                "&access_token=" + accessToken +
+                "&v=" + version;
+    }
+
+
 
     public static String createPhotoAlbum(
             String accessToken,
@@ -194,7 +216,7 @@ public class UrlCreator {
 
     }
 
-    public static int getOwnerId(String albumPath) throws MyException {
+    public static int getOwnerIdByOwnerURL(String albumPath) throws MyException {
         Pattern dg_pattern = Pattern.compile("^\\d+$");
         if (dg_pattern.matcher(albumPath).matches()) {
             return Integer.valueOf(albumPath);
@@ -209,6 +231,10 @@ public class UrlCreator {
         }
 
         throw new MyException("Can not parse album addr " + albumPath);
+    }
+
+    public static Long getOwnerIdByAlbumURL(String albumPath) throws MyException {
+        return null;
     }
 
     public static long getAlbumId(String albumPath) throws MyException {

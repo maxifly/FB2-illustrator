@@ -32,7 +32,7 @@ public class DM_ExportProject extends DM_Abstract {
                 albumId = UrlCreator.getAlbumId(albumAddr);
             }
 
-            ProjectProcessor projectProcessor = new ProjectProcessor(statusBar.getToken(), albumId);
+            ProjectProcessor projectProcessor = new ProjectProcessor(statusBar.getToken(), null, albumId);
             projectProcessor.uploadProject(statusBar.dmProject_Property().getValue().getProject());
             return albumId;
         } catch (IOException e) {

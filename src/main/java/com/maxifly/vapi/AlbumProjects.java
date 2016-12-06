@@ -65,7 +65,7 @@ public class AlbumProjects implements
 
 
     public void reset() {
-        photoProcessor = new PhotoProcessor(accessToken, albumId, PhotoSize.photo_75x75);
+        photoProcessor = new PhotoProcessor(accessToken, (long) ownerId, albumId, PhotoSize.photo_75x75);
         getAll = false;
     }
 

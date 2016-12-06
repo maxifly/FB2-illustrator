@@ -54,7 +54,7 @@ public class Ctrl_DeleteVKProject extends Ctrl_Abstract
 
         albumId = UrlCreator.getAlbumId(album_addr.getText());
 
-        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), albumId);
+        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), null, albumId);
         projectProcessor.deleteProject(prj_code.getText().trim());
 
         Alert info = new Alert(Alert.AlertType.INFORMATION, "Процесс окончен.");

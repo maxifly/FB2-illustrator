@@ -4,7 +4,7 @@ package com.maxifly.vapi.model;
  * Created by Maximus on 31.10.2016.
  */
 public class OwnerAlbumProject {
-    public int ownerId;
+    public long ownerId;
     public int albumId;
     public Project_VK project_vk;
 

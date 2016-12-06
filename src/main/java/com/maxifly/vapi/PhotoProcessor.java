@@ -26,6 +26,7 @@ public class PhotoProcessor {
 
     private String accessToken;
     private long albumId;
+    private Long ownerId;
     private int offset = 0;
     private final int WINDOWS_SIZE = 100;
     private PhotoSize photoSize;
@@ -35,9 +36,10 @@ public class PhotoProcessor {
     private RestSender restSender = new RestSender();
 
 
-    public PhotoProcessor(String accessToken, long albumId, PhotoSize max_photoSize) {
+    public PhotoProcessor(String accessToken, Long ownerId, long albumId,  PhotoSize max_photoSize) {
         this.accessToken = accessToken;
         this.albumId = albumId;
+        this.ownerId = ownerId;
         this.photoSize = max_photoSize;
         resetContainer();
     }
@@ -72,7 +74,7 @@ public class PhotoProcessor {
         iterator = null;
         container.clear();
 
-        String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.offset, this.WINDOWS_SIZE);
+        String URL = UrlCreator.getPhotos(this.accessToken, this.albumId, this.ownerId, this.offset, this.WINDOWS_SIZE);
 //        RestSender.respDelay();
         RestResponse restResponse = restSender.sendGet(URL);
 //TODO count в результате это похоже общее количество итемов, а не количество, полученное в окне. Сколько их получено в окне надо судить по количеству элементов в массиве
