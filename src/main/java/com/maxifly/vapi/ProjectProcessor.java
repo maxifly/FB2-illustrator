@@ -124,7 +124,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
 
 
             // Загрузим объекты
-            PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, albumId, ownerId, PhotoSize.photo_2560x2048);
+            PhotoProcessor photoProcessor = new PhotoProcessor(accessToken, ownerId, albumId, PhotoSize.photo_2560x2048);
             PrjObjFilter prjObjFilter = new PrjObjFilter(project_id);
 
             while (photoProcessor.hasNext()) {
