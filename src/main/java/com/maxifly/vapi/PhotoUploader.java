@@ -26,18 +26,26 @@ public class PhotoUploader {
     private static final LocLogger log = llFactory_uk.getLocLogger(PhotoUploader.class.getName());
     private String accessToken;
     private long albumId;
+    private long ownerId;
 
     private RestSender restSender = new RestSender();
     private Gson g = new Gson();
     private REST_uploadServer uploadServer;
 
-    public PhotoUploader(String accessToken, long albumId) {
+    public PhotoUploader(String accessToken, long ownerId, long albumId) {
         this.accessToken = accessToken;
         this.albumId = albumId;
+        this.ownerId = ownerId;
     }
 
     public void prepare() throws MyException {
-        String url = UrlCreator.getUploadServer(this.accessToken, albumId);
+        String url = null;
+           if (ownerId < 0 ) {
+               url = UrlCreator.getUploadServer(this.accessToken, albumId,-1*ownerId);
+           } else {
+               url = UrlCreator.getUploadServer(this.accessToken, albumId);
+           }
+
         try {
 
 
@@ -91,10 +99,20 @@ public class PhotoUploader {
 
         // Фотография загружена. Добавим ее в альбом
 
-        REST_POST_Data rest_post_data = UrlCreator.photosSave(accessToken, albumId, null, rest_result_upload.server,
-                rest_result_upload.photos_list,
-                rest_result_upload.hash,
-                description);
+        REST_POST_Data rest_post_data = null;
+
+        if (ownerId < 0 ) {
+            rest_post_data = UrlCreator.photosSave(accessToken, albumId, -1*ownerId, rest_result_upload.server,
+                    rest_result_upload.photos_list,
+                    rest_result_upload.hash,
+                    description);
+        } else {
+            rest_post_data = UrlCreator.photosSave(accessToken, albumId, null, rest_result_upload.server,
+                    rest_result_upload.photos_list,
+                    rest_result_upload.hash,
+                    description);
+        }
+
         RestResponse restResponse_Save = restSender.sendPost(rest_post_data);
         if (restResponse_Save.getResponseCode() != 200) {
             throw new MyException("Error code " + restResponse_Save.getResponseCode() + "when save photo in album ");

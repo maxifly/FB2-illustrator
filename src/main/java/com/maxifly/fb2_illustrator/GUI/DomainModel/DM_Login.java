@@ -48,9 +48,11 @@ public class DM_Login {
 
                     String token = UrlCreator.getToken(newValue);
                     String eMail = UrlCreator.getEmail(newValue);
+                    String userId = UrlCreator.getUserId(newValue);
 
                     log.debug("TOKEN: {} Email: {}", token, eMail);
                     factory_gui.getDm_statusBar().setLogin(eMail, token);
+                    factory_gui.getDm_statusBar().setUserId(Long.valueOf(userId));
                 }
 
             }

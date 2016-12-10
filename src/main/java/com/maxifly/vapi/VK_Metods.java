@@ -34,8 +34,8 @@ public class VK_Metods {
         this.accessToken = accessToken;
     }
 
-    public Long createAlbum() throws UnsupportedEncodingException, MyException {
-        String url = UrlCreator.createPhotoAlbum(accessToken, "Иллюстрации к книгам", null, "{\"fb_ill\":1}");
+    public Long createAlbum(Long groupId) throws UnsupportedEncodingException, MyException {
+        String url = UrlCreator.createPhotoAlbum(accessToken, "Иллюстрации к книгам", groupId, "{\"fb_ill\":1}");
         RestResponse restResponse = null;
         try {
             restResponse = restSender.sendGet(url);

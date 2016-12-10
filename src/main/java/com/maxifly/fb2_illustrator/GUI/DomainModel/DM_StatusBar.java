@@ -12,6 +12,7 @@ import javafx.beans.property.StringProperty;
  */
 public class DM_StatusBar {
     private StringProperty login;
+    private Long userId;
     private String token;
     private ObjectProperty<DM_Project> dmProjectProperty = new SimpleObjectProperty<>();
 
@@ -49,5 +50,13 @@ public class DM_StatusBar {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

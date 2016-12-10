@@ -65,7 +65,15 @@ public class UrlCreator {
         }
         return null;
     }
-
+    public static String getUserId(String URL) {
+        Pattern ptrn_token = Pattern.compile("&user_id=.+?(&|$)");
+        Matcher matcher = ptrn_token.matcher(URL + "&");
+        if (matcher.find()) {
+            String grp = matcher.group();
+            return grp.substring(9, grp.length() - 1);
+        }
+        return null;
+    }
     public static String getFileType(String URL) {
         Pattern ptrn_token = Pattern.compile("\\.([^\\.]+?)$");
         Matcher matcher = ptrn_token.matcher(URL);
@@ -159,7 +167,7 @@ public class UrlCreator {
     public static String getUploadServer(String accessToken, long albumId, long groupId) {
         return "https://api.vk.com/method/photos.getUploadServer?" +
                 "album_id=" + String.valueOf(albumId) +
-                "group_id=" + String.valueOf(groupId) +
+                "&group_id=" + String.valueOf(groupId) +
                 "&access_token=" + accessToken +
                 "&v=" + version;
     }

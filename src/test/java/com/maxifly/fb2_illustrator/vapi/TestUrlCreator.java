@@ -48,7 +48,14 @@ public class TestUrlCreator {
         assertEquals("kuku@mail.ru", token);
 
     }
+    @Test
+    public void getUserId() {
+        String userId =
+                UrlCreator.getUserId("http://oauth.vk.com/blank.html#access_token=abcd&expires_in=86400&user_id=320470599&email=kuku@mail.ru");
 
+        assertEquals("320470599", userId);
+
+    }
     @Test
     public void getFileType() {
         String token =

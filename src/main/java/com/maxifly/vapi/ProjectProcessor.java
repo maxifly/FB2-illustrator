@@ -51,7 +51,7 @@ public class ProjectProcessor { // TODO Переименовать класс?
         this.albumId = albumId;
         this.ownerId = ownerId;
 
-        photoUploader = new PhotoUploader(accessToken, albumId);
+        photoUploader = new PhotoUploader(accessToken, ownerId, albumId);
 
     }
 

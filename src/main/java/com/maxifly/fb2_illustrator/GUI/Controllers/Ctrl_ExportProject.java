@@ -30,7 +30,11 @@ public class Ctrl_ExportProject extends Ctrl_Abstract
     @FXML
     RadioButton rb_exists;
     @FXML
+    RadioButton rb_new_in_group;
+    @FXML
     TextField album_addr;
+    @FXML
+    TextField group_addr;
     @FXML
     Button btn_export;
 
@@ -39,9 +43,11 @@ public class Ctrl_ExportProject extends Ctrl_Abstract
 
         long album_id;
         if (rb_exists.isSelected()) {
-            album_id = dm_exportProject.export(album_addr.getText());
+            album_id = dm_exportProject.export(album_addr.getText()); //TODO Создание альбома группы
+        } else if (rb_new_in_group.isSelected()) {
+            album_id = dm_exportProject.exportInNewGroupAlbum(group_addr.getText());
         } else {
-            album_id = dm_exportProject.export(null);
+            album_id = dm_exportProject.exportInNewUserAlbum();
         }
 
         Alert info = new Alert(Alert.AlertType.INFORMATION,
@@ -68,6 +74,12 @@ public class Ctrl_ExportProject extends Ctrl_Abstract
     private void disabled() {
         if (rb_exists.isSelected()) {
             if (album_addr.textProperty().getValue() != null) {
+                btn_export.setDisable(false);
+            } else {
+                btn_export.setDisable(true);
+            }
+        } else if (rb_new_in_group.isSelected()) {
+            if (group_addr.textProperty().getValue() != null) {
                 btn_export.setDisable(false);
             } else {
                 btn_export.setDisable(true);
