@@ -27,7 +27,6 @@ public class DM_Task_FindSuitableVKProj extends Task<List<OwnerAlbumProject>>
         this.addrType = addrType;
         this.srcAddr = srcAddr;
         this.progress_monitor = new EmptyProgress();
-
     }
 
     public void setProgress_monitor(I_Progress progress_monitor) {

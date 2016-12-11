@@ -44,14 +44,18 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         this.task = task;
 
         switch (addrType) {
-            case "група":
-                ownerId = -1 * UrlCreator.getOwnerIdByOwnerURL(srcAddr);
+            case "группа":
+                ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
+                if (ownerId > 0) ownerId = -1 * ownerId;
                 break;
             case "пользователь":
                 ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
                 break;
             case "альбом":
-                albumId = UrlCreator.getAlbumId(srcAddr);
+                throw new MyException("Unsupported"); // TODO Сделать рефреш из альбома
+//                albumId = UrlCreator.getAlbumId(srcAddr);
+            default:
+                throw new MyException("Unsupported addr type: " + addrType);
         }
 
         if (albumId == null) {
@@ -63,6 +67,8 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     }
 
     private List<OwnerAlbumProject> refreshOwner(int ownerId) throws MyException {
+        log.debug("Refresh albums by owner {}",ownerId);
+
         List<OwnerAlbumProject> result = new ArrayList<>();
 
         OwnerProjects ownerProjects = owners.get(ownerId);
