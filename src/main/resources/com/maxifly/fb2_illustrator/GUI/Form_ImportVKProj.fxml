@@ -28,7 +28,7 @@
           <RowConstraints maxHeight="258.0" minHeight="1.0" prefHeight="56.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="28.0" prefWidth="203.0" text="Адрес или код альбома:" GridPane.rowIndex="1">
+            <Label prefHeight="28.0" prefWidth="203.0" text="Адрес альбома:" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>

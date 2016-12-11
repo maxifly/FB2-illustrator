@@ -10,6 +10,7 @@ import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
+import com.maxifly.vapi.model.AlbumAddrParseResult;
 import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -43,9 +44,11 @@ public class DM_ImportVKProject extends DM_Abstract {
     }
 
     public void importProject() throws MyException, IOException {
-        long albumId = UrlCreator.getAlbumId(albumAddr.getValue());
+        AlbumAddrParseResult albumAddrParseResult = UrlCreator.parseAlbumURL(albumAddr.getValue());
 
-        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(), null, albumId);
+        ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(),
+                albumAddrParseResult.ownerId,
+                albumAddrParseResult.albumId);
         progress_monitor.updateProgress(1,100, "download project");
         try {
             this.project_vk = projectProcessor.importProject(projectId.getValue());
