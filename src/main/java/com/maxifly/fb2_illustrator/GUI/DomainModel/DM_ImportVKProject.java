@@ -3,14 +3,12 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
-import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
-import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
-import com.maxifly.vapi.model.AlbumAddrParseResult;
+import com.maxifly.vapi.model.AlbumAddrAttributes;
 import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -44,7 +42,7 @@ public class DM_ImportVKProject extends DM_Abstract {
     }
 
     public void importProject() throws MyException, IOException {
-        AlbumAddrParseResult albumAddrParseResult = UrlCreator.parseAlbumURL(albumAddr.getValue());
+        AlbumAddrAttributes albumAddrParseResult = UrlCreator.parseAlbumURL(albumAddr.getValue());
 
         ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(),
                 albumAddrParseResult.ownerId,

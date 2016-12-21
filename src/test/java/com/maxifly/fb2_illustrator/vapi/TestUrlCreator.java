@@ -1,7 +1,7 @@
 package com.maxifly.fb2_illustrator.vapi;
 
 import com.maxifly.vapi.UrlCreator;
-import com.maxifly.vapi.model.AlbumAddrParseResult;
+import com.maxifly.vapi.model.AlbumAddrAttributes;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -20,7 +20,7 @@ public class TestUrlCreator {
     @Test
     public void parseAlbumAddr1() throws Exception {
         String addr = "https://vk.com/album320470599_237876710";
-        AlbumAddrParseResult albumAddrParseResult = UrlCreator.parseAlbumURL(addr);
+        AlbumAddrAttributes albumAddrParseResult = UrlCreator.parseAlbumURL(addr);
         assertEquals(320470599, albumAddrParseResult.ownerId);
         assertEquals(237876710, albumAddrParseResult.albumId);
 

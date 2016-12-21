@@ -1,9 +1,7 @@
 package com.maxifly.vapi;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.MyException;
-import com.maxifly.vapi.model.AlbumAddrParseResult;
+import com.maxifly.vapi.model.AlbumAddrAttributes;
 import com.maxifly.vapi.model.AuthHeader;
 import com.maxifly.vapi.model.REST.REST_POST_Data;
 import com.maxifly.vapi.model.ScopeElement;
@@ -242,14 +240,14 @@ public class UrlCreator {
         throw new MyException("Can not parse album addr " + albumPath);
     }
 
-    public static AlbumAddrParseResult parseAlbumURL(String albumPath) throws AddrNoParseException {
+    public static AlbumAddrAttributes parseAlbumURL(String albumPath) throws AddrNoParseException {
         Pattern url_pattern = Pattern.compile("(-?\\d+)_(\\d+)$");
         Matcher matcher = url_pattern.matcher(albumPath);
         if (matcher.find()) {
             String o = matcher.group(1);
             String a = matcher.group(2);
 
-            return new AlbumAddrParseResult(
+            return new AlbumAddrAttributes(
                     Integer.valueOf(matcher.group(1)),
                     Integer.valueOf(matcher.group(2))
                     );

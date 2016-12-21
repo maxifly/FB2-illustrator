@@ -56,6 +56,7 @@ public class AlbumProjects implements
         return albumId;
     }
 
+    //TODO Надо как-то эту штуку добавить в контейнер альбомов
     public AlbumProjects(String accessToken, int ownerId, int albumId) {
         this.accessToken = accessToken;
         this.ownerId = ownerId;
