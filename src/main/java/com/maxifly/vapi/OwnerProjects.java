@@ -37,7 +37,7 @@ public class OwnerProjects implements
     private int ownerId;
     private RestSender restSender = new RestSender();
 
-    private HashMap<Album, AlbumProjects> albums;
+    private HashMap<Album, AlbumProjects> albums; //TODO Вот эта штука должна устанавливаться снаружи и быть как бы общим контейнером для всех найденных альбомов
     private List<OwnerAlbumProject> projects;
     private Iterator<Album> albumIterator;
 
