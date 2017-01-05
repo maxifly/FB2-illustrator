@@ -167,6 +167,8 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
     public DM_Book_from_VKProj(Factory_GUI factory_gui) throws JAXBException {
         super(factory_gui);
+        selectedProject.addListener((observable, oldValue, newValue) -> changeSelectedProject(newValue)
+        );
 //        super.dm_projectObjectPropertyProperty().bindBidirectional(factory_gui.getDm_statusBar().dmProject_Property());
     }
 
@@ -189,5 +191,14 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
         super.projectObjectPropertyProperty().setValue(project_vk);
         super.load_ill(progress);
+    }
+
+    private void changeSelectedProject(OwnerAlbumProject newValue) {
+        log.debug("Change selected projexct: {}", newValue);
+        if (newValue != null) {
+            super.projectObjectProperty.setValue(newValue.project_vk);
+        } else {
+            super.projectObjectProperty.setValue(null);
+        }
     }
 }

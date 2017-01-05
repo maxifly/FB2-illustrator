@@ -133,6 +133,7 @@ public class Ctrl_Book_from_VKProj
     private void changeSelectedPrj(OwnerAlbumProject newValue) {
         isPrjSelected.setValue((newValue != null));
         selectedProject.setValue(newValue);
+
     }
 
     private void clearProjects() {

@@ -38,7 +38,7 @@ public abstract class DM_Book_from_Proj
 
     protected Factory_GUI factory_gui;
 
-    private ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
+    protected ObjectProperty<Project> projectObjectProperty = new SimpleObjectProperty<>();
     private ObjectProperty<DM_Project> dm_projectObjectProperty = new SimpleObjectProperty<>();
 
 
@@ -61,8 +61,6 @@ public abstract class DM_Book_from_Proj
         }
     }
 
-    ;
-
     protected boolean checkBookname(Project project) {
         if (project != null) {
             for (SearchTemplate_POJO searchTemplate_pojo : project.getBookNameTemplates()) {
@@ -79,14 +77,28 @@ public abstract class DM_Book_from_Proj
     }
 
     private boolean checkBookName() {
+        log.debug("check name with {}", projectObjectProperty.getValue());
         return checkBookname(projectObjectProperty.getValue());
     }
 
 
     private void change_BookName(String newValue) {
         normilizeBookName = (newValue == null) ? null : Utils.normalize(newValue);
+        checks();
 
-        if (newValue == null || "".equals(newValue.trim())) {
+    }
+
+    private void change_project(Project newValue) {
+        checks();
+    }
+
+    /**
+     * Проводит проверки и собирает замечания
+     */
+    private void checks() {
+
+
+        if (book_name.getValue() == null || "".equals(book_name.getValue().trim())) {
             warnings.setValue("Название книги не задано");
         } else {
             if (!checkBookName()) {
@@ -117,6 +129,7 @@ public abstract class DM_Book_from_Proj
                 book_name_FromFile = "";
             }
         }
+        checks();
     }
 
     public void setBookNameFromFile() {
@@ -132,6 +145,7 @@ public abstract class DM_Book_from_Proj
         dm_projectObjectProperty.addListener((observable, oldValue, newValue) -> change_dmProject(newValue));
         book_name.addListener((observable, oldValue, newValue) -> change_BookName(newValue));
         book_src_file.addListener((observable, oldValue, newValue) -> change_srcFile(newValue));
+        projectObjectProperty.addListener((observable, oldValue, newValue) -> change_project(newValue));
         bookParse = new BookProcessor_FB20();
 
         change_dmProject(factory_gui.getDm_statusBar().dmProject_Property().getValue());
