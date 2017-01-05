@@ -209,5 +209,9 @@ public class Ctrl_Book_from_VKProj
         new Thread(load_task).start();
     }
 
-
+    @Override
+    protected void clear_form() {
+        super.clear_form();
+        clearProjects();
+    }
 }
