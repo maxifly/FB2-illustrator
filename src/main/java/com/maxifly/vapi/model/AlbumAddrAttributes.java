@@ -29,4 +29,12 @@ public class AlbumAddrAttributes {
         result = 31 * result + albumId;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "AlbumAddrAttributes{" +
+                "ownerId=" + ownerId +
+                ", albumId=" + albumId +
+                '}';
+    }
 }

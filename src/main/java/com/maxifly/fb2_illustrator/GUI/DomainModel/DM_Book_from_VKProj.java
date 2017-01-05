@@ -5,10 +5,8 @@ import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.jutils.I_Progress;
-import com.maxifly.vapi.AlbumsContainer;
-import com.maxifly.vapi.OwnerProjects;
-import com.maxifly.vapi.ProjectProcessor;
-import com.maxifly.vapi.UrlCreator;
+import com.maxifly.vapi.*;
+import com.maxifly.vapi.model.AlbumAddrAttributes;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import com.maxifly.vapi.model.Project_VK;
 import javafx.beans.property.ObjectProperty;
@@ -19,6 +17,7 @@ import javafx.concurrent.Task;
 
 import javax.xml.bind.JAXBException;
 import java.nio.file.Files;
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +41,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
     public List<OwnerAlbumProject> refresh(String addrType, String srcAddr, I_Progress progress, Task task) throws MyException {
         int ownerId = 0;
-        Long albumId = null;
+        AlbumAddrAttributes albumAddrAttributes = null;
         this.progress = progress;
         this.task = task;
 
@@ -55,18 +54,59 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
                 ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
                 break;
             case "альбом":
-                throw new MyException("Unsupported"); // TODO Сделать рефреш из альбома
+                 albumAddrAttributes = UrlCreator.parseAlbumURL(srcAddr);
+                 break;
+//                throw new MyException("Unsupported"); // TODO Сделать рефреш из альбома
 //                albumId = UrlCreator.getAlbumId(srcAddr);
             default:
                 throw new MyException("Unsupported addr type: " + addrType);
         }
 
-        if (albumId == null) {
+        if (albumAddrAttributes == null) {
             return refreshOwner(ownerId);
+        } else {
+            return refreshAlbum(albumAddrAttributes);
         }
 
-        return new ArrayList<OwnerAlbumProject>();
+    }
 
+
+    private List<OwnerAlbumProject> refreshAlbum(AlbumAddrAttributes albumAddrAttributes) throws MyException {
+        log.debug("Refresh album. {}.",albumAddrAttributes);
+        List<OwnerAlbumProject> result = new ArrayList<>();
+
+        AlbumsContainer albumsContainer = this.factory_gui.getAlbumsContainer();
+        AlbumProjects albumProjects = albumsContainer.getAlbumProjects(albumAddrAttributes);
+        if (albumProjects == null) {
+            albumProjects = new AlbumProjects(this.factory_gui.getDm_statusBar().getToken(),
+                    albumAddrAttributes.ownerId,
+                    albumAddrAttributes.albumId);
+            albumsContainer.putAlbumProjects(albumAddrAttributes,albumProjects);
+        }
+
+        try {
+            for (Project_VK project_vk : albumProjects) {
+                if (task.isCancelled()) {
+                    log.debug("Task canceled");
+                    result.clear();
+                    break;
+                }
+                if (checkBookname(project_vk)) {
+                    log.debug("Project {} suitable for book mask.", project_vk);
+
+                    result.add(new OwnerAlbumProject(
+                            albumAddrAttributes.ownerId,
+                            albumAddrAttributes.albumId,
+                            project_vk));
+                }
+            }
+        }catch (TaskInterruptedRuntime e) {
+            log.error("Exception TaskInterruptedRuntime ", e);
+            task.cancel();
+            result.clear();
+        }
+
+        return result;
     }
 
     private List<OwnerAlbumProject> refreshOwner(int ownerId) throws MyException {
@@ -89,14 +129,14 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
             for (OwnerAlbumProject ownerAlbumProject : ownerProjects) {
                 if (task.isCancelled()) {
                     log.debug("Task canceled");
-                    result = new ArrayList<>();
+                    result.clear();
                     break;
                 }
 
                 if (ownerProjects.isException()) throw ownerProjects.getException();
 
                 if (checkBookname(ownerAlbumProject.project_vk)) {
-                    log.debug("Project {} suitable for book mask.");
+                    log.debug("Project {} suitable for book mask.", ownerAlbumProject.project_vk);
 
                     result.add(ownerAlbumProject);
                 }
@@ -105,7 +145,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         } catch (TaskInterruptedRuntime e) {
             log.error("Exception TaskInterruptedRuntime ", e);
             task.cancel();
-            result = new ArrayList<>();
+            result.clear();
         }
 
         if (ownerProjects.isException()) throw ownerProjects.getException();
