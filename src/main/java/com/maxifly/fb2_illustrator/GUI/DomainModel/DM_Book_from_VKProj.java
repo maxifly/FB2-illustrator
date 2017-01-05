@@ -5,6 +5,7 @@ import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.jutils.I_Progress;
+import com.maxifly.vapi.AlbumsContainer;
 import com.maxifly.vapi.OwnerProjects;
 import com.maxifly.vapi.ProjectProcessor;
 import com.maxifly.vapi.UrlCreator;
@@ -32,6 +33,8 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     private ObjectProperty<OwnerAlbumProject> selectedProject = new SimpleObjectProperty();
     private I_Progress progress;
     private Task task;
+
+
 
     public ObservableList<OwnerAlbumProject> getSuitableProjects() {
         return suitableProjects;
@@ -74,6 +77,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         OwnerProjects ownerProjects = owners.get(ownerId);
         if (ownerProjects == null) {
             ownerProjects = new OwnerProjects(this.factory_gui.getDm_statusBar().getToken(), ownerId);
+            ownerProjects.setAlbumsContainer(this.factory_gui.getAlbumsContainer());
             owners.put(ownerId, ownerProjects);
         }
 

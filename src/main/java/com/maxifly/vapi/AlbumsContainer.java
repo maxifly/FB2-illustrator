@@ -3,7 +3,9 @@ package com.maxifly.vapi;
 import com.maxifly.vapi.model.AlbumAddrAttributes;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Maximus on 21.12.2016.
@@ -17,8 +19,8 @@ import java.util.Map;
  */
 public class AlbumsContainer {
 
-private HashMap<Long, Boolean> ownersFull = new HashMap<>();
-private HashMap<Long,Map<AlbumAddrAttributes, AlbumProjects>> ownersAlbums = new HashMap<>();
+private HashMap<Integer, Boolean> ownersFull = new HashMap<>();
+private HashMap<Integer,Map<AlbumAddrAttributes, AlbumProjects>> ownersAlbums = new HashMap<>();
 
     /**
      * Сохранить альбом
@@ -51,7 +53,7 @@ private HashMap<Long,Map<AlbumAddrAttributes, AlbumProjects>> ownersAlbums = new
      * Получить количество альбомов с проектами, сохраненных для определенного пользователя
      * @return Количество альбомов
      */
-    public int ownerAlbumCount(Long ownerId) {
+    public int ownerAlbumCount(Integer ownerId) {
         Map albums = ownersAlbums.get(ownerId);
         if (albums == null) {
             return 0;
@@ -61,9 +63,23 @@ private HashMap<Long,Map<AlbumAddrAttributes, AlbumProjects>> ownersAlbums = new
     }
 
     /**
+     * Возвращает множество ссылок на альбомы пользователя
+     * @param ownerId
+     * @return
+     */
+    public Set<AlbumAddrAttributes> getOwnerAlbumsAttributes(Integer ownerId) {
+        Map albums = ownersAlbums.get(ownerId);
+        if (albums == null) {
+            return new HashSet<AlbumAddrAttributes>();
+        } else {
+            return albums.keySet();
+        }
+    }
+
+    /**
      * Сохранить признак того, что в контейнер переданы данные обо всех альбомах овнера
      */
-    public void setOwnerFull(Long ownerId, boolean isFull) {
+    public void setOwnerFull(Integer ownerId, boolean isFull) {
         ownersFull.put(ownerId,isFull);
          }
 
@@ -71,7 +87,7 @@ private HashMap<Long,Map<AlbumAddrAttributes, AlbumProjects>> ownersAlbums = new
      * Получить признак того, что в контейнере сохранены данные обо всех альбомах овнера
      * @return все или нет
      */
-    public boolean getOwnerFull(long ownerId) {
+    public boolean getOwnerFull(Integer ownerId) {
         return ownersFull.getOrDefault(ownerId,false);
     }
 
@@ -87,7 +103,7 @@ private HashMap<Long,Map<AlbumAddrAttributes, AlbumProjects>> ownersAlbums = new
      * Очистить данные об овнере
      * @param ownerId - овнер
      */
-    public void refresh(Long ownerId) {
+    public void refresh(Integer ownerId) {
         ownersFull.remove(ownerId);
         ownersAlbums.remove(ownerId);
     }

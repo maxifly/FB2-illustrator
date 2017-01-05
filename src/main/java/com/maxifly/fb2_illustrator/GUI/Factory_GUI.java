@@ -12,6 +12,7 @@ import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
 import com.maxifly.fb2_illustrator.model.TemplateType;
+import com.maxifly.vapi.AlbumsContainer;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -46,6 +47,7 @@ public class Factory_GUI {
 
     private Ctrl_Project ctrl_project;
     private Ctrl_StatusBar ctrl_statusBar;
+    private AlbumsContainer albumsContainer = new AlbumsContainer();
 
 
     public Scene getMainScene() {
@@ -472,6 +474,9 @@ public class Factory_GUI {
 
     }
 
+    public AlbumsContainer getAlbumsContainer() {
+        return albumsContainer;
+    }
 
     public DM_Login getDm_login() {
         return dm_login;

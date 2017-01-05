@@ -9,6 +9,7 @@ import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.jutils.EmptyProgress;
 import com.maxifly.jutils.I_Progress;
+import com.maxifly.vapi.model.AlbumAddrAttributes;
 import com.maxifly.vapi.model.DATA.*;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import com.maxifly.vapi.model.Project_VK;
@@ -19,7 +20,6 @@ import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,9 +37,9 @@ public class OwnerProjects implements
     private int ownerId;
     private RestSender restSender = new RestSender();
 
-    private HashMap<Album, AlbumProjects> albums; //TODO Вот эта штука должна устанавливаться снаружи и быть как бы общим контейнером для всех найденных альбомов
-    private List<OwnerAlbumProject> projects;
-    private Iterator<Album> albumIterator;
+    private AlbumsContainer albumsContainer; //TODO Вот эта штука должна устанавливаться снаружи и быть как бы общим контейнером для всех найденных альбомов
+    private List<OwnerAlbumProject> projects = new ArrayList<>();
+    private Iterator<AlbumAddrAttributes> albumIterator;
 
     private I_Progress dm_i_progress = new EmptyProgress();
 
@@ -58,9 +58,12 @@ public class OwnerProjects implements
     public OwnerProjects(String accessToken, int ownerId) {
         this.accessToken = accessToken;
         this.ownerId = ownerId;
-        reset();
     }
 
+
+    public void setAlbumsContainer(AlbumsContainer albumsContainer) {
+        this.albumsContainer = albumsContainer;
+    }
 
     public boolean isException() {
         return this.exception != null;
@@ -75,7 +78,7 @@ public class OwnerProjects implements
     }
 
     public void reset() {
-        albums = new HashMap<>();
+        albumsContainer.refresh(ownerId);
         projects = new ArrayList<>();
 
 
@@ -93,7 +96,7 @@ public class OwnerProjects implements
 
         while (albumIterator.hasNext() && currentProjIdx >= projects.size()) {
             dm_i_progress.incrementDone(1, "Всего найдено " + projects.size() + " проектов");
-            AlbumProjects albumProjects = albums.get(albumIterator.next());
+            AlbumProjects albumProjects = albumsContainer.getAlbumProjects(albumIterator.next());
             addAlbumProjects(albumProjects);
         }
 
@@ -113,11 +116,11 @@ public class OwnerProjects implements
     public Iterator<OwnerAlbumProject> iterator() {
         exception = null;
 
-        if (albums.size() == 0) {
+        if (!albumsContainer.getOwnerFull(ownerId)) {
             try {
                 fillAlbums();
             } catch (MyException e) {
-                log.error("Error when get all albums.", e);
+                log.error("Error when get all albumsContainer.", e);
                 exception = e;
             } catch (InterruptedException e) {
                 log.error("Task interrupted.", e);
@@ -126,9 +129,10 @@ public class OwnerProjects implements
             }
             getAll = false;
         }
-        albumIterator = albums.keySet().iterator();
+        albumIterator = albumsContainer.getOwnerAlbumsAttributes(ownerId).iterator(); //TODO Доделать
         currentProjIdx = 0;
-        dm_i_progress.setMaxValue(albums.keySet().size());
+        projects.clear();
+        dm_i_progress.setMaxValue(albumsContainer.getOwnerAlbumsAttributes(ownerId).size());
         return this;
     }
 
@@ -162,13 +166,18 @@ public class OwnerProjects implements
         for (REST_photoAlbum rest_album : rest_result_albums.response.items) {
             try {
                 Album album = g.fromJson(rest_album.description, Album.class);
-                if (album.fb_ill == 1)
-                    albums.put(album, new AlbumProjects(accessToken, rest_album.owner_id, rest_album.id));
-            } catch (Exception e) {
+                if (album.fb_ill == 1) {
+                    AlbumAddrAttributes aaa =  new AlbumAddrAttributes(rest_album.owner_id, rest_album.id);
+
+                    if (albumsContainer.getAlbumProjects(aaa) == null) {
+                        // Таких проектов нет - добавим
+                        albumsContainer.putAlbumProjects(aaa, new AlbumProjects(accessToken, rest_album.owner_id, rest_album.id));
+                    }
+                }
+                     } catch (Exception e) {
                 log.debug("Can not decode album description {}, {}", rest_album.description, e);
             }
-        }
-        ;
+        };
 
     }
 }

@@ -54,7 +54,7 @@ public class DM_ExportProject extends DM_Abstract {
         }
 
         AlbumAddrAttributes albumAddrParseResult = UrlCreator.parseAlbumURL(albumAddr);
-        return export(albumAddrParseResult.ownerId, albumAddrParseResult.albumId);
+        return export((long)albumAddrParseResult.ownerId, (long)albumAddrParseResult.albumId);
 
     }
 

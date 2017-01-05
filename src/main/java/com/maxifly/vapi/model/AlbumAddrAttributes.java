@@ -4,8 +4,8 @@ package com.maxifly.vapi.model;
  * Created by Maximus on 08.12.2016.
  */
 public class AlbumAddrAttributes {
-    public long ownerId;
-    public long albumId;
+    public int ownerId;
+    public int albumId;
 
     public AlbumAddrAttributes(int ownerId, int albumId) {
         this.ownerId = ownerId;
@@ -25,8 +25,8 @@ public class AlbumAddrAttributes {
 
     @Override
     public int hashCode() {
-        int result = (int) (ownerId ^ (ownerId >>> 32));
-        result = 31 * result + (int) (albumId ^ (albumId >>> 32));
+        int result = ownerId;
+        result = 31 * result + albumId;
         return result;
     }
 }

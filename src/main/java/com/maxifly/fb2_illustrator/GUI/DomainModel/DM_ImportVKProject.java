@@ -45,7 +45,7 @@ public class DM_ImportVKProject extends DM_Abstract {
         AlbumAddrAttributes albumAddrParseResult = UrlCreator.parseAlbumURL(albumAddr.getValue());
 
         ProjectProcessor projectProcessor = new ProjectProcessor(dm_statusBar.getToken(),
-                albumAddrParseResult.ownerId,
+                (long)albumAddrParseResult.ownerId,
                 albumAddrParseResult.albumId);
         progress_monitor.updateProgress(1,100, "download project");
         try {
