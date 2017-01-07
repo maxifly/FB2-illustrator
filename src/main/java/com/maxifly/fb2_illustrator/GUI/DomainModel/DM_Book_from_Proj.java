@@ -95,7 +95,7 @@ public abstract class DM_Book_from_Proj
     /**
      * Проводит проверки и собирает замечания
      */
-    private void checks() {
+    protected void checks() {
 
 
         if (book_name.getValue() == null || "".equals(book_name.getValue().trim())) {

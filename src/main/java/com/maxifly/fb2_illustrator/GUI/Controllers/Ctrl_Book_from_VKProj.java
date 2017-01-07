@@ -83,6 +83,11 @@ public class Ctrl_Book_from_VKProj
 
     }
 
+    @FXML
+    protected void reset(ActionEvent actionEvent) throws MyException, IOException {
+        dm_book_from_vkProj.reset(vk_src_type.getValue(), src_addr.getText());
+        refresh(actionEvent);
+    }
 
     private void taskCancelled(Stage monitorWindow) {
         log.error("Task cancelled");

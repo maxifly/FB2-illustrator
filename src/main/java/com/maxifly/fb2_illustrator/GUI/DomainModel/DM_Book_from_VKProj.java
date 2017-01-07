@@ -34,7 +34,6 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     private Task task;
 
 
-
     public ObservableList<OwnerAlbumProject> getSuitableProjects() {
         return suitableProjects;
     }
@@ -54,10 +53,8 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
                 ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
                 break;
             case "альбом":
-                 albumAddrAttributes = UrlCreator.parseAlbumURL(srcAddr);
-                 break;
-//                throw new MyException("Unsupported"); // TODO Сделать рефреш из альбома
-//                albumId = UrlCreator.getAlbumId(srcAddr);
+                albumAddrAttributes = UrlCreator.parseAlbumURL(srcAddr);
+                break;
             default:
                 throw new MyException("Unsupported addr type: " + addrType);
         }
@@ -70,9 +67,33 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
     }
 
+    public void reset(String addrType, String srcAddr) throws MyException {
+        if (srcAddr == null) {
+            this.factory_gui.getAlbumsContainer().refresh();
+        } else {
+            switch (addrType) {
+                case "группа":
+                    Integer ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
+                    if (ownerId > 0) ownerId = -1 * ownerId;
+                    this.factory_gui.getAlbumsContainer().refresh(ownerId);
+                    break;
+                case "пользователь":
+                    ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
+                    this.factory_gui.getAlbumsContainer().refresh(ownerId);
+                    break;
+                case "альбом":
+                    AlbumAddrAttributes albumAddrAttributes = UrlCreator.parseAlbumURL(srcAddr);
+                    this.factory_gui.getAlbumsContainer().refresh(albumAddrAttributes.ownerId);
+                    break;
+                default:
+                    throw new MyException("Unsupported addr type: " + addrType);
+            }
+        }
+
+    }
 
     private List<OwnerAlbumProject> refreshAlbum(AlbumAddrAttributes albumAddrAttributes) throws MyException {
-        log.debug("Refresh album. {}.",albumAddrAttributes);
+        log.debug("Refresh album. {}.", albumAddrAttributes);
         List<OwnerAlbumProject> result = new ArrayList<>();
 
         AlbumsContainer albumsContainer = this.factory_gui.getAlbumsContainer();
@@ -81,7 +102,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
             albumProjects = new AlbumProjects(this.factory_gui.getDm_statusBar().getToken(),
                     albumAddrAttributes.ownerId,
                     albumAddrAttributes.albumId);
-            albumsContainer.putAlbumProjects(albumAddrAttributes,albumProjects);
+            albumsContainer.putAlbumProjects(albumAddrAttributes, albumProjects);
         }
 
         try {
@@ -100,7 +121,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
                             project_vk));
                 }
             }
-        }catch (TaskInterruptedRuntime e) {
+        } catch (TaskInterruptedRuntime e) {
             log.error("Exception TaskInterruptedRuntime ", e);
             task.cancel();
             result.clear();
@@ -110,7 +131,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     }
 
     private List<OwnerAlbumProject> refreshOwner(int ownerId) throws MyException {
-        log.debug("Refresh albums by owner {}",ownerId);
+        log.debug("Refresh albums by owner {}", ownerId);
 
         List<OwnerAlbumProject> result = new ArrayList<>();
 
@@ -179,7 +200,7 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
                 selectedProject.getValue().ownerId,
                 selectedProject.getValue().albumId);
 
-        progress.updateProgress(1,100, "download project");
+        progress.updateProgress(1, 100, "download project");
         Project_VK project_vk = null;
         try {
             project_vk = projectProcessor.importProject(selectedProject.getValue().project_vk.getId());
@@ -200,5 +221,10 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         } else {
             super.projectObjectProperty.setValue(null);
         }
+    }
+
+    @Override
+    protected void checks() {
+//        super.checks();
     }
 }
