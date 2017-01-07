@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -114,6 +115,24 @@ public class Ctrl_MainMenu implements Initializable {
                 dm_mainMenu.ill();
                 break;
         }
+
+    }
+
+
+    @FXML
+    private void action_help(ActionEvent actionEvent) throws IOException {
+        switch (((MenuItem) actionEvent.getSource()).getId()) {
+            case "help_about":
+                GUI_Obj gui_obj = factory_gui.createAbout();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.getDialogPane().setContent(gui_obj.node);
+                alert.setHeaderText("");
+                alert.showAndWait();
+                break;
+
+        }
+
 
     }
 

@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.github.maxifly</groupId>
             <artifactId>jutils</artifactId>
-            <version>master-SNAPSHOT</version>
+            <version>v1.2.2</version>
         </dependency>
 
     </dependencies>

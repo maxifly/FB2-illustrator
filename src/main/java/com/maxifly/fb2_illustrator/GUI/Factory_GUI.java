@@ -250,6 +250,21 @@ public class Factory_GUI {
         return new GUI_Obj(node, loader.getController(), dm_exportProject);
     }
 
+    public GUI_Obj createAbout()
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormAbout.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+                return new Ctrl_About();
+            }
+        });
+        Node node = loader.load();
+
+        return new GUI_Obj(node, loader.getController(), null);
+    }
 
     public GUI_Obj createProjectDelete()
             throws IOException {
