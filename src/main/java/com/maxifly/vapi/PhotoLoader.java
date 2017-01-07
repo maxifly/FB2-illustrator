@@ -34,7 +34,7 @@ public class PhotoLoader {
 
     public PhotoLoader(Path destDir) {
         this.destDir = destDir;
-        downloader = new Downloader(2);
+        downloader = new Downloader(5);
     }
 
     public void setProgress_monitor(I_Progress progress_monitor) {
@@ -61,7 +61,7 @@ public class PhotoLoader {
                 String fileType = UrlCreator.getFileType(pictureURL);
                 File temp = File.createTempFile("ill", "." + fileType, destDir.toFile());
                 illustration.setFile(temp.toPath());
-                Download download = new Download(new URL(pictureURL), temp.toString(), 10);
+                Download download = new Download(new URL(pictureURL), temp.toString(), 1024);
                 this.downloader.startTask(download);
             }
 
