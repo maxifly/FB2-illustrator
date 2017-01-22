@@ -11,10 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -30,9 +27,9 @@ public class Ctrl_SearchTemplate_Edit
     private DM_SearchTemplate dm_searchTemplate;
 
     @FXML
-    TextField template;
+    TextArea template;
     @FXML
-    TextField description;
+    TextArea description;
 
     @FXML
     RadioButton type_text;
