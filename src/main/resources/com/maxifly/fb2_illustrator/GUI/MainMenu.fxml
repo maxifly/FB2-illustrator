@@ -30,7 +30,6 @@
             <MenuItem id="del_project" fx:id="vk_prj_del" mnemonicParsing="false" onAction="#action_vk" text="Delete project" />
             <MenuItem id="export_project" fx:id="vk_prj_exp" mnemonicParsing="false" onAction="#action_vk" text="Export current project" />
             <MenuItem id="import_project" fx:id="vk_prj_imp" mnemonicParsing="false" onAction="#action_vk" text="Import project" />
-            <MenuItem id="vk_test" mnemonicParsing="false" onAction="#action_vk" text="vk_test" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
