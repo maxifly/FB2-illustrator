@@ -126,16 +126,16 @@ public class DM_MainMenu {
         ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
     }
 
-    public void ill() throws IOException {
-        Illustration illustration = createIll(2, "kuku");
-
-        GUI_Obj gui_obj = factory_gui.createIll(illustration);
-
-        Scene scene = factory_gui.getMainScene();
-        ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
-
-
-    }
+//    public void ill() throws IOException {
+//        Illustration illustration = createIll(2, "kuku");
+//
+//        GUI_Obj gui_obj = factory_gui.createIll(illustration);
+//
+//        Scene scene = factory_gui.getMainScene();
+//        ((BorderPane) scene.getRoot()).setCenter(gui_obj.node);
+//
+//
+//    }
 
 
     private Illustration createIll(Integer number, String prefix) {

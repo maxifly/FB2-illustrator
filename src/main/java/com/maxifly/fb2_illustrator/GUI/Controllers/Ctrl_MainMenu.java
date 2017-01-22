@@ -94,10 +94,10 @@ public class Ctrl_MainMenu implements Initializable {
             case "prj_save":
                 save_project(actionEvent);
                 break;
-            case "prj_test":
-                dm_mainMenu.project_test();
-                projectItemsDisable();
-                break;
+//            case "prj_test":
+//                dm_mainMenu.project_test();
+//                projectItemsDisable();
+//                break;
 
             case "prj_curr_to_book":
                 GUI_Obj gui_obj = this.factory_gui.createBookFromCurProj();
@@ -111,9 +111,6 @@ public class Ctrl_MainMenu implements Initializable {
                 ((BorderPane) scene_vk.getRoot()).setCenter(gui_obj_vk.node);
                 break;
 
-            case "prj_ill":
-                dm_mainMenu.ill();
-                break;
         }
 
     }
