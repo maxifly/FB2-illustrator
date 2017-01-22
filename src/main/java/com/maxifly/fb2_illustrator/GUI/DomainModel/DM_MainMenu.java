@@ -20,8 +20,11 @@ import javafx.stage.Stage;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 
@@ -150,5 +153,37 @@ public class DM_MainMenu {
         return this.currentProjectProperty;
     }
 
+    /**
+     * Показывает страницу с документацией
+     * @throws MyException
+     */
+    public void showHelp() throws MyException {
+        try {
+            if (isBrowsingSupported()) {
+                Desktop desktop = java.awt.Desktop.getDesktop();
+
+
+                desktop.browse(new URI("http://maxifly.github.io/FB2-illustrator/"));
+
+            }
+        } catch (IOException| URISyntaxException e) {
+            e.printStackTrace();
+            throw new MyException("Can not open documentation", e);
+        }
+    }
+
+
+    private static boolean isBrowsingSupported() {
+        if (!Desktop.isDesktopSupported()) {
+            return false;
+        }
+        boolean result = false;
+        Desktop desktop = java.awt.Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+            result = true;
+        }
+        return result;
+
+    }
 
 }

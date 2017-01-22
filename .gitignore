@@ -7,3 +7,4 @@ config/*
 priv_fales/*
 target/*
 *.orig
+log.txt

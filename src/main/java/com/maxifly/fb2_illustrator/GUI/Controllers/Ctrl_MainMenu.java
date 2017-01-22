@@ -120,8 +120,11 @@ public class Ctrl_MainMenu implements Initializable {
 
 
     @FXML
-    private void action_help(ActionEvent actionEvent) throws IOException {
+    private void action_help(ActionEvent actionEvent) throws IOException, MyException {
         switch (((MenuItem) actionEvent.getSource()).getId()) {
+            case "help_help":
+                dm_mainMenu.showHelp();
+                break;
             case "help_about":
                 GUI_Obj gui_obj = factory_gui.createAbout();
 
