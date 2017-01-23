@@ -3,7 +3,9 @@ package com.maxifly.fb2_illustrator;
 import com.maxifly.vapi.model.AlbumAddrAttributes;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
