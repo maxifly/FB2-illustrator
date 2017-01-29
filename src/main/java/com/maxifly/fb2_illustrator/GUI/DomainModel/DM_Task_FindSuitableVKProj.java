@@ -1,5 +1,7 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.fb2_illustrator.Settings;
+import com.maxifly.fb2_illustrator.model.LastAddrs;
 import com.maxifly.jutils.EmptyProgress;
 import com.maxifly.jutils.I_Progress;
 import com.maxifly.vapi.model.OwnerAlbumProject;
@@ -20,7 +22,6 @@ public class DM_Task_FindSuitableVKProj extends Task<List<OwnerAlbumProject>>
     private long doneCnt = 0;
 
     private I_Progress progress_monitor;
-
 
     public DM_Task_FindSuitableVKProj(DM_Book_from_VKProj dm_book_from_vkProj, String addrType, String srcAddr) {
         this.dm_book_from_vkProj = dm_book_from_vkProj;

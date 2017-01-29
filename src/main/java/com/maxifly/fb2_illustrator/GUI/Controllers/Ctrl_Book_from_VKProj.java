@@ -8,7 +8,9 @@ import com.maxifly.fb2_illustrator.GUI.ExceptionHandler;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.MyRuntimeException;
 import com.maxifly.jutils.I_Progress;
+import com.maxifly.vapi.UrlCreator;
 import com.maxifly.vapi.model.OwnerAlbumProject;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -54,7 +56,7 @@ public class Ctrl_Book_from_VKProj
     @FXML
     private ChoiceBox<String> vk_src_type;
     @FXML
-    private TextField src_addr;
+    private ComboBox<String> src_addr;
     @FXML
     private ListView<OwnerAlbumProject> projects;
 
@@ -62,7 +64,9 @@ public class Ctrl_Book_from_VKProj
     @FXML
     protected void refresh(ActionEvent actionEvent) throws MyException, IOException {
         clearProjects();
-        DM_Task_FindSuitableVKProj refreshTask = new DM_Task_FindSuitableVKProj(dm_book_from_vkProj, vk_src_type.getValue(), src_addr.getText());
+        DM_Task_FindSuitableVKProj refreshTask = new DM_Task_FindSuitableVKProj(
+                dm_book_from_vkProj, vk_src_type.getValue(),
+                src_addr.getSelectionModel().getSelectedItem());
 
         GUI_Obj gui_obj = factory_gui.createProgressWindow();
 
@@ -85,7 +89,9 @@ public class Ctrl_Book_from_VKProj
 
     @FXML
     protected void reset(ActionEvent actionEvent) throws MyException, IOException {
-        dm_book_from_vkProj.reset(vk_src_type.getValue(), src_addr.getText());
+        dm_book_from_vkProj.reset(
+                vk_src_type.getValue(),
+                src_addr.getSelectionModel().getSelectedItem());
         refresh(actionEvent);
     }
 
@@ -122,7 +128,7 @@ public class Ctrl_Book_from_VKProj
     }
 
     private void load_ill_failed(WorkerStateEvent event, Stage monitorWindow) {
-        taskFailed(event,monitorWindow);
+        taskFailed(event, monitorWindow);
     }
 
     private void load_ill_complite(WorkerStateEvent event, Stage monitorWindow) {
@@ -132,7 +138,6 @@ public class Ctrl_Book_from_VKProj
         info.setHeaderText(null);
         info.showAndWait();
     }
-
 
 
     private void changeSelectedPrj(OwnerAlbumProject newValue) {
@@ -152,6 +157,20 @@ public class Ctrl_Book_from_VKProj
                 !isPrjSelected.getValue());
     }
 
+
+    /**
+     * Действия /которые надо совершить, если изменился тип вводимого адреса
+     * @param newValue
+     */
+    private void changeAddrType(String newValue) {
+        try {
+            this.src_addr.getItems().clear();
+            this.src_addr.getItems().addAll(dm_book_from_vkProj.getAddrs(newValue)); //TODO Добавить итемы
+        } catch (MyException e) {
+            throw new MyRuntimeException(e);
+        }
+    }
+
     public Ctrl_Book_from_VKProj(DM_Book_from_VKProj dm_book_from_proj, Factory_GUI factory_gui) {
         super(dm_book_from_proj);
         this.dm_book_from_vkProj = dm_book_from_proj;
@@ -164,7 +183,8 @@ public class Ctrl_Book_from_VKProj
 
         selectedProject.bindBidirectional(dm_book_from_vkProj.selectedProjectProperty());
         vk_src_type.getItems().addAll("группа", "пользователь", "альбом");
-        vk_src_type.setValue("группа");
+
+
 
         projects.setItems(dm_book_from_vkProj.getSuitableProjects());
         projects.getSelectionModel().selectedItemProperty().addListener(
@@ -173,6 +193,11 @@ public class Ctrl_Book_from_VKProj
         this.book_name.textProperty().addListener(
                 (observable, oldValue, newValue) -> clearProjects()
         );
+
+        vk_src_type.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> changeAddrType(newValue)
+        );
+        vk_src_type.setValue("группа");
 
 
         Ctrl_Book_from_VKProj s = this;

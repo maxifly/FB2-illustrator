@@ -28,4 +28,8 @@ public class LastAddrs implements Iterable<String>{
     public Iterator<String> iterator() {
         return addrs.iterator();
     }
+
+    public LinkedList<String> getAddrs() {
+        return addrs;
+    }
 }

@@ -3,6 +3,7 @@ package com.maxifly.fb2_illustrator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.maxifly.fb2_illustrator.model.Illustration;
+import com.maxifly.fb2_illustrator.model.LastAddrs;
 import com.maxifly.fb2_illustrator.model.Project;
 
 import java.io.File;
@@ -20,9 +21,11 @@ public class Settings {
     private Double winSize_H = 600D;
     private String projectsDir;
 
-    private LinkedList<String> last_users = new LinkedList<>();
+    private LastAddrs lastUserAddrs = new LastAddrs(5);
     private List<String> preset_users = new ArrayList<>();
-
+    private LastAddrs lastGroupAddrs = new LastAddrs(5);
+    private List<String> preset_groups = new ArrayList<>();
+    private LastAddrs lastAlbumAddrs = new LastAddrs(5);
 
     /**
      * Создает новый объект с установками
@@ -92,17 +95,34 @@ public class Settings {
     }
 
 
+    public LastAddrs getLastUserAddrs() {
+        return lastUserAddrs;
+    }
 
+    public LastAddrs getLastGroupAddrs() {
+        return lastGroupAddrs;
+    }
 
+    public LastAddrs getLastAlbumAddrs() {
+        return lastAlbumAddrs;
+    }
 
+    public List<String> getPreset_users() {
+        return preset_users;
+    }
 
+    public List<String> getPreset_groups() {
+        return preset_groups;
+    }
 
     /**
      * Заполняет предустановленые списки
      */
     private void fill_preset() {
         preset_users.clear();
-        preset_users.add("pr_1");
-        preset_users.add("pr_2");
+        preset_groups.clear();
+
+//        preset_users.add("pr_1");
+//        preset_users.add("pr_2");
     }
 }

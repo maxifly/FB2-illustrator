@@ -2,6 +2,7 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.Settings;
 import com.maxifly.fb2_illustrator.TaskInterrupted;
 import com.maxifly.fb2_illustrator.TaskInterruptedRuntime;
 import com.maxifly.jutils.I_Progress;
@@ -33,6 +34,47 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
     private I_Progress progress;
     private Task task;
 
+    //    private LastAddrs lastGroups;
+//    private LastAddrs lastUsers;
+//    private LastAddrs lastAlbums;
+
+    Settings settings;
+
+
+    /**
+     * Отдает частоиспользуемые адреса определенного типа
+     * @param addrType
+     * @return
+     * @throws MyException
+     */
+
+    public List<String> getAddrs(String addrType) throws MyException {
+        List<String> addrs = new ArrayList<>();
+
+        switch (addrType) { //TODO При случае поменять addrType на перечисление
+            case "группа":
+                addrs.addAll(settings.getLastGroupAddrs().getAddrs());
+                for (String pAddr : settings.getPreset_groups()) {
+                    if (!addrs.contains(pAddr)) addrs.add(pAddr);
+                }
+                break;
+            case "пользователь":
+                addrs.addAll(settings.getLastUserAddrs().getAddrs());
+                for (String pAddr : settings.getPreset_users()) {
+                    if (!addrs.contains(pAddr)) addrs.add(pAddr);
+                }
+                break;
+            case "альбом":
+                addrs.addAll(settings.getLastAlbumAddrs().getAddrs());
+                break;
+            default:
+                throw new MyException("Unsupported addr type: " + addrType);
+        }
+
+
+        return addrs;
+    }
+
 
     public ObservableList<OwnerAlbumProject> getSuitableProjects() {
         return suitableProjects;
@@ -44,16 +86,19 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
         this.progress = progress;
         this.task = task;
 
-        switch (addrType) {
+        switch (addrType) { //TODO При случае поменять addrType на перечисление
             case "группа":
                 ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
                 if (ownerId > 0) ownerId = -1 * ownerId;
+                settings.getLastGroupAddrs().change_LastAddr(srcAddr);
                 break;
             case "пользователь":
                 ownerId = UrlCreator.getOwnerIdByOwnerURL(srcAddr);
+                settings.getLastUserAddrs().change_LastAddr(srcAddr);
                 break;
             case "альбом":
                 albumAddrAttributes = UrlCreator.parseAlbumURL(srcAddr);
+                settings.getLastAlbumAddrs().change_LastAddr(srcAddr);
                 break;
             default:
                 throw new MyException("Unsupported addr type: " + addrType);
@@ -188,6 +233,10 @@ public class DM_Book_from_VKProj extends DM_Book_from_Proj {
 
     public DM_Book_from_VKProj(Factory_GUI factory_gui) throws JAXBException {
         super(factory_gui);
+        this.settings = factory_gui.getDm_statusBar().getSettings();
+
+
+
         selectedProject.addListener((observable, oldValue, newValue) -> changeSelectedProject(newValue)
         );
 //        super.dm_projectObjectPropertyProperty().bindBidirectional(factory_gui.getDm_statusBar().dmProject_Property());

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
@@ -57,10 +58,6 @@
                <tooltip>
                   <Tooltip text="Тип источника иллюстраций" />
                </tooltip></ChoiceBox>
-            <TextField fx:id="src_addr" GridPane.columnIndex="2" GridPane.rowIndex="3">
-               <tooltip>
-                  <Tooltip text="Адрес источника иллюстраций" />
-               </tooltip></TextField>
             <VBox alignment="TOP_CENTER" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <HBox alignment="TOP_RIGHT" spacing="10.0">
@@ -94,6 +91,7 @@
                </children>
             </VBox>
             <ListView fx:id="projects" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ComboBox fx:id="src_addr" editable="true" prefHeight="31.0" prefWidth="299.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="588.0" spacing="10.0">
