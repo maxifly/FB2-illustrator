@@ -36,6 +36,8 @@
       <items>
             <MenuItem fx:id="help_help" mnemonicParsing="false" onAction="#action_help" text="Help" />
         <MenuItem fx:id="help_about" mnemonicParsing="false" onAction="#action_help" text="About" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="help_settings" mnemonicParsing="false" onAction="#action_help" text="Settings" />
       </items>
     </Menu>
   </menus>

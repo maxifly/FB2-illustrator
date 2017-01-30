@@ -130,6 +130,12 @@ public class Ctrl_MainMenu implements Initializable {
                 alert.setHeaderText("");
                 alert.showAndWait();
                 break;
+            case "help_settings":
+                GUI_Obj gui_setting = factory_gui.createSettingForm();
+
+                Scene scene = this.factory_gui.getMainScene();
+                ((BorderPane) scene.getRoot()).setCenter(gui_setting.node);
+                break;
 
         }
 

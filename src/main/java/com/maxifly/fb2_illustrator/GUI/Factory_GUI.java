@@ -199,6 +199,25 @@ public class Factory_GUI {
 
     }
 
+
+    public GUI_Obj createSettingForm()
+            throws IOException {
+        Factory_GUI factory_gui = this;
+        DM_Settings dm_settings = new DM_Settings();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Factory_GUI.class.getResource("FormSettings.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> aClass) {
+
+                return new Ctrl_Settings(factory_gui, dm_settings);
+            }
+        });
+        Node node = loader.load();
+        return new GUI_Obj(node, loader.getController(), dm_settings);
+
+    }
+
     public GUI_Obj createIll(Illustration ill)
             throws IOException {
         Factory_GUI factory_gui = this;
