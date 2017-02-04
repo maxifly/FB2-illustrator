@@ -33,6 +33,7 @@ public class Ctrl_Settings extends Ctrl_Abstract implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        resH.textProperty().bindBidirectional(dm_settings.resHProperty());
 
     }
 }

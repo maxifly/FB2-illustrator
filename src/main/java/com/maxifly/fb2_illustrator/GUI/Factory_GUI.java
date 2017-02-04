@@ -203,7 +203,7 @@ public class Factory_GUI {
     public GUI_Obj createSettingForm()
             throws IOException {
         Factory_GUI factory_gui = this;
-        DM_Settings dm_settings = new DM_Settings();
+        DM_Settings dm_settings = new DM_Settings(factory_gui);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Factory_GUI.class.getResource("FormSettings.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {

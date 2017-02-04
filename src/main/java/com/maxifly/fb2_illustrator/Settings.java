@@ -19,6 +19,9 @@ import java.util.List;
 public class Settings {
     private Double winSize_W = 800D;
     private Double winSize_H = 600D;
+
+    private Integer bookSize_W = 600;
+    private Integer bookSize_H = 800;
     private String projectsDir;
 
     private LastAddrs lastUserAddrs = new LastAddrs(5);
@@ -80,6 +83,22 @@ public class Settings {
 
     public Double getWinSize_H() {
         return winSize_H;
+    }
+
+    public Integer getBookSize_W() {
+        return bookSize_W;
+    }
+
+    public void setBookSize_W(Integer bookSize_W) {
+        this.bookSize_W = bookSize_W;
+    }
+
+    public Integer getBookSize_H() {
+        return bookSize_H;
+    }
+
+    public void setBookSize_H(Integer bookSize_H) {
+        this.bookSize_H = bookSize_H;
     }
 
     public void setWinSize_H(Double winSize_H) {
