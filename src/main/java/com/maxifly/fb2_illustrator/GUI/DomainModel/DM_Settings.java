@@ -1,9 +1,13 @@
 package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
+import com.maxifly.fb2_illustrator.Constants;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
+import com.maxifly.fb2_illustrator.MyException;
 import com.maxifly.fb2_illustrator.Settings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import java.io.IOException;
 
 /**
  * Created by Maximus on 30.01.2017.
@@ -23,11 +27,27 @@ public class DM_Settings extends DM_Abstract {
 
     }
 
-    private void refresh() {
+    public void refresh() {
         setResH(settings.getBookSize_H().toString());
         setResV(settings.getBookSize_V().toString());
         setProjDir(settings.getProjectsDir());
     }
+
+    public void save() {
+        settings.setBookSize_H(Integer.parseInt(getResH()));
+        settings.setBookSize_V(Integer.parseInt(getResV()));
+        settings.setProjectsDir(getProjDir());
+
+        try {
+            settings.writeSettings(Constants.ensureAppDataDir());
+        } catch (IOException | MyException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
 
 

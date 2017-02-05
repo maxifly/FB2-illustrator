@@ -65,11 +65,11 @@ public class Ctrl_Settings extends Ctrl_Abstract implements Initializable {
 
     @FXML
     protected void actionSave(ActionEvent actionEvent) {
-
+        dm_settings.save();
     }
     @FXML
     protected void actionCancel(ActionEvent actionEvent) {
-
+        dm_settings.refresh();
     }
 
 
