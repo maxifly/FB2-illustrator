@@ -2,8 +2,6 @@ package com.maxifly.fb2_illustrator.GUI.DomainModel;
 
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.Settings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -11,8 +9,9 @@ import javafx.beans.property.StringProperty;
  * Created by Maximus on 30.01.2017.
  */
 public class DM_Settings extends DM_Abstract {
-    private StringProperty ResW = new SimpleStringProperty();
-    private StringProperty ResH = new SimpleStringProperty();
+    private StringProperty resV = new SimpleStringProperty();
+    private StringProperty resH = new SimpleStringProperty();
+    private StringProperty projDir = new SimpleStringProperty();
 
     private Factory_GUI factory_gui;
     private Settings settings;
@@ -26,32 +25,45 @@ public class DM_Settings extends DM_Abstract {
 
     private void refresh() {
         setResH(settings.getBookSize_H().toString());
-        setResW(settings.getBookSize_W().toString());
+        setResV(settings.getBookSize_V().toString());
+        setProjDir(settings.getProjectsDir());
     }
 
 
 
-    public String getResW() {
-        return ResW.get();
+    public String getResV() {
+        return resV.get();
     }
 
-    public StringProperty resWProperty() {
-        return ResW;
+    public StringProperty resVProperty() {
+        return resV;
     }
 
-    public void setResW(String resW) {
-        this.ResW.set(resW);
+    public void setResV(String resW) {
+        this.resV.set(resW);
     }
 
     public String getResH() {
-        return ResH.get();
+        return resH.get();
     }
 
     public StringProperty resHProperty() {
-        return ResH;
+        return resH;
     }
 
     public void setResH(String resH) {
-        this.ResH.set(resH);
+        this.resH.set(resH);
+    }
+
+    public String getProjDir() {
+        return projDir.get();
+    }
+
+    public StringProperty projDirProperty() {
+        return projDir;
+    }
+
+    public void setProjDir(String projDir) {
+        this.projDir.set(projDir);
     }
 }

@@ -205,15 +205,16 @@ public class Factory_GUI {
         Factory_GUI factory_gui = this;
         DM_Settings dm_settings = new DM_Settings(factory_gui);
         FXMLLoader loader = new FXMLLoader();
+
         loader.setLocation(Factory_GUI.class.getResource("FormSettings.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> aClass) {
-
                 return new Ctrl_Settings(factory_gui, dm_settings);
             }
         });
         Node node = loader.load();
+        Ctrl_Settings ctrl_settings= loader.getController();
         return new GUI_Obj(node, loader.getController(), dm_settings);
 
     }

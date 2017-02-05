@@ -20,8 +20,8 @@ public class Settings {
     private Double winSize_W = 800D;
     private Double winSize_H = 600D;
 
-    private Integer bookSize_W = 600;
-    private Integer bookSize_H = 800;
+    private Integer bookSize_V = 800;
+    private Integer bookSize_H = 600;
     private String projectsDir;
 
     private LastAddrs lastUserAddrs = new LastAddrs(5);
@@ -85,12 +85,12 @@ public class Settings {
         return winSize_H;
     }
 
-    public Integer getBookSize_W() {
-        return bookSize_W;
+    public Integer getBookSize_V() {
+        return bookSize_V;
     }
 
-    public void setBookSize_W(Integer bookSize_W) {
-        this.bookSize_W = bookSize_W;
+    public void setBookSize_V(Integer bookSize_V) {
+        this.bookSize_V = bookSize_V;
     }
 
     public Integer getBookSize_H() {
