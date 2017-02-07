@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.nio.file.Files;
@@ -66,10 +67,14 @@ public class Ctrl_Settings extends Ctrl_Abstract implements Initializable {
     @FXML
     protected void actionSave(ActionEvent actionEvent) {
         dm_settings.save();
+        Stage stage = (Stage) btnSave.getScene().getWindow();
+        stage.close();
     }
     @FXML
     protected void actionCancel(ActionEvent actionEvent) {
         dm_settings.refresh();
+        Stage stage = (Stage) btnSave.getScene().getWindow();
+        stage.close();
     }
 
 

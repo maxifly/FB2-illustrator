@@ -131,10 +131,7 @@ public class Ctrl_MainMenu implements Initializable {
                 alert.showAndWait();
                 break;
             case "help_settings":
-                GUI_Obj gui_setting = factory_gui.createSettingForm();
-
-                Scene scene = this.factory_gui.getMainScene();
-                ((BorderPane) scene.getRoot()).setCenter(gui_setting.node);
+                change_settings();
                 break;
 
         }
@@ -148,6 +145,12 @@ public class Ctrl_MainMenu implements Initializable {
     }
 
 
+    private void change_settings() throws IOException {
+        GUI_Obj gui_obj = factory_gui.createSettingForm();
+        Stage stage = factory_gui.createModalWindow(gui_obj.node);
+        stage.showAndWait();
+
+    }
     private void del_project() throws IOException {
         GUI_Obj gui_obj = factory_gui.createProjectDelete();
         Stage stage = factory_gui.createModalWindow(gui_obj.node);

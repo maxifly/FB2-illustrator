@@ -482,7 +482,7 @@ public class Factory_GUI {
         Parent root = new BorderPane();
         ((BorderPane) root).setCenter(node);
         stage.setScene(new Scene(root));
-        stage.setTitle("My modal window");
+        stage.setTitle("");
         stage.initModality(Modality.WINDOW_MODAL);
 
         stage.initOwner(this.getMainScene().getWindow());
