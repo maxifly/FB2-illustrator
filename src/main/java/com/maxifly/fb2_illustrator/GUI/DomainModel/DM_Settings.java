@@ -44,6 +44,8 @@ public class DM_Settings extends DM_Abstract {
             e.printStackTrace();
         }
 
+        factory_gui.getDm_statusBar().refresh();
+
 
     }
 

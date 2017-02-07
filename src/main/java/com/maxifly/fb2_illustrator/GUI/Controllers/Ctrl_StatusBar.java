@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -29,7 +30,9 @@ public class Ctrl_StatusBar implements Initializable {
     private BooleanProperty changedProjectProperty = new SimpleBooleanProperty();
 
     @FXML
-    private Label userlogin;
+    private Text userlogin;
+    @FXML
+    private Text bookRes;
 
     public Ctrl_StatusBar(DM_StatusBar dm_statusBar, Factory_GUI factory_gui) {
         this.dm_statusBar = dm_statusBar;
@@ -49,6 +52,7 @@ public class Ctrl_StatusBar implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userlogin.textProperty().bindBidirectional(dm_statusBar.loginProperty());
+        bookRes.textProperty().bindBidirectional(dm_statusBar.bookResProperty());
         dmProjectProperty.bindBidirectional(dm_statusBar.dmProject_Property());
 
         dmProjectProperty.addListener((observable, oldValue, newValue) -> project_property_changed(newValue));

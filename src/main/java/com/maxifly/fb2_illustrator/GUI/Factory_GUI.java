@@ -458,7 +458,7 @@ public class Factory_GUI {
         });
         Parent root = loader.load();
         stage.setScene(new Scene(root));
-        stage.setTitle("My modal window");
+        stage.setTitle("Connect");
         stage.initModality(Modality.WINDOW_MODAL);
 
         stage.initOwner(this.getMainScene().getWindow());

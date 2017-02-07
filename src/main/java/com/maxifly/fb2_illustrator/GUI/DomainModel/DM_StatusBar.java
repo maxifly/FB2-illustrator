@@ -16,6 +16,10 @@ public class DM_StatusBar {
     private String token;
     private ObjectProperty<DM_Project> dmProjectProperty = new SimpleObjectProperty<>();
 
+    private StringProperty bookRes = new SimpleStringProperty();
+
+
+
     private Settings settings;
 
 
@@ -26,6 +30,13 @@ public class DM_StatusBar {
     public void setLogin(String login, String token) {
         this.login.set("login: " + login);
         this.token = token;
+    }
+
+    /**
+     * Обновляет данные в статусной строке
+     */
+    public void refresh() {
+        setBookRes(settings.getBookSize_H().toString()+ "x" + settings.getBookSize_V().toString());
     }
 
     public StringProperty loginProperty() {
@@ -50,6 +61,7 @@ public class DM_StatusBar {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+        refresh();
     }
 
     public Long getUserId() {
@@ -58,5 +70,18 @@ public class DM_StatusBar {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+
+    public String getBookRes() {
+        return bookRes.get();
+    }
+
+    public StringProperty bookResProperty() {
+        return bookRes;
+    }
+
+    public void setBookRes(String bookRes) {
+        this.bookRes.set(bookRes);
     }
 }
