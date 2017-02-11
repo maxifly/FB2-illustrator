@@ -97,6 +97,12 @@ public class DM_CertainAlbum {
         }
 
 
+        // Отмасштабируем иллюстрации
+        illustrations.scaleIllustrations(
+                factory_gui.getDm_statusBar().getSettings().getBookSize_H(),
+                factory_gui.getDm_statusBar().getSettings().getBookSize_V()
+        );
+
         // Вставим иллюстрации
         BookProcessor bookParse = new BookProcessor_FB20();
         bookParse.loadBook(inputFile);

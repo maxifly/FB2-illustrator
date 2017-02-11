@@ -4,9 +4,13 @@ import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
 //import com.maxifly.fb2_illustrator.fb2_xml.model.PType;
+import com.maxifly.fb2_illustrator.MyException;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -136,6 +140,13 @@ public class Illustrations {
 
     }
 
+
+    public void scaleIllustrations(int Weight, int Hight) throws IOException, MyException {
+        Path tempDir = Files.createTempDirectory("fbill_");
+        for (Illustration ill : allIllustrations) {
+            ill.resizeFile(Weight,Hight,tempDir);
+        }
+    }
 
     public void addNotChined(Integer startIndex,
                              Integer endIndex,

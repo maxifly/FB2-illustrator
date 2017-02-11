@@ -3,9 +3,15 @@ package com.maxifly.fb2_illustrator.model;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 import com.maxifly.fb2_illustrator.Constants;
+import com.maxifly.fb2_illustrator.ImageUtils;
+import com.maxifly.fb2_illustrator.MyException;
+import com.sun.imageio.plugins.common.ImageUtil;
 import org.slf4j.cal10n.LocLogger;
 import org.slf4j.cal10n.LocLoggerFactory;
 
+import java.awt.*;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +29,8 @@ public class Illustration implements Comparable<Illustration> {
             .getLocLogger(Illustration.class.getName());
 
     private Path file;
+    private Path scaleFile;
+
     private String def_description;
     private String illustrated_description = null;
     private Integer id;
@@ -82,6 +90,38 @@ public class Illustration implements Comparable<Illustration> {
     public void setFile(Path file) {
         this.file = file;
     }
+
+    public Path getScaleFile() {
+
+        return (scaleFile!=null)?scaleFile:file;
+    }
+
+    public void setScaleFile(Path scaleFile) {
+        this.scaleFile = scaleFile;
+    }
+
+    public void resizeFile(int weight, int hight, Path illDir) throws MyException {
+        this.file.getFileName();
+        Path scaleFilePath = illDir.resolve(this.file.getFileName());
+
+        Image originalImage = null;
+        try {
+            originalImage = ImageUtils.loadImage(this.file.toFile());
+
+            RenderedImage newImage = ImageUtils.createResizedCopy(originalImage, weight, hight, true);
+            if (newImage != null) {
+                ImageUtils.writeImage(newImage, scaleFilePath.toFile());
+                scaleFile = scaleFilePath;
+            } else {
+                scaleFile = this.file;
+            };
+        } catch (MyException e) {
+            log.error("Error when resize image:",e);
+            throw e;
+        }
+    }
+
+
 
     public String getDescription() {
         if (illustrated_description == null) {

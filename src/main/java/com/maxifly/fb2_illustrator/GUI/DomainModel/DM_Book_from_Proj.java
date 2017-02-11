@@ -203,6 +203,15 @@ public abstract class DM_Book_from_Proj
             illustrations.addIllustration(illustration);
         }
 
+        // Отмасштабируем иллюстрации
+        illustrations.scaleIllustrations(
+                factory_gui.getDm_statusBar().getSettings().getBookSize_H(),
+                factory_gui.getDm_statusBar().getSettings().getBookSize_V()
+                );
+
+
+
+
 
         // Вставим иллюстрации
         bookParse.processBook(illustrations, project.getProjectParagraf(), outputFile);
