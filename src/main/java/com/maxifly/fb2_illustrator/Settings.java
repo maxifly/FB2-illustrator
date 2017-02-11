@@ -141,6 +141,8 @@ public class Settings {
         preset_users.clear();
         preset_groups.clear();
 
+        preset_groups.add("https://vk.com/club139994833");
+
 //        preset_users.add("pr_1");
 //        preset_users.add("pr_2");
     }
