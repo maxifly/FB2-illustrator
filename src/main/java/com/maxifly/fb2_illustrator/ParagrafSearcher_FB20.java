@@ -90,7 +90,7 @@ public class ParagrafSearcher_FB20
         }
 
         addBinarys(fictionBook, illustrations);
-        return fictionBook;
+        return fictionBook; 
     }
 
     private void fillBinaryesIds(FictionBook fictionBook) {
