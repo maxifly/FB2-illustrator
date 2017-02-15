@@ -74,7 +74,9 @@ public class Illustration implements Comparable<Illustration> {
     public boolean isSuitable(ValueToTest paragrafText) {
         for (SearchTemplate_POJO searchTemplate : searchTemplates) {
             try {
-                if (searchTemplate.checkString(paragrafText)) return true;
+                if (searchTemplate.checkString(paragrafText)) {
+                    if (this.illustrated_description == null) this.illustrated_description = searchTemplate.getDescription();
+                    return true;}
             } catch (Check_Exception e) {
                 log.error("Exception when check {}: {}", searchTemplate, e);
             }
