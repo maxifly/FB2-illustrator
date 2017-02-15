@@ -23,6 +23,8 @@ public class BookProcessor_FB20 implements BookProcessor {
 
     private FictionBook fictionBook;
     private JAXBContext jc;
+    private Path inputFile;
+    private boolean isClear = false; // Признак модификации
 
     public BookProcessor_FB20() throws JAXBException {
         jc = JAXBContext.newInstance("com.maxifly.fb2_illustrator.fb2_xml.model");
@@ -30,6 +32,7 @@ public class BookProcessor_FB20 implements BookProcessor {
 
     @Override
     public void loadBook(Path inputFile) throws Exception {
+        this.inputFile = inputFile;
         log.debug("Book XML " + inputFile);
 
         // Разберем XML
@@ -37,6 +40,7 @@ public class BookProcessor_FB20 implements BookProcessor {
 
 
         fictionBook = (FictionBook) unmarshaller.unmarshal(inputFile.toFile());
+        this.isClear = true;
     }
 
     @Override
@@ -50,6 +54,10 @@ public class BookProcessor_FB20 implements BookProcessor {
 
     @Override
     public void processBook(Illustrations illustrations, String projectInfo, Path outputFile) throws Exception {
+        // Перечитаем книгу еще раз
+        // Если ее уже модифицировали
+
+        if (!isClear) loadBook(this.inputFile);
 
         // Поищем иллюстрации
         ParagrafSearcher_FB20 ps = new ParagrafSearcher_FB20();
@@ -62,6 +70,7 @@ public class BookProcessor_FB20 implements BookProcessor {
 
         Marshaller marshaller = jc.createMarshaller();
         marshaller.marshal(fictionBook, outputFile.toFile());
+        isClear = false;
 
     }
 }

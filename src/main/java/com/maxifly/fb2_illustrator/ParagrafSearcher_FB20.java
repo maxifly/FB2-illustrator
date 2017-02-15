@@ -32,6 +32,10 @@ public class ParagrafSearcher_FB20
 
     private String projectInfo;
 
+//    private Set<String> illForDrop = new HashSet<>(); // Список иллюстраций, предназначенный для удаления
+    private String illPrefix = "ill_"; // Префикс добавляемых иллюстраций
+    private Set<String> existsImageIds = new HashSet<>();
+
 
     @Override
     public void search(FictionBook fictionBook, Illustrations illustrations, Paragrafs paragrafs) {
@@ -50,11 +54,24 @@ public class ParagrafSearcher_FB20
 
     @Override
     public FictionBook process(FictionBook fictionBook, Illustrations illustrations, Paragrafs paragrafs, String projectInfo) {
+        Random rnd = new Random();
 
         this.illustrations = illustrations;
         this.paragrafs = paragrafs;
         this.projectInfo = projectInfo;
         this.currentParagrafNumber = 0;
+
+
+
+//        this.illForDrop.clear();
+
+        // Определим, какие картинки уже есть в тексте
+        fillBinaryesIds(fictionBook);
+
+        // Найдем префикс, который не используется
+        do {this.illPrefix = "ill_"+rnd.nextInt(10000)+"_";
+        } while(isPrefixExists(this.illPrefix));
+
 
         FictionBook.Body mainBody = fictionBook.getBody().iterator().next();
 
@@ -76,6 +93,21 @@ public class ParagrafSearcher_FB20
         return fictionBook;
     }
 
+    private void fillBinaryesIds(FictionBook fictionBook) {
+        this.existsImageIds.clear();
+        for (FictionBook.Binary binary:fictionBook.getBinary() ) {
+            if (binary.getId() != null) this.existsImageIds.add(binary.getId());
+        }
+    }
+
+    private boolean isPrefixExists(String illPrefix) {
+        for (String id : this.existsImageIds) {
+            if (id.startsWith(illPrefix)) {
+                log.debug("Prefix {} exists.",illPrefix);
+                return true;}
+        }
+        return false;
+    }
 
     private void addBinarys(FictionBook fictionBook, Illustrations illustrations) {
         List<FictionBook.Binary> binaryList = fictionBook.getBinary();
@@ -97,7 +129,7 @@ public class ParagrafSearcher_FB20
 
             FictionBook.Binary fictionBookBinary = objectFactory.createFictionBookBinary();
             fictionBookBinary.setValue(data);
-            fictionBookBinary.setId("ill_" + ill.getId().toString());
+            fictionBookBinary.setId(this.illPrefix + ill.getId().toString());
             fictionBookBinary.setContentType("image/jpeg");
 
             return fictionBookBinary;
@@ -182,7 +214,7 @@ public class ParagrafSearcher_FB20
     private JAXBElement<?> createIllustration(Illustration ill) {
 
         ImageType imageType = objectFactory.createImageType();
-        imageType.setHref("ill_" + ill.getId().toString());
+        imageType.setHref(this.illPrefix + ill.getId().toString());
 
         JAXBElement<ImageType> imageTypeJAXBElement =
                 objectFactory.createStyleTypeImage(imageType);
