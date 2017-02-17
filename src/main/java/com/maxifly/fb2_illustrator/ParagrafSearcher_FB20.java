@@ -214,29 +214,13 @@ public class ParagrafSearcher_FB20
     private JAXBElement<?> createIllustration(Illustration ill) {
 
         ImageType imageType = objectFactory.createImageType();
-        imageType.setHref(this.illPrefix + ill.getId().toString()+".jpg");
+        imageType.setHref("#"+this.illPrefix + ill.getId().toString()+".jpg");
 
         JAXBElement<ImageType> imageTypeJAXBElement =
                 objectFactory.createStyleTypeImage(imageType);
 
         imageTypeJAXBElement.getValue().setTitle(ill.getDescription());
         return imageTypeJAXBElement;
-
-
-//        PType pType = objectFactory.createPType();
-//        List<Serializable> content = pType.getContent();
-//        content.add(imageTypeJAXBElement);
-//
-//        PType pTypeDesc = objectFactory.createPType();
-//        List<Serializable> contentPTypeDesc = pTypeDesc.getContent();
-//        contentPTypeDesc.add(ill.getDescription());
-//
-//        CiteType citeType = objectFactory.createCiteType();
-//        List<Object> citeList = citeType.getPOrPoemOrEmptyLine();
-//        citeList.add(pType);
-//        citeList.add(pTypeDesc);
-//
-//        return objectFactory.createSectionTypeCite(citeType);
 
     }
 
