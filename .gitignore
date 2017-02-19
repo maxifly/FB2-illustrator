@@ -8,3 +8,5 @@ priv_fales/*
 target/*
 *.orig
 log.txt
+*.zip
+bin/fb2_illustrator.jar
