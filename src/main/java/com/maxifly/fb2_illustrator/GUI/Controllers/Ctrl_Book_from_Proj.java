@@ -157,6 +157,14 @@ public abstract class Ctrl_Book_from_Proj
         }
     }
 
+    private void dstFileChange(String newValue) {
+        if (newValue == null || "".equals(newValue.trim())) {
+            book_dst.setValue(newValue);
+        } else {
+            book_dst.setValue(newValue);
+        }
+    }
+
     private void change_warnings(String newValue) {
         warnings.setVisible(newValue != null && !"".equals(newValue));
     }
@@ -174,6 +182,8 @@ public abstract class Ctrl_Book_from_Proj
         warnings.textProperty().bindBidirectional(dm_book_from_proj.warningsProperty());
 
         book_src_file.textProperty().addListener((observable, oldValue, newValue) -> srcFileChange(newValue));
+        book_dst_file.textProperty().addListener((observable, oldValue, newValue) -> dstFileChange(newValue));
+
         warnings.textProperty().addListener((observable, oldValue, newValue) -> change_warnings(newValue));
 
     }
