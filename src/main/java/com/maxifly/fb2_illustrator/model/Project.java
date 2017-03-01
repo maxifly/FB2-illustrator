@@ -253,6 +253,20 @@ public class Project {
         illustrations.addAll(changeList);
     }
 
+    /**
+     * Сохраняет проект
+     *
+     * @throws IOException
+     * @throws MyException
+     */
+    public void save() throws IOException, MyException {
+        File projectDid = ensureProjectDirectory();
+        copyIllToDir(projectDid);
+
+        String string_project = toJson();
+        FileOperations.writeAll(getProjectFile(), string_project);
+        setChanged(false);
+    }
 
     public String toJson() {
         Gson gson = new GsonBuilder()

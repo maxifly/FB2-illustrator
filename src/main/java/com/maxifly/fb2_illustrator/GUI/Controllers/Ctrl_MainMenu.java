@@ -187,7 +187,7 @@ public class Ctrl_MainMenu implements Initializable {
         projectItemsDisable();
     }
 
-    protected void save_project(ActionEvent actionEvent) throws IOException, GUI_Exception {
+    protected void save_project(ActionEvent actionEvent) throws IOException, MyException {
         dm_mainMenu.project_save();
         projectItemsDisable();
     }
