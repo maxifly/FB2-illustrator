@@ -58,7 +58,7 @@
             </GridPane>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Hyperlink text="https://github.com/maxifly/FB2-illustrator/releases" />
+                  <Hyperlink onAction="#gh_link" text="https://github.com/maxifly/FB2-illustrator/releases" />
                </children>
             </HBox>
          </children>

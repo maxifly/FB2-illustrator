@@ -7,6 +7,7 @@ import com.maxifly.fb2_illustrator.FileOperations;
 import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.fb2_illustrator.GUI.GUI_Obj;
 import com.maxifly.fb2_illustrator.MyException;
+import com.maxifly.fb2_illustrator.Utils;
 import com.maxifly.fb2_illustrator.model.Illustration;
 import com.maxifly.fb2_illustrator.model.Project;
 import com.maxifly.fb2_illustrator.model.SearchTemplate_POJO;
@@ -151,32 +152,9 @@ public class DM_MainMenu {
      * @throws MyException
      */
     public void showHelp() throws MyException {
-        try {
-            if (isBrowsingSupported()) {
-                Desktop desktop = java.awt.Desktop.getDesktop();
-
-
-                desktop.browse(new URI("http://maxifly.github.io/FB2-illustrator/"));
-
-            }
-        } catch (IOException| URISyntaxException e) {
-            e.printStackTrace();
-            throw new MyException("Can not open documentation", e);
-        }
+        Utils.showUrlInBrowser("http://maxifly.github.io/FB2-illustrator/");
     }
 
 
-    private static boolean isBrowsingSupported() {
-        if (!Desktop.isDesktopSupported()) {
-            return false;
-        }
-        boolean result = false;
-        Desktop desktop = java.awt.Desktop.getDesktop();
-        if (desktop.isSupported(Desktop.Action.BROWSE)) {
-            result = true;
-        }
-        return result;
-
-    }
 
 }
