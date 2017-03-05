@@ -47,10 +47,8 @@ public class Ctrl_About extends Ctrl_Abstract implements Initializable {
     Text last_version;
 
 
-    public void gh_link(ActionEvent e) {
-        System.out.println("kuku");
+    public void hp_link(ActionEvent e) {
         String url = ((Hyperlink) e.getSource()).getText();
-
         try {
             Utils.showUrlInBrowser(url);
         } catch (MyException e1) {
