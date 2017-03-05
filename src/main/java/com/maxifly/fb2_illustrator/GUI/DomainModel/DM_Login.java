@@ -7,9 +7,7 @@ import com.maxifly.fb2_illustrator.GUI.Factory_GUI;
 import com.maxifly.vapi.Connect;
 import com.maxifly.vapi.UrlCreator;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.web.WebEngine;
@@ -31,6 +29,7 @@ public class DM_Login {
     private Factory_GUI factory_gui;
     private WebEngine webEngine;
     private ReadOnlyStringProperty currentLocationProperty;
+    private BooleanProperty isLogin = new SimpleBooleanProperty(false);
 
     public DM_Login(Factory_GUI factory_gui) {
         this.factory_gui = factory_gui;
@@ -53,6 +52,8 @@ public class DM_Login {
                     log.debug("TOKEN: {} Email: {}", token, eMail);
                     factory_gui.getDm_statusBar().setLogin(eMail, token);
                     factory_gui.getDm_statusBar().setUserId(Long.valueOf(userId));
+
+                    setIsLogin(true);
                 }
 
             }
@@ -78,4 +79,19 @@ public class DM_Login {
     }
 
 
+    public boolean isLogin() {
+        return isLogin.get();
+    }
+
+    public BooleanProperty isLoginProperty() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin.set(isLogin);
+    }
+
+    public void setIsLoginProperty(BooleanProperty isLoginProperty) {
+        this.isLogin = isLoginProperty;
+    }
 }
